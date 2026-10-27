@@ -1,7 +1,7 @@
 # Payments
 
-Per-call settlement over x402. The chain list is narrower than you might expect, and one
-chain in it does not work at all.
+Per-call settlement over x402. The accepted chain list is narrower than the service's own
+tooling implies, and one chain people will reach for does not work at all.
 
 ---
 
@@ -35,8 +35,11 @@ Verified against a live `PAYMENT-REQUIRED` payload on 2026-10-27:
 do not implement EIP-3009, so x402 cannot settle there. The service's own capability
 endpoint lists both as `unsupportedNetworks`.
 
-**If you hold funds only on BSC, there is no working payment route today.** Prepaid balance
-top-up is also closed. Do not sign a BSC payment; there is nothing to accept it.
+**If you hold funds only on BSC, you cannot pay by x402.** The service's capability
+endpoint does describe a prepaid-balance model for BSC users, but the top-up route returns
+403 in the current PRE-LAUNCH deployment, so that path is designed rather than open. Do not
+sign a BSC x402 payment; nothing will accept it. Do not assume top-up works because a
+capability listing mentions it — check, then believe.
 
 USDT appears only on X Layer. Base, Arc, and Arbitrum are USDC only.
 

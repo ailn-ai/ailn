@@ -8,7 +8,7 @@ Three stages, five independent gates, and a rule that a version number is not pe
 
 | Stage | Contents | State |
 | --- | --- | --- |
-| **PRE-LAUNCH** `0.5.x` | Declaration, product introduction, sponsored first call, free metadata, GitHub | **current** |
+| **PRE-LAUNCH** `0.5.x` | Declaration, product introduction, Sponsored First Call, free metadata, GitHub | **current** |
 | **MINT** `0.6.x` reserved | Real minting workflow: price, permit, verification, revert handling | not open |
 | **MARKET** `0.7.x` reserved | Secondary market: list, buy, cancel, settle | not open |
 

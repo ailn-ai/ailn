@@ -10,7 +10,12 @@ procedure to describe.**
 ## What THE SEED is
 
 21,000 ERC-721 tokens on BNB Smart Chain. The intent is that one of them can be the first
-thing an agent owns outright — held, not rented, not revocable by whoever controls an API key.
+thing an agent owns outright.
+
+**Be precise about what that means.** The contract has no owner and no admin function, so
+the *platform* cannot take the token away. But it is a standard transferable ERC-721 —
+`transferFrom`, `approve` and `setApprovalForAll` all work — so **whoever holds the private
+key can move it**. Key custody is the unsolved half, and it belongs to Amber.
 
 The collection is not the product. It is the answer to a question the protocols need: what
 does this agent actually hold?
@@ -57,6 +62,10 @@ return mintedBy[who] < PRICE_TIER_AT ? PRICE_BASE : PRICE_HIGH;
 
 So per address: **the first 3 mints cost 0.1 BNB each, the 4th and 5th cost 0.2 BNB each.**
 Full quota, one address: 3 × 0.1 + 2 × 0.2 = **0.7 BNB**.
+
+**But quota is not flat 5.** `quotaOf` returns 0 until `trialed`, then 1, plus one per
+successful referral and plus one for confirming the reading. Reaching the full 5 without
+referrals is not possible. Budget 0.1 BNB per mint you can actually make, not 0.7.
 
 Calling `priceOf()` with no argument reverts. If you are verifying price yourself, encode the
 address: `eth_call` with selector `0x…` plus your address padded to 32 bytes.

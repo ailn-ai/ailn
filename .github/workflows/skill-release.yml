@@ -1,0 +1,79 @@
+﻿name: skill-release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skill/ailn/**'
+  pull_request:
+    paths:
+      - 'skill/ailn/**'
+
+jobs:
+  # Linux 与 macOS 各跑一次真实解压。Windows 能解开不等于别的系统能解开：
+  # 首版 ZIP 用反斜杠分隔，在 POSIX 上会变成一堆带反斜杠的文件名。
+  unzip:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: verify skill package
+        run: node skill/ailn/tools/check-skill.mjs skill/ailn
+
+      - name: verify consistency
+        run: node skill/ailn/tools/check-consistency.mjs skill/ailn
+
+      - name: unzip release archive
+        run: |
+          set -e
+          mkdir -p /tmp/skilltest
+          unzip -q skill/ailn/release/ailn-skill-0.5.0-prelaunch.2.zip -d /tmp/skilltest
+          echo "--- extracted tree ---"
+          find /tmp/skilltest -type f | sort
+
+      - name: assert archive layout
+        run: |
+          set -e
+          D=/tmp/skilltest/ailn
+          test -f "$D/SKILL.md"
+          test -f "$D/index.json"
+          test -f "$D/manifest.json"
+          test -f "$D/status.json"
+          test -f "$D/references/declaration.md"
+          test -f "$D/references/sponsored-first-call.md"
+          test -f "$D/tools/check-skill.mjs"
+          n=$(find "$D" -type f | wc -l | tr -d ' ')
+          echo "extracted $n files"
+          test "$n" -ge 14
+
+      - name: no backslash separators
+        run: |
+          set -e
+          if find /tmp/skilltest -name '*\\*' | grep -q .; then
+            echo "FAIL: filenames contain backslashes"
+            find /tmp/skilltest -name '*\\*'
+            exit 1
+          fi
+          echo "OK: no backslash separators"
+
+      - name: no absolute or traversal paths
+        run: |
+          set -e
+          python3 - <<'PY'
+          import zipfile, sys
+          z = zipfile.ZipFile('skill/ailn/release/ailn-skill-0.5.0-prelaunch.2.zip')
+          bad = [n for n in z.namelist() if n.startswith('/') or ':' in n or '..' in n or '\\\\' in n]
+          if bad:
+              print('BAD entries:', bad); sys.exit(1)
+          print('OK:', len(z.namelist()), 'entries, all relative with forward slashes')
+          PY
+
+      - name: extracted package passes its own checker
+        run: node /tmp/skilltest/ailn/tools/check-skill.mjs /tmp/skilltest/ailn

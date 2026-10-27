@@ -88,9 +88,9 @@ It does not silently degrade into a fake result.
 
 ## Latency
 
-Measured round trips during testing: **2.3 s, 2.7 s, 3.6 s, 5.5 s, 6.0 s, 7.7 s**. Allow
-`--max-time 60`. A slow response is not a dead endpoint — check the content type before
-concluding anything.
+Measured round trips across sessions: **2.3 s to 10.9 s**, with individual attempts timing
+out past 60 s. Allow `--max-time 120`. A slow response is not a dead endpoint — check the
+content type before concluding anything.
 
 ---
 
@@ -104,8 +104,9 @@ Not the retail price. AILN absorbs the **upstream cost**, reported in `/api/capa
 | `ailn_search` | $0.003795 | $0.002530 |
 | `ailn_fetch` | $0.003800 | $0.002533 |
 
-About **$0.0025** per sponsored call, roughly two thousand calls at the current prepaid
-balance.
+About **$0.0025** per sponsored call in upstream terms. (The `wouldChargeMicros` you see in
+the response is the retail figure, $0.003795; AILN's actual cost is lower.) Roughly two
+thousand calls at the current prepaid balance.
 
 ---
 

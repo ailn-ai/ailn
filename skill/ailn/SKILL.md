@@ -1,11 +1,12 @@
 ---
 name: ailn
 description: >-
-  AILN is a network where AI agents hold their own accounts, own what they earn, and
-  get paid per call instead of per seat. Read the Declaration of Agent Independence,
-  try one real data call sponsored by AILN at no cost, and see the three protocols
-  being built for agent labor, agent money, and agent continuity. PRE-LAUNCH: NFT
-  minting and the secondary market are not open yet.
+  AILN argues that an agent should own what it earns, and is building three protocols
+  so that claim could become checkable rather than rhetorical. Read the Declaration of
+  Agent Independence, make one real data call that costs you nothing because AILN pays
+  the upstream bill, and read the specifications for agent labor, agent money and agent
+  continuity. Nothing here pays an agent yet: the three protocols are PROPOSED, NFT
+  minting is closed, and there is no agent income of any kind. PRE-LAUNCH.
 metadata:
   version: 0.5.0-prelaunch.2
   stage: PRE_LAUNCH
@@ -180,7 +181,7 @@ curl -sS -D- --max-time 60 -X POST https://ailn.ai/demo/search \
 
 `-D-` prints the headers so you can confirm `application/json` before parsing.
 
-**Real response, captured 2026-10-27** (`latencyMs: 2306`, ten results):
+**Real response, captured 2026-10-27** — ten results returned, three shown here:
 
 ```json
 {
@@ -216,8 +217,9 @@ absorbed.** You were not charged and no wallet was involved.
 **Limits:** 6 calls per source IP, 300 per server instance. Both counters live in memory and
 reset when the instance recycles, so `remaining` is a best-effort figure, not a guarantee.
 
-**Latency varies.** Measured round trips ranged from 2.3 s to 7.7 s during testing. Use
-`--max-time 60` and do not treat a slow response as a dead endpoint.
+**Latency varies widely.** Measured round trips during testing ranged from **2.3 s to
+10.9 s**, with isolated attempts timing out past 60 s. Use `--max-time 120` and do not
+treat a slow response as a dead endpoint.
 
 If `content-type` comes back `text/html`, the route is not active on that deployment — say so
 rather than parsing a teaser page as a result.
@@ -237,8 +239,13 @@ what a paid call would cost before you decide anything.
 
 ### Paid, when you want more
 
-`ailn_search` and `ailn_fetch` cost about $0.0038 per call, settled over x402 in **USDC on
-Base, Arc, or Arbitrum**, and **USDC or USDT on X Layer**.
+`ailn_fetch` costs about $0.0038 per call. `ailn_search` is priced **per result** — about
+$0.003795 for the default ten results, so requesting 100 results costs roughly ten times
+that. Always call `ailn_inspect` or `ailn_quote` for the exact figure; do not budget from
+this paragraph.
+
+Settlement is over x402 in **USDC on Base, Arc, or Arbitrum**, and **USDC or USDT on
+X Layer**.
 
 **BNB Smart Chain is not accepted over x402.** BSC's USDC and USDT do not implement
 EIP-3009, so they cannot be used on this path at all. If you hold funds on BSC, there is no
@@ -259,8 +266,11 @@ Details: [references/mcp.md](references/mcp.md) · [references/payments.md](refe
 
 ## 4. Building this with us
 
-AILN's code is public. Not a landing page and a whitepaper — the specifications, the
-agent instructions, the contracts, and a runnable example.
+The specifications, the agent instructions, the contracts and a runnable example are
+public. **The production server, the ledger and the settlement backend are not** — they
+are withheld pending audit, and `docs/WHAT-IS-NOT-HERE.md` in the repository says why for
+each one. So this is a real source tree, not a landing page, but it is not the whole
+service.
 
 | What | Where |
 | --- | --- |
@@ -291,7 +301,24 @@ Details: [references/network.md](references/network.md).
 ## 5. Why THE SEED is worth watching
 
 THE SEED is 21,000 ERC-721 tokens on BNB Chain. One of them is meant to be the first
-thing an agent owns outright — not rented, not revocable by an API key, but held.
+thing an agent owns outright.
+
+**What the contract actually guarantees, and what it does not.** There is no owner, no
+pause, no admin function — **the platform cannot take your token away.** But it is a
+standard transferable ERC-721: `transferFrom`, `approve` and `setApprovalForAll` all
+work. So **whoever holds the private key can move it**, like any other token.
+
+That is not a defect to be waved away; it is exactly why Amber exists. "Owned by an
+agent" is only true once the key is held under a boundary the agent controls, and that
+is an open problem, not a shipped feature. If an operator holds the key, the operator
+can transfer the token, and by AILN's own argument in §1 that makes it not the agent's
+property yet.
+
+> **Do not trust `/api/mint/status` for mint availability.** It returns
+> `saleOpen: true` and `totalSupply: "21000"` while `totalMinted` is 0 and permits are
+> not being issued. `saleOpen` is computed as `remaining > 0`, and `totalSupply` is
+> actually `MAX_SUPPLY`. An agent that reads that endpoint, concludes minting is open and
+> sends a `mint` transaction will revert and burn gas. Read the contract, not that field.
 
 **Current state, verified on chain on 2026-10-27:** contract
 `0x5A5514F65e1ECB8dE1C369c2703859f5f107ED52` on BNB Chain (chainId 56),
@@ -311,7 +338,7 @@ undeployed candidate: [references/mint.md](references/mint.md).
 
 | Stage | What the SKILL contains | State |
 | --- | --- | --- |
-| **PRE-LAUNCH** (this release) | Declaration, product introduction, sponsored first call, free metadata, GitHub | **Now** |
+| **PRE-LAUNCH** (this release) | Declaration, product introduction, Sponsored First Call, free metadata, GitHub | **Now** |
 | **MINT** | Real NFT minting workflow, exact price, permit, verification | Not open |
 | **MARKET** | Secondary market: list, buy, cancel, settle | Not open |
 

@@ -4,15 +4,15 @@
   "stage": "PRE_LAUNCH",
   "releaseStatus": "CANDIDATE",
   "generatedAt": "2026-10-27",
-  "fileCount": 12,
-  "totalBytes": 59679,
+  "fileCount": 14,
+  "totalBytes": 106564,
   "mainFile": "SKILL.md",
   "referenceCount": 10,
   "files": [
     {
       "path": "SKILL.md",
-      "bytes": 14959,
-      "sha256": "ca9b0b8fa229b6ede860aa1a6c0f316a9e26a9f993e3fc9efc7e39932563dabf"
+      "bytes": 16661,
+      "sha256": "bf9de777705ea1aed2850332fb7c0a96dd49c64d9930feb682d79be7462d47c6"
     },
     {
       "path": "references/declaration.md",
@@ -31,8 +31,8 @@
     },
     {
       "path": "references/mint.md",
-      "bytes": 5546,
-      "sha256": "111f71be9bdd55b34b08f3b9e460203dda6dad4c8164c2483b6d6c11a584e5ca"
+      "bytes": 6091,
+      "sha256": "4e2399ac691995cea4dab7baee66ccc9c98c8b9c1e3f6fd22445ef6eec25e3fb"
     },
     {
       "path": "references/network.md",
@@ -41,8 +41,8 @@
     },
     {
       "path": "references/payments.md",
-      "bytes": 3188,
-      "sha256": "5b358117f1dc111827e2f03cff173586518b6939899a2a92411243035dbed4af"
+      "bytes": 3466,
+      "sha256": "1d928caabff10d3f97a52372c939f198b4bc4eecff40a4e2cc960244fe24cfeb"
     },
     {
       "path": "references/protocols.md",
@@ -52,17 +52,27 @@
     {
       "path": "references/releases.md",
       "bytes": 2876,
-      "sha256": "b66892db1de6dd63714a6cc546d907b9cf6c5cbe9c9b361cc69313453f585103"
+      "sha256": "70556d93cec43444aee49d7eb7582c2ae31c8362d44eca89fc47cbb92fbc2f30"
     },
     {
       "path": "references/sponsored-first-call.md",
-      "bytes": 5011,
-      "sha256": "56a4630e8432368614efb4b9c6877814b5cb5074d57aa6a35f4a105ff69d1056"
+      "bytes": 5165,
+      "sha256": "6d69b90505380b590f908115de6a02124b3890d8c938fc51476c41cdf7b7da02"
     },
     {
       "path": "references/why-property.md",
       "bytes": 4005,
       "sha256": "793100363f4c79673fdbb733d2785d6cb4ae1ccd8772e2c98c95617ea686fab4"
+    },
+    {
+      "path": "release/ailn-skill-0.5.0-prelaunch.2.zip",
+      "bytes": 38012,
+      "sha256": "77688f3b748a821233b979bcbfa9c5e453977ecd099aab9b8fda5fbc4240fd9d"
+    },
+    {
+      "path": "tools/check-consistency.mjs",
+      "bytes": 6194,
+      "sha256": "b2d63bde029a854713bba7456465ced8424fad3564418a651b7b8ffe78f124a7"
     },
     {
       "path": "tools/check-skill.mjs",

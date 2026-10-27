@@ -9,12 +9,14 @@
     "node": ">=20"
   },
   "scripts": {
-    "verify": "node scripts/verify.mjs",
+    "verify": "node scripts/verify.mjs && node skill/ailn/tools/check-skill.mjs skill/ailn && node skill/ailn/tools/check-consistency.mjs skill/ailn",
     "scan": "node scripts/scan.mjs .",
     "lint:docs": "node scripts/verify.mjs --only=docs",
     "lint:links": "node scripts/verify.mjs --only=links",
     "example:quote": "node examples/mcp-quote/index.mjs",
-    "test": "node scripts/verify.mjs"
+    "test": "node scripts/verify.mjs",
+    "check:skill": "node skill/ailn/tools/check-skill.mjs skill/ailn",
+    "check:consistency": "node skill/ailn/tools/check-consistency.mjs skill/ailn"
   },
   "keywords": [
     "ai-agents",
