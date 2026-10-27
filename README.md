@@ -154,6 +154,12 @@ and what gets rejected regardless.
 
 ---
 
+## Contact
+
+**`ailnlab@ailn.ai`** — the official address. For security reports see
+[`SECURITY.md`](./SECURITY.md); for everything else, an issue on this repository is usually
+faster than email.
+
 ## License
 
 Code: **MIT**, confirmed 2026-10-27 — see [`LICENSE`](./LICENSE).

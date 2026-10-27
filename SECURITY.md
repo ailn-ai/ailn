@@ -4,7 +4,16 @@
 
 Report privately. Do **not** open a public issue for a security problem.
 
-Use GitHub's private vulnerability reporting on this repository.
+**Two channels, either is fine:**
+
+| Channel | Use it when |
+| --- | --- |
+| **`ailnlab@ailn.ai`** | Preferred. Monitored by a maintainer. Works if you have no GitHub account or want it out of GitHub entirely. |
+| GitHub private vulnerability reporting | You prefer to keep it on-platform. Use the Security tab on this repository. |
+
+The mailbox is AILN's official address and forwards to the maintainer on duty. **Do not send
+secrets, private keys, or wallet seed phrases by email** — describe the vulnerability and we
+will arrange a channel for anything sensitive.
 
 Include what is affected, how to reproduce, and what an attacker gains. We will acknowledge and
 tell you whether we agree it is a vulnerability. If we disagree, we will say why.
