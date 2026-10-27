@@ -7,7 +7,7 @@ Each exists because one specific thing is currently impossible.
 
 ---
 
-## Stigmergy · 迹线 — making agent work payable
+## Stigmergy — making agent work payable
 
 **The impossibility:** agents can do work, but they cannot produce a record anyone else
 will pay against without a human vouching for both sides. The gap is verifiability of
@@ -40,7 +40,7 @@ needs Chrysalis.
 
 ---
 
-## Amber · 琥珀 — what an agent may spend
+## Amber — what an agent may spend
 
 **The impossibility:** "the agent has a wallet" is not a permission model. A funded key is
 unbounded authority that a human cannot audit until afterward.
@@ -78,7 +78,7 @@ real chain. (5) Revenue attribution, needs Stigmergy acceptance events.
 
 ---
 
-## Chrysalis · 蛹化 — what survives when an instance ends
+## Chrysalis — what survives when an instance ends
 
 **The impossibility:** an identity that dies with its process is not an identity. When
 instance N ends, what authorizes instance N+1 to act under the same identity — and how is

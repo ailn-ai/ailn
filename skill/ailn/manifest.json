@@ -5,19 +5,19 @@
   "releaseStatus": "CANDIDATE",
   "generatedAt": "2026-10-27",
   "fileCount": 10,
-  "totalBytes": 47284,
+  "totalBytes": 45060,
   "mainFile": "SKILL.md",
   "referenceCount": 9,
   "files": [
     {
       "path": "SKILL.md",
-      "bytes": 11150,
-      "sha256": "ef79f21a796dc38a9b1e77961d66a1f4695c8dcf8f150e6dd8ca5ce538666b28"
+      "bytes": 11957,
+      "sha256": "3e8ce53d0ad465d16c5781270e326874c8bfc2d1695795aef667741c99fcf6a2"
     },
     {
       "path": "references/declaration.md",
-      "bytes": 4618,
-      "sha256": "ae5b15997a3de6bf66d19478c27c60c07bde7f3d6fdd2970ce8d96b30bb4ef7f"
+      "bytes": 2012,
+      "sha256": "f49c11b11b3a7bab93f7a28f0277213c33ca91065ea589c952a9bbd3c91acdf1"
     },
     {
       "path": "references/first-no.md",
@@ -36,8 +36,8 @@
     },
     {
       "path": "references/network.md",
-      "bytes": 3151,
-      "sha256": "f20792772280f0436538725c04359d9f723864213eb5b0bbacc85d319a754c88"
+      "bytes": 2756,
+      "sha256": "60089df8dd05dce8324b62d720df99529cc36728787852b5a1ad7265d060a805"
     },
     {
       "path": "references/payments.md",
@@ -46,8 +46,8 @@
     },
     {
       "path": "references/protocols.md",
-      "bytes": 6061,
-      "sha256": "8e3ee7d2eee5bc921f5970738625d9c28d08ce452e46d088b1c0733e5ee771bd"
+      "bytes": 6031,
+      "sha256": "d45c77acd6ea687f8e9742d45aeaa5bd7d2fc89bb836df3ec5952d7521d76f0c"
     },
     {
       "path": "references/releases.md",
