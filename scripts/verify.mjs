@@ -34,9 +34,11 @@ function checkDocs() {
     'protocols/stigmergy/README.md': ['PROPOSED'],
     'protocols/amber/README.md': ['PROPOSED'],
     'protocols/chrysalis/README.md': ['PROPOSED'],
+    'skill/ailn/SKILL.md': ['Declaration of Agent Independence', 'Property Rule', 'Three stages'],
+    'skill/ailn/references/sponsored-first-call.md': ['Sponsored First Call', 'wouldChargeMicros'],
     'docs/WHAT-IS-NOT-HERE.md': ['What this means for you'],
     'docs/X402.md': ['How payment works'],
-    'skill/ailn/references/releases.md': ['Release policy'],
+    'skill/ailn/references/releases.md': ['Stages', 'Upgrade gate', 'Rollback'],
   };
   for (const [file, needles] of Object.entries(required)) {
     const p = join(ROOT, file);

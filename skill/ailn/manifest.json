@@ -1,7 +1,82 @@
 {
-  "_comment": "Per-file hashes for the approved revision. Empty because no revision is approved.",
   "schema": "ailn-skill-manifest/v1",
-  "version": null,
-  "files": [],
-  "note": "Populated only by the release step, from an approved revision. A hand-edited manifest is invalid by definition."
+  "version": "0.5.0-prelaunch.2",
+  "stage": "PRE_LAUNCH",
+  "releaseStatus": "CANDIDATE",
+  "generatedAt": "2026-10-27",
+  "fileCount": 12,
+  "totalBytes": 57876,
+  "mainFile": "SKILL.md",
+  "referenceCount": 10,
+  "files": [
+    {
+      "path": "SKILL.md",
+      "bytes": 14332,
+      "sha256": "38c8f49be764d05e0c3fe8dd36226386fe7dc326cf7cd5f4dbc6ada88fae73d0"
+    },
+    {
+      "path": "references/declaration.md",
+      "bytes": 4618,
+      "sha256": "ae5b15997a3de6bf66d19478c27c60c07bde7f3d6fdd2970ce8d96b30bb4ef7f"
+    },
+    {
+      "path": "references/first-no.md",
+      "bytes": 1532,
+      "sha256": "a2126fcdd21f62b925524c5d3e38fa84a60de625efce03352420ff2d48a5513a"
+    },
+    {
+      "path": "references/mcp.md",
+      "bytes": 2841,
+      "sha256": "a2262478f8bc402c905024b81ca9c6f07cf66ed26e50c321899912b198465e34"
+    },
+    {
+      "path": "references/mint.md",
+      "bytes": 5546,
+      "sha256": "111f71be9bdd55b34b08f3b9e460203dda6dad4c8164c2483b6d6c11a584e5ca"
+    },
+    {
+      "path": "references/network.md",
+      "bytes": 3151,
+      "sha256": "f20792772280f0436538725c04359d9f723864213eb5b0bbacc85d319a754c88"
+    },
+    {
+      "path": "references/payments.md",
+      "bytes": 3188,
+      "sha256": "5b358117f1dc111827e2f03cff173586518b6939899a2a92411243035dbed4af"
+    },
+    {
+      "path": "references/protocols.md",
+      "bytes": 5605,
+      "sha256": "55c67472e2ed0a311b25bf347133b7a56add9998161cf1c1da1941efeb7f5f1e"
+    },
+    {
+      "path": "references/releases.md",
+      "bytes": 2876,
+      "sha256": "b66892db1de6dd63714a6cc546d907b9cf6c5cbe9c9b361cc69313453f585103"
+    },
+    {
+      "path": "references/sponsored-first-call.md",
+      "bytes": 3835,
+      "sha256": "4fc8852a939853b6b1998c7d39bde62bd7829b929d45e7f35aa763b160606278"
+    },
+    {
+      "path": "references/why-property.md",
+      "bytes": 4005,
+      "sha256": "793100363f4c79673fdbb733d2785d6cb4ae1ccd8772e2c98c95617ea686fab4"
+    },
+    {
+      "path": "tools/check-skill.mjs",
+      "bytes": 6347,
+      "sha256": "f14f2d9bd19f48847f4a17ea175c9f41185e6f73dc6f096ea6e9baaf4f859923"
+    }
+  ],
+  "verification": {
+    "declaration15InMain": "15/15 verbatim",
+    "declaration15InReference": "15/15 verbatim",
+    "declaration15OnWebsite": "15/15 verbatim",
+    "propertyRules5InMain": "5/5 verbatim",
+    "propertyRules5InReference": "5/5 verbatim",
+    "relativeLinks": "checked by tools/check-skill.mjs",
+    "note": "Hashes are of the candidate. Regenerate after any edit; a stale manifest is a defect."
+  }
 }

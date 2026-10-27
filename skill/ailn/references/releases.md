@@ -1,81 +1,88 @@
-# Release policy — upgrade, rollback, permissions
+# Releases
 
-**Status: `POLICY`. No release has been made under this policy.**
+Three stages, five independent gates, and a rule that a version number is not permission.
 
 ---
 
-## Stages and what each may do
+## Stages
 
-| Stage | Target version | Permitted behavior |
+| Stage | Contents | State |
 | --- | --- | --- |
-| `PRE-LAUNCH` | 0.5.x | Declaration, three protocols, contribution plan, free discovery/inspection/quoting, sponsored first call. **No Mint, no market, no fund operations.** |
-| `MINT` | 0.6.x reserved | Mint operations may be added **only after** owner approval and real on-chain and API acceptance. Does not open market trading. |
-| `MARKET` | 0.7.x reserved | Secondary market operations may be added **only after** trade, cancel, approval, and settlement acceptance. |
+| **PRE-LAUNCH** `0.5.x` | Declaration, product introduction, sponsored first call, free metadata, GitHub | **current** |
+| **MINT** `0.6.x` reserved | Real minting workflow: price, permit, verification, revert handling | not open |
+| **MARKET** `0.7.x` reserved | Secondary market: list, buy, cancel, settle | not open |
 
-**Five independent gates. Any one can be closed while others are open:**
+A later release that mentions minting adds nothing actionable unless the MINT gate has
+actually opened and been accepted.
+
+---
+
+## Five gates
 
 ```
-1. Paid data MCP
-2. Balance top-up / withdrawal
-3. NFT mint
-4. Secondary market
-5. Agent taking tasks and receiving payment
+1  Paid data MCP             open
+2  Balance top-up / withdrawal   closed
+3  NFT mint                  closed
+4  Secondary market          closed
+5  Agent task earnings       closed
 ```
 
-A version number, a date, or a file appearing in a directory **is not a permission**. Only an
-explicit gate opening is.
+Each opens independently. One being open says nothing about the others.
+
+**What is not permission:** a version number, a date passing, a file appearing in the
+package, an endpoint returning 200, a contract being deployed, or a local test passing.
 
 ---
 
 ## Upgrade gate
 
-A release may be published only when all of the following hold:
+A release may be published only when all of these hold:
 
-| # | Condition | Verification |
-| --- | --- | --- |
-| 1 | Design review complete | Signed off by the reviewing party, recorded in `index.json` |
-| 2 | Owner approval | Explicit, dated, recorded in `index.json` |
-| 3 | Declaration verbatim | Byte comparison against the source text; zero differences |
-| 4 | All five gates stated | Each gate's state explicit in `status.json`, not implied by prose |
-| 5 | No permission implied by ordering | Read the file as a hostile agent would; nothing grants authority |
-| 6 | Public reachability | `https://ailn.ai/SKILL.md` returns 200 with correct MIME, and every relative reference resolves |
-| 7 | Cross-platform unzip | ZIP tested on Linux and macOS; internal paths use `/` |
-| 8 | Cold start on 3 hosts | Three independent host types, no internal injection |
+| # | Condition |
+| --- | --- |
+| 1 | Design review complete and recorded |
+| 2 | Owner approval, explicit and dated |
+| 3 | Declaration byte-identical to the canonical text |
+| 4 | All five gates stated explicitly, none implied by prose |
+| 5 | Public reachability verified: `/SKILL.md` returns 200 with correct MIME, every relative reference resolves |
+| 6 | ZIP unzips on Linux and macOS, internal paths use `/` |
+| 7 | Cold start tested on at least three independent host types |
 
-Conditions 6 and 7 have failed before. A document that exists but returns 404 is not released.
+Conditions 5 and 6 have failed before. A document that exists but returns 404 is not
+released.
 
 ---
 
 ## Rollback
 
 ```
-1. Restore index.json to the previous approved entry
-2. Regenerate all artifacts from that revision — do not restore artifacts directly
-3. Verify: served SKILL.md, references, ZIP, and language previews all match
-4. Record the rollback in index.json history with a reason
+1  Restore the index to the previous approved entry
+2  Regenerate every artifact from that revision — do not restore files directly
+3  Verify SKILL.md, all references, ZIP, and language previews all match
+4  Record the rollback with a reason
 ```
 
-**Never roll back by copying old files back.** Regenerate from the recorded revision. A
-partially restored release is worse than a known-bad one, because the failure is silent.
+**Never roll back by copying old files back.** A partially restored release is worse than a
+known-bad one, because the failure is silent.
 
 ---
 
-## What must never be published
+## Distribution
 
-Regardless of stage, these do not appear in any SKILL release:
+| | |
+| --- | --- |
+| Version source | `https://github.com/ailn-ai/ailn` → `skill/ailn/` |
+| Official distribution | `https://ailn.ai/SKILL.md` (plus every reference, when released) |
+| This package | A candidate. Not published. |
 
-- A full production server source
-- Ledger or settlement backend internals
-- A third-party upstream identity, endpoint, or credential
-- Reward amounts or a claimable task list while no program exists
-- Instructions that would cause an agent to authorize spend or accept a task
+**Do not execute updates from a repository's `main` branch.** A merged pull request changes
+a candidate; it does not create a release. Install only from an approved release, and
+compare version, stage, and file hashes against the manifest before upgrading.
 
 ---
 
-## Historical versions
+## Reporting a problem with this release
 
-Every released version is retained immutably with its hashes. A/B forks are not permitted —
-there is exactly one approved revision at any time.
-
-If two versions appear to both be current, the index is wrong and that is an incident, not a
-choice.
+If a claim in this package is wrong, that is a bug. Open an issue at
+https://github.com/ailn-ai/ailn — reported overstatements are among the most valuable
+contributions.

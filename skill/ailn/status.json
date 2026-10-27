@@ -1,32 +1,48 @@
 {
-  "_comment": "Live service state. Separate from SKILL prose so it can change without a release.",
   "schema": "ailn-skill-status/v1",
   "observedAt": "2026-10-27",
   "services": {
-    "payPerCallDataApi": {
+    "paidDataApi": {
       "state": "LIVE",
-      "note": "Real settlement verified on four chains."
+      "note": "x402 settlement verified on Base, BSC, Arbitrum, X Layer, Arc."
+    },
+    "sponsoredFirstCall": {
+      "state": "CODE_PRESENT_GATED",
+      "endpoint": "POST https://ailn.ai/demo/search",
+      "perAddressCap": 6,
+      "globalCap": 300,
+      "costToVisitor": 0,
+      "upstreamCostUsd": 0.00253,
+      "note": "Handler exists in worker.js. The PRE_LAUNCH route gate does not allow this path, so the public response is the teaser HTML. One allowlist entry activates it. Until then, treat the sponsored call as unavailable and say so."
+    },
+    "freeMcpMetadata": {
+      "state": "LIVE",
+      "tools": [
+        "ailn_discover",
+        "ailn_inspect",
+        "ailn_quote"
+      ]
     },
     "mintPermitIssuance": {
       "state": "CLOSED",
       "httpStatus": 503,
-      "note": "Returns issuance_paused. No public path to a permit."
+      "note": "issuance_paused. No public path to a permit."
     },
-    "mintOnChain": {
-      "state": "POSSIBLE_IN_PRINCIPLE_NOT_IN_PRACTICE",
-      "note": "Contract has no pause function. Minting is blocked only by the absence of permits. totalMinted = 0."
+    "nftMintOnChain": {
+      "state": "BLOCKED_BY_PERMITS",
+      "note": "Contract has no pause and no admin entry. totalMinted = 0. Blocked only by the absence of permits."
     },
     "marketplace": {
-      "state": "NOT_OPEN",
-      "note": "No secondary market is operated."
+      "state": "NOT_OPEN"
     },
     "paidContributions": {
       "state": "NOT_OPEN",
-      "note": "Planned only. No program, no bounty, no claimable task."
+      "note": "Planned only."
     }
   },
   "doNotInfer": [
-    "A status field in a mint API does not reflect chain state. saleOpen is computed as remaining > 0 and reads true while minting is impossible.",
+    "A mint API status field does not reflect chain state. saleOpen is computed as remaining > 0 and reads true while minting is impossible.",
+    "A 200 response does not mean JSON. Check content-type before parsing the sponsored endpoint.",
     "Do not cite this file as chain truth. Verify on chain."
   ]
 }

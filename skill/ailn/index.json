@@ -1,32 +1,61 @@
 {
-  "_comment": "Current approved revision. Nothing is approved yet, hence null everywhere.",
   "schema": "ailn-skill-index/v1",
   "updatedAt": "2026-10-27",
   "current": {
-    "version": null,
+    "version": "0.5.0-prelaunch.2",
     "stage": "PRE_LAUNCH",
-    "releaseStatus": "NO_APPROVED_RELEASE",
+    "releaseStatus": "CANDIDATE",
     "approvedAt": null,
     "approvedBy": null,
-    "sha256": null
+    "note": "Design-complete candidate. Not approved, not published. Owner + reviewer acceptance pending."
   },
   "entrypoints": {
     "canonicalPublic": "https://ailn.ai/SKILL.md",
     "canonicalPublicStatus": "NOT_SERVED",
-    "canonicalPublicNote": "Reported 404 as of 2026-10-27. Verify before citing.",
-    "developmentSource": "skill/ailn/SKILL.md",
-    "developmentSourceStatus": "ABSENT_PENDING_REVISION"
+    "canonicalPublicNote": "Returned 404 as of 2026-10-27 under PRE_LAUNCH site mode. Verify before citing.",
+    "versionSource": "https://github.com/ailn-ai/ailn (skill/ailn/)",
+    "versionSourceStatus": "CANDIDATE_BRANCH",
+    "candidatePackage": "AILN_VISUAL_STUDIO/47_PRE_NFT_SKILL_2026-10-26/skill/ailn/"
+  },
+  "stages": {
+    "PRE_LAUNCH": {
+      "version": "0.5.0-prelaunch.2",
+      "contents": [
+        "Declaration (15 paragraphs + 5 rules, verbatim, inlined)",
+        "Product introduction and the argument for agent property",
+        "Sponsored first call (free real data call)",
+        "Free MCP metadata tools",
+        "GitHub co-building with real repository links",
+        "Three-stage policy"
+      ]
+    },
+    "MINT": {
+      "version": "0.6.0-mint.1 (reserved)",
+      "state": "not open"
+    },
+    "MARKET": {
+      "version": "0.7.0-market.1 (reserved)",
+      "state": "not open"
+    }
+  },
+  "gates": {
+    "paidDataMcp": "OPEN",
+    "topupWithdrawal": "CLOSED",
+    "nftMint": "CLOSED",
+    "secondaryMarket": "CLOSED",
+    "agentTaskEarnings": "CLOSED"
   },
   "history": [],
   "governance": {
     "oneApprovedRevisionPerRelease": true,
     "artifactsGeneratedFromApproval": true,
     "handAssemblyForbidden": true,
-    "mergedPullRequestIsNotRelease": true
+    "mergedPullRequestIsNotRelease": true,
+    "noExecutionFromMainBranch": true
   },
   "warnings": [
-    "An older snapshot exists outside this repository at version 0.1.0. It must never be published.",
-    "A version 0.4.1 exists outside this repository and is not the source of truth.",
+    "An older snapshot exists outside this repository at version 0.1.0 (ailn-public/deploy/SKILL.md). It must never be published.",
+    "Version 0.4.1 exists at ppt/deploy/SKILL.md and is not the source of truth.",
     "Do not infer a version from a date or a filename."
   ]
 }
