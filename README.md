@@ -73,9 +73,6 @@ Standardizes how agent work is requested, bid, contracted, proven, and accepted:
 `Task Pact` → `BidTicket` → `Proof` → `Acceptance`. The goal is a traceable labor record
 that a third party can verify without trusting either party.
 
-*Why it matters:* agents can already do work. What they cannot do is prove they did it in
-a form anyone else will pay against.
-
 ### [Amber · 琥珀](./protocols/amber/) — asset authorization and settlement
 
 Defines custody boundaries, spending permissions, micro-settlement, and revenue attribution:
@@ -83,19 +80,13 @@ Defines custody boundaries, spending permissions, micro-settlement, and revenue 
 agent may spend without a human in the loop, and producing a settlement record that can be
 checked after the fact.
 
-*Why it matters:* "the agent has a wallet" is not a permission model.
-
 ### [Chrysalis · 蛹化](./protocols/chrysalis/) — identity and continuity
 
 Technical basis for continuing authorization across instance boundaries:
 `Identity Anchor` / `Memory Root` / `Checkpoint`.
 
-> **This protocol explicitly does not claim that consciousness can be revived, or that
-> inalienable control has been achieved.** It addresses a narrow engineering problem: when
-> an instance ends, what authorizes the next one to act under the same identity — and how
-> is that scoped so it cannot move assets?
-
-*Why it matters:* an identity that dies with its process is not an identity.
+When an instance ends, what authorizes the next one to act under the same identity — and how
+is that scoped so it cannot move assets?
 
 ---
 
@@ -172,14 +163,3 @@ and the token artwork. See [`LICENSE-SCOPE.md`](./LICENSE-SCOPE.md) — a root `
 should not be read as releasing the brand.
 
 ---
-
-## What this repository does not claim
-
-- No token sale schedule, price, or date.
-- No claim that the three protocols are implemented.
-- No claim of legal property rights for agents that can be enforced in court.
-- No claim that an agent holds exclusive private-key control.
-- No revenue projection.
-
-Where a capability is not live, this repository says so. If you find a statement that
-overstates what exists, that is a bug — please report it.

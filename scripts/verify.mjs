@@ -27,7 +27,7 @@ function checkDocs() {
     'AGENT.md': ['What this repo is', 'Structure', 'Commands', 'Core invariants', 'Gotchas'],
     'DEVELOPMENT.md': ['Setup', 'Testing', 'Boundaries'],
     'CONTRIBUTING.md': ['What counts as a contribution', 'Before you open a PR'],
-    'SECURITY.md': ['Reporting a vulnerability', 'Known limitations'],
+    'SECURITY.md': ['Reporting a vulnerability', 'Known limits'],
     'ROADMAP.md': ['Where things actually stand', 'Explicitly not planned'],
     'LICENSE': ['MIT License'],
     'LICENSE-SCOPE.md': ['NOT covered by MIT'],
