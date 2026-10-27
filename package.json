@@ -1,0 +1,30 @@
+{
+  "name": "ailn",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AILN — protocol specifications, Agent SKILL source, and a runnable pay-per-call example.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "verify": "node scripts/verify.mjs",
+    "scan": "node scripts/scan.mjs .",
+    "lint:docs": "node scripts/verify.mjs --only=docs",
+    "lint:links": "node scripts/verify.mjs --only=links",
+    "example:quote": "node examples/mcp-quote/index.mjs",
+    "test": "node scripts/verify.mjs"
+  },
+  "keywords": [
+    "ai-agents",
+    "x402",
+    "erc721",
+    "protocols",
+    "specification"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ailn-ai/ailn.git"
+  }
+}

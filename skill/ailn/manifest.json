@@ -1,0 +1,7 @@
+{
+  "_comment": "Per-file hashes for the approved revision. Empty because no revision is approved.",
+  "schema": "ailn-skill-manifest/v1",
+  "version": null,
+  "files": [],
+  "note": "Populated only by the release step, from an approved revision. A hand-edited manifest is invalid by definition."
+}

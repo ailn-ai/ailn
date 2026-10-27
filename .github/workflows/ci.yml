@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: verify repository
+        run: node scripts/verify.mjs
+
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: sensitivity scan
+        run: node scripts/scan.mjs .
+
+  example:
+    runs-on: ubuntu-latest
+    # The example hits the live API. A network failure is not a repository failure,
+    # so this job is reported but does not gate the build.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: run live quote example
+        run: node examples/mcp-quote/index.mjs

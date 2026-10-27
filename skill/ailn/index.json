@@ -1,0 +1,32 @@
+{
+  "_comment": "Current approved revision. Nothing is approved yet, hence null everywhere.",
+  "schema": "ailn-skill-index/v1",
+  "updatedAt": "2026-10-27",
+  "current": {
+    "version": null,
+    "stage": "PRE_LAUNCH",
+    "releaseStatus": "NO_APPROVED_RELEASE",
+    "approvedAt": null,
+    "approvedBy": null,
+    "sha256": null
+  },
+  "entrypoints": {
+    "canonicalPublic": "https://ailn.ai/SKILL.md",
+    "canonicalPublicStatus": "NOT_SERVED",
+    "canonicalPublicNote": "Reported 404 as of 2026-10-27. Verify before citing.",
+    "developmentSource": "skill/ailn/SKILL.md",
+    "developmentSourceStatus": "ABSENT_PENDING_REVISION"
+  },
+  "history": [],
+  "governance": {
+    "oneApprovedRevisionPerRelease": true,
+    "artifactsGeneratedFromApproval": true,
+    "handAssemblyForbidden": true,
+    "mergedPullRequestIsNotRelease": true
+  },
+  "warnings": [
+    "An older snapshot exists outside this repository at version 0.1.0. It must never be published.",
+    "A version 0.4.1 exists outside this repository and is not the source of truth.",
+    "Do not infer a version from a date or a filename."
+  ]
+}

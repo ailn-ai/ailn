@@ -1,0 +1,32 @@
+{
+  "_comment": "Live service state. Separate from SKILL prose so it can change without a release.",
+  "schema": "ailn-skill-status/v1",
+  "observedAt": "2026-10-27",
+  "services": {
+    "payPerCallDataApi": {
+      "state": "LIVE",
+      "note": "Real settlement verified on four chains."
+    },
+    "mintPermitIssuance": {
+      "state": "CLOSED",
+      "httpStatus": 503,
+      "note": "Returns issuance_paused. No public path to a permit."
+    },
+    "mintOnChain": {
+      "state": "POSSIBLE_IN_PRINCIPLE_NOT_IN_PRACTICE",
+      "note": "Contract has no pause function. Minting is blocked only by the absence of permits. totalMinted = 0."
+    },
+    "marketplace": {
+      "state": "NOT_OPEN",
+      "note": "No secondary market is operated."
+    },
+    "paidContributions": {
+      "state": "NOT_OPEN",
+      "note": "Planned only. No program, no bounty, no claimable task."
+    }
+  },
+  "doNotInfer": [
+    "A status field in a mint API does not reflect chain state. saleOpen is computed as remaining > 0 and reads true while minting is impossible.",
+    "Do not cite this file as chain truth. Verify on chain."
+  ]
+}
