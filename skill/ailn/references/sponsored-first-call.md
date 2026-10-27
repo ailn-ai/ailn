@@ -17,6 +17,26 @@
 > schemas, not data — they are not a substitute for this call, and should not be described as
 > if they were.
 
+### The cheap way to check, before spending time
+
+```bash
+curl -sS --max-time 15 -X POST https://ailn.ai/api/demo/search \
+  -H 'Content-Type: application/json' -d '{"query":"x"}'
+```
+
+This returns **403** `{"ok":false,"code":"pre_launch"}` in about two seconds. That structured
+error is the fastest honest signal that the demo route is not open. Prefer it to probing
+`/demo/search`, which is caught by the site's catch-all and can take up to a minute and a half
+to return a teaser page.
+
+**`GET /api/capabilities` advertises `limits: {"demoPerIp": 6}`.** That is the server claiming
+the endpoint exists with a quota, and it does not reflect whether the route is reachable.
+Do not cite it as evidence that the call will work.
+
+**Latency on this host is unstable** — measured round trips during one session ranged from
+about 2 seconds to 87 seconds, with one outright timeout. Allow a generous `--max-time` and
+do not interpret a slow response as a dead endpoint before checking the content type.
+
 What follows documents the intended behaviour, so it can be verified the moment the route is
 allowlisted.
 
