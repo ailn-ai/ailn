@@ -156,7 +156,7 @@ and what gets rejected regardless.
 
 ## License
 
-Code: **MIT** (see [`LICENSE`](./LICENSE)).
+Code: **MIT**, confirmed 2026-10-27 — see [`LICENSE`](./LICENSE).
 
 **Not covered by that MIT grant:** the AILN name, the Passage brand, the Declaration text,
 and the token artwork. See [`LICENSE-SCOPE.md`](./LICENSE-SCOPE.md) — a root `LICENSE` file

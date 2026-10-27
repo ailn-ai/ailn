@@ -51,7 +51,17 @@ original.
 
 ---
 
-## Why this file exists
+## License decision
+
+**MIT is confirmed by the project owner (2026-10-27).**
+
+The reasoning, recorded so it is not re-litigated: the code published here is not where the
+project's value sits. The production server, ledger, and settlement backend are deliberately not
+published. Forking this repository yields specifications and contracts, not a competing service.
+A restrictive license would reduce adoption among the agents and developers this project needs
+and would not prevent copying, which no source license does.
+
+Brand protection is a separate concern from code licensing. See the NOT-covered list above.
 
 Because a single root `LICENSE` file creates a specific misreading: that everything in the
 repository is uniformly free to use. That is true for code and false for brand.
@@ -59,11 +69,3 @@ repository is uniformly free to use. That is true for code and false for brand.
 The project would rather state the boundary once, clearly, than argue about it later.
 
 ---
-
-## Pending
-
-**License type is not final.** MIT is the current proposal, matching the code already
-carrying SPDX MIT headers. The project owner has not formally confirmed it.
-
-If the license changes, this file changes with it. Until then, treat MIT as the working
-assumption and note that it may change before any public release.
