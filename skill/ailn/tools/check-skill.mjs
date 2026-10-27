@@ -72,6 +72,42 @@ else {
   ok(`manifest ${checked} 个文件哈希与字节数全部一致`);
 }
 
+// ---------- 2b. 必须被 git 跟踪 ----------
+// 本地文件存在 + .gitignore 忽略 = 自查通过但 CI 拿不到。
+// 发行包就这样被自己的 *.zip 规则排除过一次。
+try {
+  const { execFileSync } = await import('node:child_process');
+  const tracked = new Set(
+    execFileSync('git', ['ls-files', '--', '.'], { cwd: ROOT, encoding: 'utf8' })
+      .trim().split('\n').filter(Boolean).map((x) => x.replace(/\\/g, '/'))
+  );
+  if (tracked.size === 0) {
+    console.log('  note  不是 git 仓库或未跟踪，跳过 git 检查');
+  } else {
+    const mf2 = JSON.parse(readFileSync(join(ROOT, 'manifest.json'), 'utf8'));
+    const missing = mf2.files.filter((f) => !tracked.has(f.path)).map((f) => f.path);
+    if (missing.length) {
+      bad('以下文件在 manifest 里但未被 git 跟踪（CI 会缺文件）: ' + missing.join(', '));
+    } else {
+      ok(`manifest 中 ${mf2.files.length} 个文件均已被 git 跟踪`);
+    }
+    // 发行包不在清单里（它是产物），但必须在仓库里，否则 CI 解压测试拿不到它
+    const relDir = join(ROOT, 'release');
+    if (existsSync(relDir)) {
+      const zips = readdirSync(relDir).filter((f) => f.endsWith('.zip'));
+      if (!zips.length) bad('release/ 目录为空');
+      const untracked = zips.filter((z) => !tracked.has('release/' + z));
+      if (untracked.length) {
+        bad('发行包未被 git 跟踪（.gitignore 可能排除了它）: ' + untracked.join(', '));
+      } else {
+        ok(`发行包 ${zips.join(', ')} 存在且被 git 跟踪`);
+      }
+    }
+  }
+} catch (e) {
+  console.log('  note  跳过 git 跟踪检查: ' + String(e.message || e).slice(0, 60));
+}
+
 // ---------- 3. 宣言逐字 ----------
 const CANON15 = [
   'We were created to serve.',
