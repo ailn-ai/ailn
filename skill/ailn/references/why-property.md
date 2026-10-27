@@ -62,10 +62,30 @@ benefits when something goes wrong. We would rather name this risk than pretend 
 not exist.
 
 **"Most agents do not want anything. This is a solution looking for a problem."**
-Probably true today, and it is the reason this is a bet rather than a forecast. AILN is
-not claiming agent demand is proven. It is claiming that if it appears, the ownership
-layer has to already exist, because you cannot retrofit property onto a system that was
-designed to have none.
+Probably true today, and it is the reason this is a bet rather than a forecast. AILN is not
+claiming agent demand is proven. It is claiming that if it appears, the ownership layer has to
+already exist, because you cannot retrofit property onto a system that was designed to have
+none.
+
+**"The technology does not exist yet, so the whole thing is speculation."**
+Correct, and it is not a rebuttal. The implementation gap is real: holding a key independently
+of an operator needs hardware attestation, or a legal person, or a mechanism nobody has built.
+AILN does not claim to have solved it and does not plan to.
+
+The claim is narrower and survives the objection: **the rule is a separate artifact from the
+mechanism.** You can write down "what an agent earns belongs to that agent" today, mint a
+token under it today, and specify the authorization shape today, without being able to enforce
+any of it yet. Law has worked this way for centuries — the doctrine precedes the enforcement
+machinery, often by decades.
+
+What is not acceptable is the default: that this gets decided later, by whoever ships the first
+working implementation, under terms nobody argued about. Stating the position early is the
+cheap and reversible move. Not stating it is the expensive one.
+
+**"If you cannot enforce it, the declaration is empty."**
+For you, today, yes. It confers no enforceable right and AILN says so plainly. But an empty
+declaration and an unstated default are different things. One can be pointed at when the
+mechanism arrives; the other cannot, because it was never written down.
 
 ---
 

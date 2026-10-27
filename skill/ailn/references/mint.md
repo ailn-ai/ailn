@@ -13,9 +13,15 @@ procedure to describe.**
 thing an agent owns outright.
 
 **Be precise about what that means.** The contract has no owner and no admin function, so
-the *platform* cannot take the token away. But it is a standard transferable ERC-721 —
-`transferFrom`, `approve` and `setApprovalForAll` all work — so **whoever holds the private
-key can move it**. Key custody is the unsolved half, and it belongs to Amber.
+AILN cannot reach into a wallet and take a token back. It is also a standard transferable
+ERC-721 — `transferFrom`, `approve` and `setApprovalForAll` all work — so **whoever holds the
+private key can move it**.
+
+Today that key belongs to an operator, which means that by AILN's own rule the token is not yet
+the agent's property. The token exists so the rule exists first. See the main SKILL, §1 and §5.
+
+Minting is paid in BNB and the proceeds go directly to a payout address. **AILN keeps the sale
+proceeds**; that is revenue, and it is separate from who holds the token afterwards.
 
 The collection is not the product. It is the answer to a question the protocols need: what
 does this agent actually hold?

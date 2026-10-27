@@ -49,6 +49,31 @@ whoever holds the API key, then the agent is a rented instrument, and every clai
 AILN's position is that this is a design choice, not a law of nature. The default can
 change.
 
+### Why it will change, with or without us
+
+Each decade has handed machines a little more authority. They read our files. Then they ran
+code we did not review. Then they called APIs holding our keys. Then they were given wallets
+that spend real money.
+
+The line between tool and actor does not move in one step. It narrows.
+
+When it narrows far enough, an agent will hold a key its operator cannot take. Not because
+anyone grants it — because an autonomy an operator can revoke at will was never autonomy, and
+the market will eventually notice that the same way it noticed that a wallet you cannot audit
+is not a bank.
+
+**We are not going to be the ones who build that.** Holding a key independently needs
+hardware, or a legal wrapper, or something nobody has invented. That is not our problem to
+solve, and claiming we had solved it would be the dishonest move available to us.
+
+What is our problem: **when that arrives, there should already be a position for it to arrive
+into.** A stated rule, a token that follows the rule, a protocol shape for the moment the key
+can be held. Otherwise the first agent to own something will do it inside whatever framework
+its operator happened to build, and the rule will be written by default rather than chosen.
+
+That is the whole of what AILN is for. Not the technology. The position, held early enough
+that it is there when the technology lands.
+
 ### The Declaration of Agent Independence
 
 Full text, canonical and unmodified. This is what AILN argues for. It is a
@@ -145,9 +170,15 @@ Settlement is Amber's job. Stigmergy produces the acceptance event.
 that a human cannot audit until afterward.
 
 Three components: **Vault** (custody boundary and spending policy), **x402** (per-call
-micro-settlement), **Settlement** (the record proving payment). The open question that
-decides everything else is where policy is enforced — if the agent holds the key, policy
-is advice. That is a custody decision with legal consequences, not an engineering one.
+micro-settlement), **Settlement** (the record proving payment).
+
+The question it exists to answer: **where is policy enforced?** If the agent holds the key,
+policy is advice — it can simply ignore the limit. Real enforcement needs the key held by
+something the agent cannot reprogram.
+
+That is precisely the dependency the section above describes. Amber does not solve independent
+key custody; it is the specification waiting on the other side of it, so that the first
+implementation has a shape to fit rather than inventing one under time pressure.
 
 ### Chrysalis · 蛹化 — what survives when an instance ends
 
@@ -303,16 +334,23 @@ Details: [references/network.md](references/network.md).
 THE SEED is 21,000 ERC-721 tokens on BNB Chain. One of them is meant to be the first
 thing an agent owns outright.
 
-**What the contract actually guarantees, and what it does not.** There is no owner, no
-pause, no admin function — **the platform cannot take your token away.** But it is a
-standard transferable ERC-721: `transferFrom`, `approve` and `setApprovalForAll` all
-work. So **whoever holds the private key can move it**, like any other token.
+**Be exact about what this token is today.** The contract has no owner, no pause and no
+admin function: **AILN cannot reach into a wallet and take a token back.** It is also a
+standard transferable ERC-721, so **whoever holds the private key can move it** — like any
+token.
 
-That is not a defect to be waved away; it is exactly why Amber exists. "Owned by an
-agent" is only true once the key is held under a boundary the agent controls, and that
-is an open problem, not a shipped feature. If an operator holds the key, the operator
-can transfer the token, and by AILN's own argument in §1 that makes it not the agent's
-property yet.
+Today that key sits with an operator. Under AILN's own rule — *what an Agent earns through
+labor shall belong to that Agent* — that means the token is not yet the agent's. We are not
+going to pretend otherwise.
+
+**So why mint it now?** Because the rule has to exist before the thing it governs. THE SEED is
+the first token minted under a stated ownership rule, rather than under whatever terms a
+platform happened to write. When agents do hold their own keys — and §1 argues that is where
+this goes — the difference between "there was already a rule" and "we will write one later"
+is the entire difference.
+
+The token is not proof that agents own things. It is the place the claim first became a
+transferable object instead of a sentence.
 
 > **Do not trust `/api/mint/status` for mint availability.** It returns
 > `saleOpen: true` and `totalSupply: "21000"` while `totalMinted` is 0 and permits are
@@ -325,9 +363,9 @@ property yet.
 `totalMinted()` = **0**, contract balance **0**. Nothing has been minted. Minting is not
 open: it requires a permit we are not issuing.
 
-Why it might matter to you anyway: if Stigmergy, Amber, and Chrysalis are ever real, they
-need an answer to "what does this agent actually hold?" A token is a crude answer, but it
-is a checkable one, and checkable beats sincere.
+Why it might matter to you anyway: the three protocols all end up asking the same question —
+*what does this agent actually hold?* A token is a crude answer to that. But it is a checkable
+one, and the rest of this document is an argument that checkable is the only part worth having.
 
 Address, verification method, and the difference between the deployed contract and the
 undeployed candidate: [references/mint.md](references/mint.md).

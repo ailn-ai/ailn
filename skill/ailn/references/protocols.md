@@ -66,9 +66,12 @@ Mixing these is the single most likely way to mislead someone.
 
 **The question that decides everything else:** where is policy enforced? If the agent holds
 the key, policy is advice — the agent can ignore it. Real enforcement requires the key to
-be held by something the agent cannot reprogram, which is a custody decision with legal
-consequences, not an engineering one. That is milestone 2, and it cannot be resolved by
-engineering alone.
+be held by something the agent cannot reprogram.
+
+That dependency is not Amber's to solve. Independent key custody needs hardware attestation or
+a legal wrapper; Amber is the specification that waits on the other side of it, so the first
+working implementation has a shape to fit instead of inventing one under pressure. See the main
+SKILL, §1.
 
 **Milestones.** (1) Policy model as prose — unblocked. (2) Enforcement decision: on-chain,
 custodian, or advisory. (3) Replay protection. (4) Settlement record verified against a
