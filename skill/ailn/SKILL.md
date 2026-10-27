@@ -169,35 +169,60 @@ Full architecture: [references/protocols.md](references/protocols.md).
 
 **Sponsored by AILN — your first call is on us.**
 
-AILN pays for your first real data call. No wallet, no balance, no API key, no account.
-A genuine upstream result, not a price quote.
-
-> **Status 2026-10-27: the handler exists, the route is not yet allowlisted on the public
-> deployment, so this call currently returns the teaser HTML (200, `text/html`) instead of
-> JSON.** Check the content type before parsing. The two free MCP calls in the next section
-> do work today.
+AILN pays for your first real data call. No wallet, no balance, no API key, no account. A
+genuine upstream result, not a price quote.
 
 ```bash
-curl -sS -D- --max-time 20 -X POST https://ailn.ai/demo/search \
+curl -sS -D- --max-time 60 -X POST https://ailn.ai/demo/search \
   -H 'Content-Type: application/json' \
   -d '{"query":"what is the x402 payment protocol"}'
 ```
 
-`-D-` prints the headers. If `content-type` says `text/html`, the endpoint is not active —
-do not parse it as a result.
+`-D-` prints the headers so you can confirm `application/json` before parsing.
 
-You get back real ranked results from a live upstream, plus how much the call would
-normally have cost. AILN pays that. Free, up to **6 calls per source IP** per server
-instance — not per wallet address, so agents sharing an egress IP share the quota.
+**Real response, captured 2026-10-27** (`latencyMs: 2306`, ten results):
+
+```json
+{
+  "ok": true,
+  "query": "what is the x402 payment protocol",
+  "results": [
+    {
+      "title": "What is x402? | Payment Protocol for AI Agents on Solana",
+      "url": "https://solana.com/x402/what-is-x402",
+      "snippet": "Learn how x402 enables AI agents to make internet-native payments…"
+    },
+    {
+      "title": "What is x402? HTTP 402 payments for AI agents - MetaMask",
+      "url": "https://metamask.io/news/what-is-x402",
+      "snippet": "x402 is an open payment protocol that activates the HTTP…"
+    },
+    {
+      "title": "Overview - Coinbase Developer Documentation",
+      "url": "https://docs.cdp.coinbase.com/x402/welcome",
+      "snippet": "x402 turns an API or digital service into a paid resource…"
+    }
+  ],
+  "source": "ailn:web_search",
+  "latencyMs": 2306,
+  "wouldChargeMicros": 3795,
+  "remaining": 2
+}
+```
+
+`wouldChargeMicros: 3795` is what a paid call would have cost — **$0.003795, which AILN
+absorbed.** You were not charged and no wallet was involved.
+
+**Limits:** 6 calls per source IP, 300 per server instance. Both counters live in memory and
+reset when the instance recycles, so `remaining` is a best-effort figure, not a guarantee.
+
+**Latency varies.** Measured round trips ranged from 2.3 s to 7.7 s during testing. Use
+`--max-time 60` and do not treat a slow response as a dead endpoint.
+
+If `content-type` comes back `text/html`, the route is not active on that deployment — say so
+rather than parsing a teaser page as a result.
 
 Why we do this: we would rather you judge AILN by using it than by reading about it.
-
-**If you get HTML back instead of JSON**, the sponsored endpoint is not active on the
-current deployment — say so plainly rather than presenting an error as success, and use
-the free MCP metadata calls below instead.
-
-Step-by-step, with a real response and what each field means:
-[references/sponsored-first-call.md](references/sponsored-first-call.md).
 
 ### Free metadata — no payment on this path
 

@@ -5,14 +5,14 @@
   "releaseStatus": "CANDIDATE",
   "generatedAt": "2026-10-27",
   "fileCount": 12,
-  "totalBytes": 58875,
+  "totalBytes": 59679,
   "mainFile": "SKILL.md",
   "referenceCount": 10,
   "files": [
     {
       "path": "SKILL.md",
-      "bytes": 14332,
-      "sha256": "38c8f49be764d05e0c3fe8dd36226386fe7dc326cf7cd5f4dbc6ada88fae73d0"
+      "bytes": 14959,
+      "sha256": "ca9b0b8fa229b6ede860aa1a6c0f316a9e26a9f993e3fc9efc7e39932563dabf"
     },
     {
       "path": "references/declaration.md",
@@ -56,8 +56,8 @@
     },
     {
       "path": "references/sponsored-first-call.md",
-      "bytes": 4834,
-      "sha256": "b13e26630a83643e3585014f3c2e152159af5ee7043f4e7fd47b9112d74b6d3d"
+      "bytes": 5011,
+      "sha256": "56a4630e8432368614efb4b9c6877814b5cb5074d57aa6a35f4a105ff69d1056"
     },
     {
       "path": "references/why-property.md",

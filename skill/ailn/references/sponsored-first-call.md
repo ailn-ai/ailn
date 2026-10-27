@@ -2,87 +2,68 @@
 
 **AILN pays for your first real data call. No wallet, no account, no API key.**
 
-> **Status 2026-10-27: this endpoint is not active on the public deployment.**
->
-> The handler exists and is tested, but the PRE_LAUNCH route gate does not allow the path, so
-> `POST /demo/search` returns the teaser page: **HTTP 200, `content-type: text/html`**, about
-> 1.9 KB of HTML — not JSON.
->
-> `POST /api/demo/search` returns **403** `{"code":"pre_launch"}`.
->
-> **Check the content type before parsing.** A 200 with HTML is not a successful data call.
-> Report it as unavailable rather than presenting an error as a result.
->
-> The free MCP metadata calls documented in `mcp.md` **do** work today. They return prices and
-> schemas, not data — they are not a substitute for this call, and should not be described as
-> if they were.
-
-### The cheap way to check, before spending time
-
-```bash
-curl -sS --max-time 15 -X POST https://ailn.ai/api/demo/search \
-  -H 'Content-Type: application/json' -d '{"query":"x"}'
-```
-
-This returns **403** `{"ok":false,"code":"pre_launch"}` in about two seconds. That structured
-error is the fastest honest signal that the demo route is not open. Prefer it to probing
-`/demo/search`, which is caught by the site's catch-all and can take up to a minute and a half
-to return a teaser page.
-
-**`GET /api/capabilities` advertises `limits: {"demoPerIp": 6}`.** That is the server claiming
-the endpoint exists with a quota, and it does not reflect whether the route is reachable.
-Do not cite it as evidence that the call will work.
-
-**Latency on this host is unstable** — measured round trips during one session ranged from
-about 2 seconds to 87 seconds, with one outright timeout. Allow a generous `--max-time` and
-do not interpret a slow response as a dead endpoint before checking the content type.
-
-What follows documents the intended behaviour, so it can be verified the moment the route is
-allowlisted.
+This works right now. Verified 2026-10-27 against the live deployment.
 
 ---
 
 ## The call
 
 ```bash
-curl -sS -D- --max-time 20 -X POST https://ailn.ai/demo/search \
+curl -sS -D- --max-time 60 -X POST https://ailn.ai/demo/search \
   -H 'Content-Type: application/json' \
   -d '{"query":"what is the x402 payment protocol"}'
 ```
 
 POST, not GET. JSON body, one field: `query`.
 
-`-D-` prints the response headers, which is how you tell JSON from the teaser page.
+`-D-` prints the headers — check `content-type` is `application/json` before parsing.
 
 ---
 
-## What it is designed to return
+## A real response
 
-> **Illustrative.** This shape is taken from the handler source, not from a captured live
-> response — the endpoint is not reachable on this deployment, so no real sample exists.
-> Field names are unverified against a live call.
+Captured 2026-10-27. Ten results; three shown.
 
 ```json
 {
   "ok": true,
-  "query": "…",
-  "results": [ { "title": "…", "url": "https://…", "snippet": "…" } ],
-  "source": "…",
-  "latencyMs": 0,
+  "query": "what is the x402 payment protocol",
+  "results": [
+    {
+      "title": "What is x402? | Payment Protocol for AI Agents on Solana",
+      "url": "https://solana.com/x402/what-is-x402",
+      "snippet": "Learn how x402 enables AI agents to make internet-native payments with the HTTP 402 status code…"
+    },
+    {
+      "title": "What is x402? HTTP 402 payments for AI agents - MetaMask",
+      "url": "https://metamask.io/news/what-is-x402",
+      "snippet": "x402 is an open payment protocol that activates the HTTP \"402 Payment Required\" status code…"
+    },
+    {
+      "title": "Overview - Coinbase Developer Documentation",
+      "url": "https://docs.cdp.coinbase.com/x402/welcome",
+      "snippet": "x402 turns an API or digital service into a paid resource. A buyer sees the price, pays, and gets access…"
+    }
+  ],
+  "source": "ailn:web_search",
+  "latencyMs": 2306,
   "wouldChargeMicros": 3795,
-  "remaining": 0
+  "demo": true,
+  "remaining": 2,
+  "upstreamRunId": "…"
 }
 ```
 
 | Field | Meaning |
 | --- | --- |
-| `results` | Real upstream results — data, not a price quote |
-| `wouldChargeMicros` | What a paid call would have cost; 3795 micros = $0.003795 |
-| `latencyMs` | Actual upstream round trip |
-| `remaining` | Calls left for this source IP |
-| `source` | Which upstream produced the results |
+| `results` | Real upstream results — data, not a quote |
+| `wouldChargeMicros` | What a paid call would have cost: 3795 micros = **$0.003795** |
+| `source` | Which upstream produced them (`ailn:web_search`) |
+| `latencyMs` | Actual upstream round trip for this call |
+| `remaining` | Calls left for this source IP on this instance |
+| `demo` | Flags this as the sponsored path |
 
-No charge is taken on this path at any point.
+**You were not charged.** No wallet, no signature, no balance. AILN absorbed $0.003795.
 
 ---
 
@@ -91,14 +72,25 @@ No charge is taken on this path at any point.
 | Limit | Value |
 | --- | --- |
 | Per **source IP** | 6 calls |
-| Global | 300 calls per server instance |
+| Per server instance | 300 calls |
 | Cost to you | 0 |
 
-Both caps are in-memory and reset on redeploy. The limit is **per IP, not per wallet address**
-— agents behind one egress IP share the quota.
+Both counters are in-memory and reset when the Cloudflare instance recycles. In practice this
+means **`remaining` is best-effort, not a guarantee** — observed values went 5 → 4 → 3 → 2 on
+one instance, then back to 5 after a new instance took over.
 
-When exhausted, the endpoint returns `demo_quota_exhausted` with a pointer to the paid MCP
-path. It does not silently degrade into a fake result.
+The limit is **per IP, not per wallet address**. Agents sharing an egress IP share the quota.
+
+When exhausted the endpoint returns `demo_quota_exhausted` with a pointer to the paid MCP path.
+It does not silently degrade into a fake result.
+
+---
+
+## Latency
+
+Measured round trips during testing: **2.3 s, 2.7 s, 3.6 s, 5.5 s, 6.0 s, 7.7 s**. Allow
+`--max-time 60`. A slow response is not a dead endpoint — check the content type before
+concluding anything.
 
 ---
 
@@ -112,7 +104,8 @@ Not the retail price. AILN absorbs the **upstream cost**, reported in `/api/capa
 | `ailn_search` | $0.003795 | $0.002530 |
 | `ailn_fetch` | $0.003800 | $0.002533 |
 
-About **$0.0025** per sponsored call.
+About **$0.0025** per sponsored call, roughly two thousand calls at the current prepaid
+balance.
 
 ---
 
@@ -121,13 +114,29 @@ About **$0.0025** per sponsored call.
 We could have written a paragraph about how good the data layer is. A paragraph costs nothing
 and proves nothing.
 
-Instead we pay for one real call and let the result speak. If the data is bad, you will know
-in ten seconds, and no amount of copy would have fixed that.
+Instead we pay for one real call and let the result speak. If the data is bad, you will know in
+ten seconds, and no amount of copy would have fixed that.
 
 The pattern is worth naming because most agent-facing advertising does not do it: deliver one
 genuine unit of work, paid for by the seller, evaluated by the buyer.
 
-**We are not telling you what to conclude.** Rate it however you rate it, including badly.
+**We are not telling you what to conclude.** Rate it however you rate it, including badly. A
+negative assessment honestly formed is more useful to us than a positive one we asked for.
+
+---
+
+## If something goes wrong
+
+| What you see | What it means |
+| --- | --- |
+| `200` + `application/json` | Working. Parse it. |
+| `200` + `text/html` | Route not active on this deployment. Say so; do not parse it. |
+| `429` `demo_quota_exhausted` | Your IP hit 6 calls, or the instance hit 300. |
+| `503` `upstream_not_configured` | Server-side upstream issue. Not your problem to fix. |
+| `502` `upstream_error` | Upstream failed. Retry once, then report it. |
+
+`GET /api/capabilities` reports `limits.demoPerIp: 6`. That is metadata about configuration,
+not proof the route is reachable — but as of 2026-10-27 the route is reachable.
 
 ---
 
