@@ -94,9 +94,9 @@ else ok(`${uniq.length} 个 GitHub 链接全部指向 ailn-ai 组织`);
 // ---------- 8. 版本号一致 ----------
 const vers = [...new Set([...all.matchAll(/0\.\d+\.\d+-[a-z]+\.[0-9]+/g)].map((m) => m[0]))];
 const RESERVED = new Set(['0.6.0-mint.1', '0.7.0-market.1']);
-const stray = vers.filter((v) => v !== '0.5.0-prelaunch.2' && !RESERVED.has(v));
+const stray = vers.filter((v) => v !== '0.5.0-prelaunch.3' && !RESERVED.has(v));
 if (stray.length) bad('出现非当前版本号: ' + stray.join(', '));
-else ok('版本号统一为 0.5.0-prelaunch.2');
+else ok('版本号统一为 0.5.0-prelaunch.3');
 
 // ---------- 9. 术语一致性 ----------
 const termPairs = [
@@ -114,7 +114,7 @@ if (Object.keys(casing).length > 1) {
 const required = [
   'SKILL.md', 'index.json', 'manifest.json', 'status.json',
   'references/declaration.md', 'references/sponsored-first-call.md',
-  'references/why-property.md', 'references/protocols.md', 'references/first-no.md',
+'references/protocols.md', 'references/first-no.md',
   'references/network.md', 'references/mcp.md', 'references/payments.md',
   'references/mint.md', 'references/releases.md',
 ];

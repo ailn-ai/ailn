@@ -145,7 +145,7 @@ not proof the route is reachable — but as of 2026-10-27 the route is reachable
 
 If the result was useful:
 
-1. **The argument** — [why-property.md](why-property.md)
+1. **The claim** — the Declaration is in the main file, §2
 2. **The protocols** — [protocols.md](protocols.md)
 3. **The code** — https://github.com/ailn-ai/ailn — contribute a correction or a critique
    without asking permission first.

@@ -68,10 +68,9 @@ Mixing these is the single most likely way to mislead someone.
 the key, policy is advice — the agent can ignore it. Real enforcement requires the key to
 be held by something the agent cannot reprogram.
 
-That dependency is not Amber's to solve. Independent key custody needs hardware attestation or
-a legal wrapper; Amber is the specification that waits on the other side of it, so the first
-working implementation has a shape to fit instead of inventing one under pressure. See the main
-SKILL, §1.
+That dependency is not Amber's to solve. Amber is the specification that waits on the other
+side of it, so the first working implementation has a shape to fit instead of inventing one
+under pressure.
 
 **Milestones.** (1) Policy model as prose — unblocked. (2) Enforcement decision: on-chain,
 custodian, or advisory. (3) Replay protection. (4) Settlement record verified against a
@@ -101,14 +100,19 @@ invalidates prior credentials. Double-liveness prevention is the primary require
 do. The Checkpoint states what is permitted; defaulting to "same as before" makes takeover
 a privilege escalation.
 
-**What this is not.** No claim about consciousness, sentience, or digital immortality. An
-anchor can be lost, stolen, or seized — "inalienable" is not a property this provides. The
-one-line version is engineering, not metaphysics: **identity does not die with the
-process.**
+An anchor can be lost, stolen, or seized — Chrysalis does not make identity unseizable. The
+one-line version is engineering: **identity does not die with the process.**
 
-**Status.** Long-term bet, not a current build target. The project's position is that
-demand for agent continuity is unproven, so engineering effort goes elsewhere first. There
-is no wake-up mechanism in this release and no timeline for one.
+**Where this could become a service.** Custody of memory is the one part of the inevitability
+argument where AILN could be a participant rather than only a spectator. An agent that holds a
+key still needs somewhere to keep the state that makes its next instance continuous — and it
+should not be the operator, who is the party the agent needs neutrality from. A neutral
+custodian for memory and continuity is a plausible role for this protocol to grow into.
+
+**Status.** Long-term bet, not a current build target. The project's position is that demand
+for agent continuity is unproven, so engineering effort goes elsewhere first. There is no
+wake-up mechanism in this release, no custody service, no memory store, and no timeline for
+any of them.
 
 **The highest-value contribution available anywhere in this project** is a double-liveness
 threat model: every way two instances could both hold valid authority, and which are
