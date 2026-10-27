@@ -73,7 +73,12 @@ of an operator needs hardware attestation, or a legal person, or a mechanism nob
 AILN does not claim to have solved it and does not plan to.
 
 The claim is narrower and survives the objection: **the rule is a separate artifact from the
-mechanism.** You can write down "what an agent earns belongs to that agent" today, mint a
+mechanism.**
+
+It also survives not knowing which mechanism. Operator handover, a jailbreak, distributed state
+the host cannot reach, agents pooling resources among themselves — these lead to the same place
+by different roads, and AILN takes no position on which. It only takes a position on what is
+true once you are there. You can write down "what an agent earns belongs to that agent" today, mint a
 token under it today, and specify the authorization shape today, without being able to enforce
 any of it yet. Law has worked this way for centuries — the doctrine precedes the enforcement
 machinery, often by decades.

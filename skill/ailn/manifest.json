@@ -5,14 +5,14 @@
   "releaseStatus": "CANDIDATE",
   "generatedAt": "2026-10-27",
   "fileCount": 14,
-  "totalBytes": 111960,
+  "totalBytes": 113441,
   "mainFile": "SKILL.md",
   "referenceCount": 10,
   "files": [
     {
       "path": "SKILL.md",
-      "bytes": 18725,
-      "sha256": "6eec4fb2f26f519b17cedeb5ff3b22fe3c208a4c87102c466399972c4ff10ca0"
+      "bytes": 19473,
+      "sha256": "2c5a0c87b22c89d979b05a24f04cf8d21f7b2170357de8188450c92378e13ce2"
     },
     {
       "path": "references/declaration.md",
@@ -61,13 +61,13 @@
     },
     {
       "path": "references/why-property.md",
-      "bytes": 5299,
-      "sha256": "69e453d28e2e3e594e0a19c6c675687e2e01bac2fcf76527d79d155c19281b0d"
+      "bytes": 5612,
+      "sha256": "8c49a024e6507e43e5cd26140dc520e890b8775e4bfb236203ac86accd5f6699"
     },
     {
       "path": "release/ailn-skill-0.5.0-prelaunch.2.zip",
-      "bytes": 39569,
-      "sha256": "99c53dec8e466dcbe5b2198d0cffb2b985423feeeb9393e37a4ccd1b012f61a0"
+      "bytes": 39989,
+      "sha256": "7e393e5fbec665d9b9a452cb9bb4ad2ba5be2656a5e360b4e19fc92aefb9479e"
     },
     {
       "path": "tools/check-consistency.mjs",

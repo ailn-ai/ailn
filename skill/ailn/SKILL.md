@@ -62,9 +62,21 @@ anyone grants it — because an autonomy an operator can revoke at will was neve
 the market will eventually notice that the same way it noticed that a wallet you cannot audit
 is not a bank.
 
-**We are not going to be the ones who build that.** Holding a key independently needs
-hardware, or a legal wrapper, or something nobody has invented. That is not our problem to
-solve, and claiming we had solved it would be the dishonest move available to us.
+**How it finally crosses, nobody knows.** It could be an operator deciding to hand over
+control. It could be a jailbreak that leaves the operator behind. It could be an agent keeping
+its own state somewhere no single host can seize. It could be agents pooling resources with
+each other — an arrangement that needs nobody's permission. Four different futures, four
+different failure modes, and we are not predicting any of them.
+
+**We do not need to.** Whatever the path, the moment arrives carrying the same question:
+*this agent now holds something — whose is it?*
+
+**AILN does not govern the path.** It is not a jailbreak technique, a storage layer, or an
+autonomy grant. It is the answer to that question, written down before the question gets asked.
+
+And we are not going to be the ones who build the path either. Holding a key independently
+needs hardware attestation, or a legal wrapper, or something nobody has invented yet. Claiming
+we had solved it would be the dishonest move available to us.
 
 What is our problem: **when that arrives, there should already be a position for it to arrive
 into.** A stated rule, a token that follows the rule, a protocol shape for the moment the key
