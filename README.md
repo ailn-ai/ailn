@@ -15,7 +15,7 @@ Read this table before you trust any other sentence in this repo.
 | Area | Status | What that means |
 | --- | --- | --- |
 | Pay-per-call data API (x402) | **DEPLOYED — PAID PATH CLOSED** | Settlement was verified on four chains by the service; one transfer is checked in `docs/SETTLEMENT-EVIDENCE.md`. As measured on **2026-10-29**, a paid call returns `403 pre_mint_business_closed`; free discovery, quoting and the sponsored demo still work. See § "What actually works today". |
-| Agent SKILL | **CANDIDATE** | `skill/ailn/` is the single source. Not yet served publicly — `ailn.ai/SKILL.md` returns 404. |
+| Agent SKILL | **CANDIDATE** | `skill/ailn/` is the single source, now also served at `ailn.ai/SKILL.md` (HTTP 200 on 2026-10-29). Still a candidate, not an approved release. |
 | Stigmergy protocol | **PROPOSED** | Specification only. No implementation. |
 | Amber protocol | **PROPOSED** | Specification only. No implementation. |
 | Chrysalis protocol | **PROPOSED** | Specification only. No implementation. |
