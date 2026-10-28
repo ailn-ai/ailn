@@ -67,7 +67,7 @@ Earlier revisions of this file listed it as a payment chain — that was wrong a
 
 | Call | Result |
 |---|---|
-| `tools/list` | 200, three tools |
+| `tools/list` | 200, six tools |
 | `tools/call` → free `ailn_quote` | 200, real quote returned |
 | `tools/call` → paid `ailn_run` | **403 `pre_mint_business_closed`** |
 | `POST /demo/search` (sponsored) | 200, real results, `chargedMicros: 0` |

@@ -8,6 +8,7 @@ the README disagree on a field, **this file wins** — it is copied from the liv
 | Tool | Pricing | Price to caller | Upstream cost | Callable now |
 |---|---|---|---|---|
 | `ailn_discover` | free | — | — | yes |
+| `ailn_inspect` | free | — | — | yes |
 | `ailn_quote` | free | — | — | yes |
 | `ailn_search` | per-result x10 (default) | $0.003795 | 2,530 micro-USD | paid path closed |
 | `ailn_fetch` | per call | $0.003800 | 2,533 micro-USD | paid path closed |

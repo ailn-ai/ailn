@@ -15,7 +15,7 @@ One row per directory under `third_party/`. Do not add code without a row.
 2. Every directory keeps its upstream `LICENSE` file.
 3. GPL / AGPL are not accepted.
 4. Row count must equal directory count.
-5. Vendored code is **not** wired into any build, test or workflow here. It is a reference copy.
+5. Vendored code is not wired into any build, test or workflow. One reference file imports it on purpose: `reserve/eip-712/reference.mjs` uses this `@noble/hashes` copy instead of a hand-rolled permutation.
 
 ## Why these four
 
