@@ -6,6 +6,7 @@
 | Standard | EIP-712 typed-data signing |
 | Maturity | Standardized |
 | Upstream / License | https://eips.ethereum.org/EIPS/eip-712 — see upstream for license terms |
+| Vendored | `third_party/noble-hashes/` (keccak-256) |
 | Status | `verified` (run-once-2026-10-29) |
 | Verified scope | keccak-256 against three published vectors; EIP-712 digest assembled from it, not cross-checked against a third-party signer |
 | Main text | 5.2 |

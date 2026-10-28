@@ -2,11 +2,23 @@
 
 One row per directory under `third_party/`. Do not add code without a row.
 
-| Name | Version / commit | License | Upstream URL |
-|---|---|---|---|
-| _(example — replace)_ | `v1.2.3` / `abc1234` | MIT | https://example.com/repo |
+| Directory | Package | Version | License | Upstream |
+|---|---|---|---|---|
+| `noble-hashes/` | @noble/hashes | 2.4.0 | MIT | https://github.com/paulmillr/noble-hashes |
+| `noble-post-quantum/` | @noble/post-quantum | 0.7.1 | MIT | https://github.com/paulmillr/noble-post-quantum |
+| `hpke-js/` | hpke-js | 1.8.0 | MIT | https://github.com/dajiaji/hpke-js |
+| `multiformats/` | multiformats | 14.0.5 | Apache-2.0 OR MIT | https://github.com/multiformats/js-multiformats |
 
-Rules
-1. Keep the upstream LICENSE file and copyright headers verbatim. Do not rename files or directories.
-2. GPL / AGPL / LGPL (static link) are not accepted.
-3. One row per vendored directory; row count must equal directory count.
+## Rules
+
+1. Files are copied verbatim from the published package. Nothing is renamed, no copyright header is removed.
+2. Every directory keeps its upstream `LICENSE` file.
+3. GPL / AGPL are not accepted.
+4. Row count must equal directory count.
+5. Vendored code is **not** wired into any build, test or workflow here. It is a reference copy.
+
+## Why these four
+
+They are the smallest upstreams that cover the most entries in `reserve/`: hashing (keccak, sha2),
+post-quantum signatures and KEM, HPKE, and content addressing. Together they back ten of the
+twenty-nine entries with real, auditable library code instead of a description.

@@ -6,6 +6,7 @@
 | Standard | Merkle proofs; accumulators |
 | Maturity | Established |
 | Upstream / License | no single upstream — see upstream for license terms |
+| Vendored | `third_party/noble-hashes/` (sha2-256) |
 | Status | `verified` (run-once-2026-10-29) |
 | Main text | 7.2 |
 

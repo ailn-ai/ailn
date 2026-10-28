@@ -6,6 +6,7 @@
 | Standard | HPKE, RFC 9180 |
 | Maturity | Standardized |
 | Upstream / License | https://www.rfc-editor.org/rfc/rfc9180 — see upstream for license terms |
+| Vendored | `third_party/hpke-js/` (RFC 9180) |
 | Status | `reserve` |
 | Main text | 7.2 |
 

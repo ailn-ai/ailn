@@ -6,6 +6,7 @@
 | Standard | Transparency-log semantics |
 | Maturity | Ecosystem-mature |
 | Upstream / License | https://www.rfc-editor.org/rfc/rfc9162 — see upstream for license terms |
+| Vendored | `third_party/noble-hashes/` (sha2-256) |
 | Status | `verified` (run-once-2026-10-29) |
 | Verified scope | inclusion proofs + append-only prefix growth (RFC 6962 hashing); consistency proofs not implemented |
 | Main text | 5.5, 11.1 |

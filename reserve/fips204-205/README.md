@@ -6,6 +6,7 @@
 | Standard | FIPS 204, ML-DSA; FIPS 205, SLH-DSA |
 | Maturity | Standardized |
 | Upstream / License | https://csrc.nist.gov/pubs/fips/204/final ; https://csrc.nist.gov/pubs/fips/205/final — see upstream for license terms |
+| Vendored | `third_party/noble-post-quantum/` (ml-dsa, slh-dsa) |
 | Status | `reserve` |
 | Main text | 2.2, 9.2 |
 

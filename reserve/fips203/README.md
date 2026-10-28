@@ -6,6 +6,7 @@
 | Standard | FIPS 203, ML-KEM |
 | Maturity | Standardized |
 | Upstream / License | https://csrc.nist.gov/pubs/fips/203/final — see upstream for license terms |
+| Vendored | `third_party/noble-post-quantum/` (ml-kem) |
 | Status | `reserve` |
 | Main text | 9.4 |
 

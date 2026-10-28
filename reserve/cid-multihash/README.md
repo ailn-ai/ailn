@@ -6,6 +6,7 @@
 | Standard | CID / multihash; hash chains |
 | Maturity | Standardized |
 | Upstream / License | https://github.com/multiformats/cid ; https://github.com/multiformats/multihash — see upstream for license terms |
+| Vendored | `third_party/multiformats/` (CID, multihash) |
 | Status | `verified` (run-once-2026-10-29) |
 | Main text | 7.1 |
 
