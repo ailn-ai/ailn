@@ -73,6 +73,7 @@ Earlier revisions of this file listed it as a payment chain — that was wrong a
 | `POST /demo/search` (sponsored) | 200, real results, `chargedMicros: 0` |
 
 Chain, asset and state facts are maintained in [`skill/ailn/status.json`](./skill/ailn/status.json).
+Field-level contract — tools, prices, upstream cost, networks, error codes — is not described here; it is copied from the live endpoint into [`docs/API-CONTRACT.md`](./docs/API-CONTRACT.md).
 This README points there rather than restating them.
 
 EIP-712 domain parameters were verified against each token's on-chain
