@@ -1,0 +1,2 @@
+# Keep LF in the tree so hash checks survive a Windows clone.
+* text=auto eol=lf

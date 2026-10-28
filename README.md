@@ -206,6 +206,6 @@ The reserve list maps 1:1 to the standards in AILN's technical foundations appen
 
 ### What `verified` means here
 
-`verified` means exactly one thing: that entry has a `reference.mjs` which ran in the dated run
+`verified` means exactly one thing: the entry is covered by a committed run — either a `reference.mjs` under `reserve/<slug>/` or a test under `conformance/` — with the raw output next to it
 under `conformance/`, and the raw output is committed next to it. It does **not** mean the standard
 is implemented in production, audited, or complete. Everything else stays `reserve`.

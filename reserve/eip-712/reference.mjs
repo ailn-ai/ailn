@@ -62,6 +62,7 @@ console.log('keccak256 matches 3 published vectors:', ok);
 if (!ok) process.exit(1);
 
 // EIP-712: digest = keccak256(0x1901 || domainSeparator || structHash)
+// 0x1111... below is a placeholder address for this example; it is not an account and holds nothing.
 const word = (n) => Buffer.from(BigInt(n).toString(16).padStart(64, '0'), 'hex');
 const addr = (a) => Buffer.from(a.replace(/^0x/, '').padStart(64, '0'), 'hex');
 const typeHash = keccak256('Payment(address to,uint256 amount)');

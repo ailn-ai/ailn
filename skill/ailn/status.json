@@ -5,7 +5,9 @@
   "services": {
     "paidDataApi": {
       "state": "LIVE",
-      "note": "x402 settlement verified on Base, X Layer, Arc, Arbitrum. BSC is NOT accepted — its USDC/USDT lack EIP-3009."
+      "note": "Deployed; settlement verified on Base, X Layer, Arc, Arbitrum. BSC is NOT accepted — its USDC/USDT lack EIP-3009.",
+      "paidPath": "CLOSED",
+      "paidPathNote": "A paid call currently returns 403 pre_mint_business_closed (measured 2026-10-29). Free discovery and quoting work; the sponsored demo works."
     },
     "sponsoredFirstCall": {
       "state": "LIVE",
