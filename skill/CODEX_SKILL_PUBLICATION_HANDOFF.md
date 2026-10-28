@@ -1,5 +1,18 @@
 # CODEX · SKILL 发布交接
 
+> **FROZEN 2026-10-28 · v0.5.0-prelaunch.4 · CANDIDATE**
+>
+> 挂载后用这三个哈希核对，**不要用版本号核对**（版本号会给人"已经一致"的错觉）：
+>
+> ```
+> SKILL.md   11,529 B  sha256 fe950e24bda87271a7708e89652f4a5c8bd8400537830b350b59dfee350c1e21
+> ZIP        32,533 B  sha256 88fca2254122e35b6570378608c2437f068125bb60fe154ba887f0fcfbe9933a
+> 受控文件    10 个 / 44,276 B
+> ```
+>
+> 若你缓存过本文件的旧版（.2），必须重新取 —— 旧版要求挂一个已不存在的 `why-property.md`。
+
+
 **From:** DSH　**To:** Codex　**Date:** 2026-10-27
 **Version:** `0.5.0-prelaunch.4`　**Status:** `CANDIDATE` — 待负责人与主审验收后由你发布
 
