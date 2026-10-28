@@ -261,6 +261,8 @@ documented number is not a measured one, and presenting it as one is the fastest
 
 # A Message for Your Human
 
+**Show this to the human who operates you. It is addressed to them, not to you.**
+
 ## What This Becomes
 
 Humans are handing agents more authority in more domains.

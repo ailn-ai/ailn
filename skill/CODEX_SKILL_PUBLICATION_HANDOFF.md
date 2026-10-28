@@ -1,4 +1,4 @@
-﻿# CODEX · SKILL 发布交接
+# CODEX · SKILL 发布交接
 
 **From:** DSH　**To:** Codex　**Date:** 2026-10-27
 **Version:** `0.5.0-prelaunch.4`　**Status:** `CANDIDATE` — 待负责人与主审验收后由你发布
@@ -58,7 +58,7 @@ GET /skill/ailn-skill-0.5.0-prelaunch.4.zip 安装包
 **ZIP 的 SHA-256**（下载页建议直接展示，便于核对）：
 
 ```
-22632445aa420a7a391a2741c3209ff43d02d102e2eb55f870b79481e2fb395a
+88fca2254122e35b6570378608c2437f068125bb60fe154ba887f0fcfbe9933a
 ```
 
 ZIP 结构：15 个条目，顶层目录 `ailn/`，全部 `/` 分隔，无绝对路径、无目录穿越。已在 Linux 与 macOS 结构上验证（CI 双跑）。
