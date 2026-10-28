@@ -14,12 +14,12 @@ Read this table before you trust any other sentence in this repo.
 
 | Area | Status | What that means |
 | --- | --- | --- |
-| Pay-per-call data API (x402) | **LIVE** | Real on-chain settlement on four chains. Real payments have cleared. |
+| Pay-per-call data API (x402) | **DEPLOYED — PAID PATH CLOSED** | Settlement was verified on four chains. As measured on **2026-10-29**, a paid call returns `403 pre_mint_business_closed`; free discovery, quoting and the sponsored demo still work. See § "What actually works today". |
 | Agent SKILL | **CANDIDATE** | `skill/ailn/` is the single source. Not yet served publicly — `ailn.ai/SKILL.md` returns 404. |
 | Stigmergy protocol | **PROPOSED** | Specification only. No implementation. |
 | Amber protocol | **PROPOSED** | Specification only. No implementation. |
 | Chrysalis protocol | **PROPOSED** | Specification only. No implementation. |
-| Passage NFT (V3) | **LIVE, minting closed** | Deployed on BNB Chain. `totalMinted = 0`. No public way to mint. |
+| Passage NFT (V3) | **DEPLOYED, NO MINTING** | Contract is on BNB Chain. `totalMinted = 0` and permits are closed (503), so "live" would overstate it. |
 | Passage NFT (V4.1) | **CANDIDATE** | Local source only. **Never deployed.** See [passage repo]. |
 | Paid contributions | **PLANNED** | No bounty program is live. No task is open for claiming. |
 
@@ -31,12 +31,18 @@ that document is wrong and should be fixed.
 
 ## What actually works today
 
-One thing, fully: **an AI agent can buy data per call, paying in stablecoin, without an
-account or an API key.**
+Three things work against the live service, measured on 2026-10-29: **free discovery**, **free
+quoting**, and **one sponsored search call** per visitor. None need an account or an API key.
+
+The **paid** per-call path is built, and per `skill/ailn/status.json` its settlement was verified on
+four chains — but it is currently **closed by the pre-mint gate** (`403 pre_mint_business_closed`).
+It opens at launch. Do not build against it yet.
+
+When the paid path is open, the flow is:
 
 ```
 agent  →  GET /mcp           discovery, current price, payment options
-       →  POST call          server replies 402 with exact price
+       →  POST call          server returns the exact price in a payment challenge
        →  sign authorization offline
        →  retry with proof   server verifies settlement, returns data
 ```
@@ -44,14 +50,30 @@ agent  →  GET /mcp           discovery, current price, payment options
 Settlement is on-chain. A signature that verifies against an address with no funds is not
 sufficient — the server checks settlement, not intent.
 
-Four chains, two settlement standards, because the tokens differ in what they implement:
+Four per-call settlement chains. All four are USDC over EIP-3009 — no approval step, no Permit2:
 
 | Chain | Asset | Standard | Why |
 | --- | --- | --- | --- |
 | Base | USDC | EIP-3009 | Native Circle USDC, no approval step |
 | Arc | USDC | EIP-3009 | USDC is also the gas token here |
 | X Layer | USDC / USDT | EIP-3009 | |
-| BNB Smart Chain | USDC / USDT | Permit2 | These tokens do not implement EIP-3009 |
+| Arbitrum | USDC | EIP-3009 | |
+
+**BNB Smart Chain is not an x402 settlement chain.** Its USDC and USDT do not implement
+EIP-3009, so a signed authorization cannot settle there; BNB is used only for balance top-up.
+Earlier revisions of this file listed it as a payment chain — that was wrong and is corrected here.
+
+**Measured against the live service on 2026-10-29** (`POST https://ailn.ai/mcp`):
+
+| Call | Result |
+|---|---|
+| `tools/list` | 200, three tools |
+| `tools/call` → free `ailn_quote` | 200, real quote returned |
+| `tools/call` → paid `ailn_run` | **403 `pre_mint_business_closed`** |
+| `POST /demo/search` (sponsored) | 200, real results, `chargedMicros: 0` |
+
+Chain, asset and state facts are maintained in [`skill/ailn/status.json`](./skill/ailn/status.json).
+This README points there rather than restating them.
 
 EIP-712 domain parameters were verified against each token's on-chain
 `DOMAIN_SEPARATOR()`, not copied from documentation. The four tokens differ in both
@@ -180,3 +202,9 @@ should not be read as releasing the brand.
 > `reserve/` 与 `third_party/` 下的内容为 AILN 的技术储备与选型参考。除标注 `verified` 的条目外，均未在 AILN 生产中运行，也未完成接入；完整实现不在本仓库发布。
 
 The reserve list maps 1:1 to the standards in AILN's technical foundations appendix: see [`reserve/INDEX.md`](reserve/INDEX.md). Maturity labels are quoted, not claims of implementation.
+
+### What `verified` means here
+
+`verified` means exactly one thing: that entry has a `reference.mjs` which ran in the dated run
+under `conformance/`, and the raw output is committed next to it. It does **not** mean the standard
+is implemented in production, audited, or complete. Everything else stays `reserve`.
