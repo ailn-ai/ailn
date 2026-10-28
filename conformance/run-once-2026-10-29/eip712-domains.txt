@@ -1,0 +1,7 @@
+run: 2026-10-29 01:42 (Asia/Shanghai)
+node: v24.17.0 / Microsoft Windows 11 家庭版
+commands:
+  node conformance/run-once-2026-10-29/run-all.mjs
+  node conformance/run-once-2026-10-29/run-reserve.mjs
+
+keccak256 (vendored noble-hashes) matches 3 published vectors: true ok    Base DOMAIN_SEPARATOR recomputed from components ok    Arbitrum DOMAIN_SEPARATOR recomputed from components ok    X Layer DOMAIN_SEPARATOR recomputed from components  3/3 on-chain domain separators reproduced
