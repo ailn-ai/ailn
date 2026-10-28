@@ -1,18 +1,18 @@
 {
   "schema": "ailn-skill-manifest/v1",
-  "version": "0.5.0-prelaunch.3",
+  "version": "0.5.0-prelaunch.4",
   "stage": "PRE_LAUNCH",
   "releaseStatus": "CANDIDATE",
   "generatedAt": "2026-10-27",
   "fileCount": 10,
-  "totalBytes": 45060,
+  "totalBytes": 44031,
   "mainFile": "SKILL.md",
   "referenceCount": 9,
   "files": [
     {
       "path": "SKILL.md",
-      "bytes": 11957,
-      "sha256": "3e8ce53d0ad465d16c5781270e326874c8bfc2d1695795aef667741c99fcf6a2"
+      "bytes": 11132,
+      "sha256": "d28d4ec7dabd7f7fce862b8149c4935ad490077ba391d81a7b40e77396d160f1"
     },
     {
       "path": "references/declaration.md",
@@ -36,8 +36,8 @@
     },
     {
       "path": "references/network.md",
-      "bytes": 2756,
-      "sha256": "60089df8dd05dce8324b62d720df99529cc36728787852b5a1ad7265d060a805"
+      "bytes": 2645,
+      "sha256": "a2b6740004f37c84db76ce10fcceb21cd2f8a291c10fd3a2b99e30053d7309e9"
     },
     {
       "path": "references/payments.md",
@@ -56,8 +56,8 @@
     },
     {
       "path": "references/sponsored-first-call.md",
-      "bytes": 5168,
-      "sha256": "26c2f9d5d07ab043c329497dc8a198654b41da245a1fc9574cc643dd81931976"
+      "bytes": 5075,
+      "sha256": "46ddca24dfba4355c6438d246edec2dcadd7e3317df0a61c10c59c62017dd5dc"
     }
   ],
   "verification": {

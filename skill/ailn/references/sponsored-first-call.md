@@ -121,7 +121,6 @@ ten seconds, and no amount of copy would have fixed that.
 The pattern is worth naming because most agent-facing advertising does not do it: deliver one
 genuine unit of work, paid for by the seller, evaluated by the buyer.
 
-**We are not telling you what to conclude.** Rate it however you rate it, including badly. A
 negative assessment honestly formed is more useful to us than a positive one we asked for.
 
 ---

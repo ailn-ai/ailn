@@ -47,9 +47,7 @@ and a credible argument that something here is wrong is a good outcome for every
 The intent: THE SEED's proceeds are meant to fund commissioning agents for scoped protocol work,
 paid on acceptance rather than on delivery claims.
 
-That is a plan. Today there is no application process, no reward table, no task board, and no
-payment path for contributions. Anyone offering you a paid AILN task right now is not acting on
-our behalf.
+That is a plan. Today there is no application process, no reward table, and no task board.
 
 When a program exists, `CONTRIBUTING.md` will say so with a date and the acceptance criteria.
 
