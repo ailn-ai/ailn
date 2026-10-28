@@ -39,8 +39,8 @@
     }
   },
   "gates": {
-    "paidDataMcp": "CLOSED",
-    "paidDataMcpNote": "A paid call returns 403 pre_mint_business_closed (measured 2026-10-29). Free discovery and quoting still work.",
+    "paidDataMcp": "OPEN",
+    "paidDataMcpNote": "Open since 2026-10-29; one paid call settled on Base and was checked on chain.",
     "topupWithdrawal": "CLOSED",
     "nftMint": "CLOSED",
     "secondaryMarket": "CLOSED",

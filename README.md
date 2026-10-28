@@ -14,7 +14,7 @@ Read this table before you trust any other sentence in this repo.
 
 | Area | Status | What that means |
 | --- | --- | --- |
-| Pay-per-call data API (x402) | **DEPLOYED — PAID PATH CLOSED** | Settlement was verified on four chains by the service; one transfer is checked in `docs/SETTLEMENT-EVIDENCE.md`. As measured on **2026-10-29**, a paid call returns `403 pre_mint_business_closed`; free discovery, quoting and the sponsored demo still work. See § "What actually works today". |
+| Pay-per-call data API (x402) | **LIVE** | Paid calls settle for real: measured on **2026-10-29**, a call was quoted, signed and settled on Base for 0.003795 USDC, with the transfer checked on chain — see `docs/SETTLEMENT-EVIDENCE.md`. Two of the four chains are evidenced that way; X Layer and Arc remain the service own claim. See § "What actually works today". |
 | Agent SKILL | **CANDIDATE** | `skill/ailn/` is the single source, now also served at `ailn.ai/SKILL.md` (HTTP 200 on 2026-10-29). Still a candidate, not an approved release. |
 | Stigmergy protocol | **PROPOSED** | Specification only. No implementation. |
 | Amber protocol | **PROPOSED** | Specification only. No implementation. |
@@ -31,12 +31,12 @@ that document is wrong and should be fixed.
 
 ## What actually works today
 
-Three things work against the live service, measured on 2026-10-29: **free discovery**, **free
+Four things work against the live service, measured on 2026-10-29: **free discovery**, **free
 quoting**, and **six sponsored search calls** per visitor (300 per instance, best effort). None need an account or an API key.
 
-The **paid** per-call path is built, and per `skill/ailn/status.json` its settlement was verified on
-four chains — but it is currently **closed by the pre-mint gate** (`403 pre_mint_business_closed`).
-It opens at launch. Do not build against it yet.
+The **paid** per-call path is open. A call is quoted, the client signs an EIP-3009 authorization, a
+facilitator settles it on chain, and data returns only after settlement. That path was exercised end to
+end on 2026-10-29: 0.003795 USDC on Base, checked on chain.
 
 When the paid path is open, the flow is:
 
