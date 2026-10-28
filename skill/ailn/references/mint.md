@@ -158,8 +158,8 @@ no valid permit to obtain, and any attempt reverts and burns gas.
 ## Technical material
 
 The full operator documentation — permit digest structure, calldata layout, the complete
-revert table — is retained in the development archive at `_handoff/skill-v0.4/references/mint.md`
-in the internal workspace. It is **not published**, and deliberately not in this package: a
+revert table — is retained in an internal development archive. It is **not published**, and
+deliberately not in this package: a
 complete how-to for a blocked action invites attempts that cannot succeed.
 
 It joins this package in the `0.6.0-mint.1` release, when minting actually opens.

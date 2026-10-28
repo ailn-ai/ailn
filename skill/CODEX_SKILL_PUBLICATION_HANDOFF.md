@@ -1,7 +1,7 @@
 # CODEX · SKILL 发布交接
 
 **From:** DSH　**To:** Codex　**Date:** 2026-10-27
-**Version:** `0.5.0-prelaunch.2`　**Status:** `CANDIDATE` — 待负责人与主审验收后由你发布
+**Version:** `0.5.0-prelaunch.4`　**Status:** `CANDIDATE` — 待负责人与主审验收后由你发布
 
 ---
 
@@ -26,21 +26,20 @@
 GET /SKILL.md
 ```
 
-### 1.2 十个 references（相对引用可达性是一项发布闸门）
+### 1.2 九个 references（相对引用可达性是一项发布闸门）
 
-SKILL.md 内部用的是相对链接 `references/xxx.md`。文件挂在 `/SKILL.md` 时，浏览器会把它们解析到根路径，所以**这十个路径必须同时存在**：
+SKILL.md 内部用的是相对链接 `references/xxx.md`。文件挂在 `/SKILL.md` 时，浏览器会把它们解析到根路径，所以**这九个路径必须同时存在**：
 
 ```
 GET /references/declaration.md
-GET /references/sponsored-first-call.md
-GET /references/why-property.md
-GET /references/protocols.md
 GET /references/first-no.md
-GET /references/network.md
 GET /references/mcp.md
-GET /references/payments.md
 GET /references/mint.md
+GET /references/network.md
+GET /references/payments.md
+GET /references/protocols.md
 GET /references/releases.md
+GET /references/sponsored-first-call.md
 ```
 
 > **替代方案（更整洁，二选一）**：把整包挂在 `/skill/` 下——
@@ -53,13 +52,13 @@ GET /references/releases.md
 GET /skill/index.json                       当前版本、阶段、入口、五道门
 GET /skill/manifest.json                    逐文件 SHA256 与字节数
 GET /skill/status.json                      实时服务开关
-GET /skill/ailn-skill-0.5.0-prelaunch.2.zip 安装包
+GET /skill/ailn-skill-0.5.0-prelaunch.4.zip 安装包
 ```
 
 **ZIP 的 SHA-256**（下载页建议直接展示，便于核对）：
 
 ```
-42f13fa2c1e32a2ebdd291d1229c484e1590c2ebac1c2bb80b06d3a98b4c2513
+2b383c22aed3b6bf6f9e428cce33d8fd86bf9ff05ff6e48d64e697a04d0ac21d
 ```
 
 ZIP 结构：15 个条目，顶层目录 `ailn/`，全部 `/` 分隔，无绝对路径、无目录穿越。已在 Linux 与 macOS 结构上验证（CI 双跑）。
@@ -73,7 +72,7 @@ ZIP 结构：15 个条目，顶层目录 `ailn/`，全部 `/` 分隔，无绝对
 | `/SKILL.md` | `text/markdown; charset=utf-8` | **不要用 `text/plain`**——Agent 与浏览器都需要知道这是 Markdown |
 | 其余 `*.md` | `text/markdown; charset=utf-8` | 同上 |
 | `index.json` / `manifest.json` / `status.json` | `application/json; charset=utf-8` | 不要带 `charset` 以外的多余参数 |
-| `*.zip` | `application/zip` | 同时给 `Content-Disposition: attachment; filename="ailn-skill-0.5.0-prelaunch.2.zip"` |
+| `*.zip` | `application/zip` | 同时给 `Content-Disposition: attachment; filename="ailn-skill-0.5.0-prelaunch.4.zip"` |
 
 ### 缓存
 

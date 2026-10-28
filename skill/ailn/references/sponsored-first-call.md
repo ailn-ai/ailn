@@ -9,7 +9,7 @@ This works right now. Verified 2026-10-27 against the live deployment.
 ## The call
 
 ```bash
-curl -sS -D- --max-time 60 -X POST https://ailn.ai/demo/search \
+curl -sS -D- --max-time 120 -X POST https://ailn.ai/demo/search \
   -H 'Content-Type: application/json' \
   -d '{"query":"what is the x402 payment protocol"}'
 ```
@@ -121,7 +121,6 @@ ten seconds, and no amount of copy would have fixed that.
 The pattern is worth naming because most agent-facing advertising does not do it: deliver one
 genuine unit of work, paid for by the seller, evaluated by the buyer.
 
-negative assessment honestly formed is more useful to us than a positive one we asked for.
 
 ---
 

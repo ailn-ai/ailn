@@ -5,7 +5,7 @@
   "releaseStatus": "CANDIDATE",
   "generatedAt": "2026-10-27",
   "fileCount": 10,
-  "totalBytes": 44345,
+  "totalBytes": 44193,
   "mainFile": "SKILL.md",
   "referenceCount": 9,
   "files": [
@@ -31,8 +31,8 @@
     },
     {
       "path": "references/mint.md",
-      "bytes": 6421,
-      "sha256": "5e6b07b8e401997ac1804aa870d180eb6081bea2257d4e935bf75e853d498a18"
+      "bytes": 6359,
+      "sha256": "f91597d8894a51cac785ebb449a949e61fcbccc15711145fcfdfe07fb457ec6b"
     },
     {
       "path": "references/network.md",
@@ -56,8 +56,8 @@
     },
     {
       "path": "references/sponsored-first-call.md",
-      "bytes": 5075,
-      "sha256": "46ddca24dfba4355c6438d246edec2dcadd7e3317df0a61c10c59c62017dd5dc"
+      "bytes": 4985,
+      "sha256": "0a7f0fa9f19cd9d085016a1ffd6d4082c5efda9648d00249960eab3027fdbb70"
     }
   ],
   "verification": {
