@@ -14,7 +14,7 @@ import { join, dirname, resolve, relative, extname } from 'node:path';
 import { createHash } from 'node:crypto';
 
 const ROOT = process.argv[2];
-if (!ROOT || !existsSync(ROOT)) { console.error('用法: node check-skill.mjs <dir>'); process.exit(1); }
+if (!ROOT || !existsSync(ROOT)) { console.error('usage: node check-skill.mjs <dir>'); process.exit(1); }
 
 let fail = 0;
 const bad = (m) => { console.error('  FAIL ' + m); fail += 1; };
@@ -42,24 +42,24 @@ for (const f of mds) {
     const clean = target.split('#')[0];
     if (!clean) continue;
     links += 1;
-    if (!existsSync(resolve(dirname(f), clean))) bad(`${relative(ROOT, f)} -> 断链: ${target}`);
+    if (!existsSync(resolve(dirname(f), clean))) bad(`${relative(ROOT, f)} -> broken link: ${target}`);
   }
 }
-ok(`${mds.length} 个 md，${links} 条相对链接全部可解析`);
+ok(`${mds.length} md files; all ${links} relative links resolve`);
 
 // ---------- 2. manifest 哈希 ----------
 const mfPath = join(ROOT, 'manifest.json');
-if (!existsSync(mfPath)) bad('manifest.json 缺失');
+if (!existsSync(mfPath)) bad('manifest.json missing');
 else {
   const mf = JSON.parse(readFileSync(mfPath, 'utf8'));
   let checked = 0;
   for (const ent of mf.files) {
     const p = join(ROOT, ent.path);
-    if (!existsSync(p)) { bad(`manifest 声明了不存在的文件: ${ent.path}`); continue; }
+    if (!existsSync(p)) { bad(`manifest declares a file that does not exist: ${ent.path}`); continue; }
     const h = createHash('sha256').update(readFileSync(p)).digest('hex');
     checked += 1;
-    if (h !== ent.sha256) bad(`哈希不一致: ${ent.path}（清单 ${ent.sha256.slice(0,12)}… 实际 ${h.slice(0,12)}…）`);
-    if (statSync(p).size !== ent.bytes) bad(`字节数不一致: ${ent.path}`);
+    if (h !== ent.sha256) bad(`hash mismatch: ${ent.path} (manifest ${ent.sha256.slice(0,12)} vs actual ${h.slice(0,12)})`);
+    if (statSync(p).size !== ent.bytes) bad(`byte size mismatch: ${ent.path}`);
   }
   // 反向：目录里有但清单里没有
   const listed = new Set(mf.files.map((f) => f.path));
@@ -67,9 +67,9 @@ else {
     const rel = relative(ROOT, f).replace(/\\/g, '/');
     // 根目录 README 是仓库导航，不属于 SKILL 内容，故意不入清单
     if (rel === 'README.md') continue;
-    if (!listed.has(rel)) bad(`文件未登记进 manifest: ${rel}`);
+    if (!listed.has(rel)) bad(`file not listed in manifest: ${rel}`);
   }
-  ok(`manifest ${checked} 个文件哈希与字节数全部一致`);
+  ok(`manifest ${checked} files match on hash and byte size`);
 }
 
 // ---------- 2b. 必须被 git 跟踪 ----------
@@ -82,14 +82,14 @@ try {
       .trim().split('\n').filter(Boolean).map((x) => x.replace(/\\/g, '/'))
   );
   if (tracked.size === 0) {
-    console.log('  note  不是 git 仓库或未跟踪，跳过 git 检查');
+    console.log('  note  not a git repo or untracked; skipping git check');
   } else {
     const mf2 = JSON.parse(readFileSync(join(ROOT, 'manifest.json'), 'utf8'));
     const missing = mf2.files.filter((f) => !tracked.has(f.path)).map((f) => f.path);
     if (missing.length) {
-      bad('以下文件在 manifest 里但未被 git 跟踪（CI 会缺文件）: ' + missing.join(', '));
+      bad('in manifest but not tracked by git (CI will be missing them): ' + missing.join(', '));
     } else {
-      ok(`manifest 中 ${mf2.files.length} 个文件均已被 git 跟踪`);
+      ok(`manifest 中 ${mf2.files.length} manifest files are all tracked by git`);
     }
     // 发行包不在清单里（它是产物），但必须在仓库里，否则 CI 解压测试拿不到它
     const relDir = join(ROOT, 'release');
@@ -98,14 +98,14 @@ try {
       if (!zips.length) bad('release/ 目录为空');
       const untracked = zips.filter((z) => !tracked.has('release/' + z));
       if (untracked.length) {
-        bad('发行包未被 git 跟踪（.gitignore 可能排除了它）: ' + untracked.join(', '));
+        bad('archive not tracked by git (.gitignore may exclude it): ' + untracked.join(', '));
       } else {
-        ok(`发行包 ${zips.join(', ')} 存在且被 git 跟踪`);
+        ok(`archive ${zips.join(', ')} exists and is tracked by git`);
       }
     }
   }
 } catch (e) {
-  console.log('  note  跳过 git 跟踪检查: ' + String(e.message || e).slice(0, 60));
+  console.log('  note  skipping git tracking check: ' + String(e.message || e).slice(0, 60));
 }
 
 // ---------- 3. 宣言逐字 ----------
@@ -140,27 +140,27 @@ const nm = norm(main), nd = norm(decl);
 const missM = CANON15.filter((p) => !nm.includes(norm(p)));
 const missD = CANON15.filter((p) => !nd.includes(norm(p)));
 const missRM = RULES5.filter((p) => !nm.includes(norm(p)));
-if (missM.length) bad(`主文件缺 ${missM.length} 段宣言`); else ok('主文件内嵌宣言 15/15 逐字');
-if (missD.length) bad(`declaration 缺 ${missD.length} 段`); else ok('declaration 15/15 逐字');
-if (missRM.length) bad(`主文件缺 ${missRM.length} 条公约`); else ok('主文件内嵌公约 5/5 逐字');
+if (missM.length) bad(`main file missing ${missM.length} declaration paragraph(s)`); else ok('main file: declaration 15/15 verbatim');
+if (missD.length) bad(`declaration missing ${missD.length} paragraph(s)`); else ok('declaration 15/15 verbatim');
+if (missRM.length) bad(`main file missing ${missRM.length} property rule(s)`); else ok('main file: property rules 5/5 verbatim');
 
 // ---------- 4. 版本一致 ----------
 const fmVer = (main.match(/^\s*version:\s*(\S+)/m) || [])[1];
 const idx = JSON.parse(readFileSync(join(ROOT, 'index.json'), 'utf8'));
 const mf = JSON.parse(readFileSync(mfPath, 'utf8'));
 const st = JSON.parse(readFileSync(join(ROOT, 'status.json'), 'utf8'));
-if (fmVer !== idx.current.version) bad(`版本不一致: frontmatter=${fmVer} index=${idx.current.version}`);
-if (fmVer !== mf.version) bad(`版本不一致: frontmatter=${fmVer} manifest=${mf.version}`);
-if (!st.services) bad('status.json 缺 services');
-if (!fail) ok(`版本一致: ${fmVer}（index / manifest / frontmatter）`);
+if (fmVer !== idx.current.version) bad(`version mismatch: frontmatter=${fmVer} index=${idx.current.version}`);
+if (fmVer !== mf.version) bad(`version mismatch: frontmatter=${fmVer} manifest=${mf.version}`);
+if (!st.services) bad('status.json missing services');
+if (!fail) ok(`version consistent: ${fmVer} (index / manifest / frontmatter)`);
 
 // ---------- 5. 有偿贡献表述 ----------
 const all = mds.map((f) => readFileSync(f, 'utf8')).join('\n').toLowerCase();
-if (!all.includes('planned, not open')) bad('缺少 "planned, not open" 声明');
+if (!all.includes('planned, not open')) bad('missing the "planned, not open" statement');
 const offers = ['bounty is live', 'claim your reward', 'apply for a bounty', 'task board is open'];
-for (const o of offers) if (all.includes(o)) bad(`出现被禁止的有偿表述: "${o}"`);
-if (!fail) ok('有偿贡献表述合规（planned-not-open）');
+for (const o of offers) if (all.includes(o)) bad(`forbidden paid-contribution wording present: "${o}"`);
+if (!fail) ok('paid-contribution wording compliant (planned-not-open)');
 
 console.log('');
-if (fail) { console.error(`check FAILED: ${fail} 个问题`); process.exit(1); }
+if (fail) { console.error(`check FAILED: ${fail} problem(s)`); process.exit(1); }
 console.log('check OK');
