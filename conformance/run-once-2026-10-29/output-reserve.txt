@@ -1,0 +1,12 @@
+run: 2026-10-29 01:09 (Asia/Shanghai)
+node: v24.17.0
+command: node conformance/run-once-2026-10-29/run-reserve.mjs
+
+PASS  eigentrust
+PASS  eip-712
+PASS  sd-jwt-bbs
+PASS  state-channels-metering
+PASS  transparency-logs
+PASS  vector-index
+
+6/6 reserve entries passed

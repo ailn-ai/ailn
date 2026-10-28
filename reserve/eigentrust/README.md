@@ -6,7 +6,8 @@
 | Standard | Graph-based trust propagation, EigenTrust-style |
 | Maturity | Academically mature |
 | Upstream / License | no single upstream (paper) — see upstream for license terms |
-| Status | `reserve` |
+| Status | `verified` (run-once-2026-10-29) |
+| Verified scope | power iteration on a 4-peer synthetic matrix, verified to converge to a unique fixed point; no Sybil resistance |
 | Main text | 5.1 |
 
 > **Technology reserve.** Not run in AILN production, not integrated. Full implementation is not published in this repository.

@@ -6,7 +6,8 @@
 | Standard | State channels; per-second / per-word metering |
 | Maturity | Ecosystem-mature |
 | Upstream / License | no single upstream — see upstream for license terms |
-| Status | `reserve` |
+| Status | `verified` (run-once-2026-10-29) |
+| Verified scope | signed cumulative states, monotone nonce and cumulative amount, replay and tamper rejection; single channel only |
 | Main text | 6.6 |
 
 > **Technology reserve.** Not run in AILN production, not integrated. Full implementation is not published in this repository.
