@@ -37,9 +37,9 @@ address with no balance is not sufficient — that trap is documented in `docs/X
 
 ## What is still missing here
 
-- **No published transaction hash yet.** "Settlement verified on four chains" is the server own
-  claim (`provenNetworks`); this repository does not yet publish explorer links a third party could
-  check. Treat it as unverified until it does.
+- **One chain is evidenced, three are claims.** A single Arbitrum transfer is checked and published in
+  [`docs/SETTLEMENT-EVIDENCE.md`](./SETTLEMENT-EVIDENCE.md); Base, X Layer and Arc appear only under the
+  service own `provenNetworks` claim.
 - **No rate limits, SLA or refund policy** are written down.
 - **No request/response example for the paid path** — it is closed, so there is nothing honest to
   capture yet.

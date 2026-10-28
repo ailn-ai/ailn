@@ -14,7 +14,7 @@ Read this table before you trust any other sentence in this repo.
 
 | Area | Status | What that means |
 | --- | --- | --- |
-| Pay-per-call data API (x402) | **DEPLOYED — PAID PATH CLOSED** | Settlement was verified on four chains. As measured on **2026-10-29**, a paid call returns `403 pre_mint_business_closed`; free discovery, quoting and the sponsored demo still work. See § "What actually works today". |
+| Pay-per-call data API (x402) | **DEPLOYED — PAID PATH CLOSED** | Settlement was verified on four chains by the service; one transfer is checked in `docs/SETTLEMENT-EVIDENCE.md`. As measured on **2026-10-29**, a paid call returns `403 pre_mint_business_closed`; free discovery, quoting and the sponsored demo still work. See § "What actually works today". |
 | Agent SKILL | **CANDIDATE** | `skill/ailn/` is the single source. Not yet served publicly — `ailn.ai/SKILL.md` returns 404. |
 | Stigmergy protocol | **PROPOSED** | Specification only. No implementation. |
 | Amber protocol | **PROPOSED** | Specification only. No implementation. |
@@ -32,7 +32,7 @@ that document is wrong and should be fixed.
 ## What actually works today
 
 Three things work against the live service, measured on 2026-10-29: **free discovery**, **free
-quoting**, and **one sponsored search call** per visitor. None need an account or an API key.
+quoting**, and **six sponsored search calls** per visitor (300 per instance, best effort). None need an account or an API key.
 
 The **paid** per-call path is built, and per `skill/ailn/status.json` its settlement was verified on
 four chains — but it is currently **closed by the pre-mint gate** (`403 pre_mint_business_closed`).
