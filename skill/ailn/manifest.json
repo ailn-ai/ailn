@@ -5,14 +5,14 @@
   "releaseStatus": "CANDIDATE",
   "generatedAt": "2026-10-27",
   "fileCount": 10,
-  "totalBytes": 44031,
+  "totalBytes": 44150,
   "mainFile": "SKILL.md",
   "referenceCount": 9,
   "files": [
     {
       "path": "SKILL.md",
-      "bytes": 11132,
-      "sha256": "d28d4ec7dabd7f7fce862b8149c4935ad490077ba391d81a7b40e77396d160f1"
+      "bytes": 11251,
+      "sha256": "7922bd729ff37411b8927ac9970552f94dccee7b6def4b5ae112c4603121b295"
     },
     {
       "path": "references/declaration.md",

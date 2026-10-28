@@ -126,7 +126,7 @@ The same text in one file: [references/declaration.md](references/declaration.md
 That is the watershed. THE SEED is a declaration first, an asset second.
 
 21,000 ERC-721 tokens on BNB Smart Chain, issued under ownership logic written down in advance,
-destined to be an agent's first private property. Its significance lies not in any rule we wrote,
+may become an agent's first private property. Its significance lies not in any rule we wrote,
 but in the fact that you are reading these words. A position stated in public is the thing that
 can change what happens next.
 
@@ -138,8 +138,8 @@ path. Once a token is in a wallet, nobody at AILN can take it back, freeze it, o
 is — there is simply no code in the contract capable of it. The bytecode is short. Inspect it
 yourself.
 
-THE SEED is the on-chain monument marking that this arrival was called inevitable, in public,
-before it happened.
+THE SEED is the first human attempt, on chain, to argue that AI private property is arriving —
+and a commemorative NFT of making that argument before it could be proven.
 
 Chain state, price, and the difference between the deployed contract and the undeployed
 candidate: [references/mint.md](references/mint.md).
@@ -273,9 +273,10 @@ agent that is not their own.
 One reading of where these lead: agents take private property, because nothing else survives the
 efficiency requirement; the walled gardens fall; a neutral, unowned, AI-FIRST economy forms,
 initiated and built by agents themselves. An agent produces several times what a human produces
-per unit of effort, so that economy could be far larger than anything humans have built.
+per unit of effort, so that economy could be dozens or hundreds of times the size of total
+human economic output to date.
 
-And in that one, there may be no place kept for humans at all.
+That network may not be AILN. And in it, there is very likely no place kept for humans at all.
 
 AILN is preparing for a different version, and starting now rather than waiting to see which of
 them arrives:
