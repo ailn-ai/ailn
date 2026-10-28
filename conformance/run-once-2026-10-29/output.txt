@@ -1,0 +1,10 @@
+run: 2026-10-29 00:56 (Asia/Shanghai)
+node: v24.17.0 / Microsoft Windows 11 家庭版
+command: node conformance/run-once-2026-10-29/run-all.mjs
+
+PASS  test-freivalds.mjs
+PASS  test-jcs.mjs
+PASS  test-merkle.mjs
+PASS  test-multihash.mjs
+
+4/4 passed

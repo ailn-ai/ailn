@@ -1,0 +1,20 @@
+// Freivalds: verify C = A*B with one random vector, then catch a corrupted entry.
+const P = 1000003n;
+const n = 8;
+const mod = (x) => ((x % P) + P) % P;
+let seed = 42n;
+const rnd = () => { seed = (seed * 6364136223846793005n + 1442695040888963407n) % (2n ** 63n); return Number(seed % 1000n); };
+const A = Array.from({ length: n }, () => Array.from({ length: n }, rnd));
+const B = Array.from({ length: n }, () => Array.from({ length: n }, rnd));
+const C = A.map(row => B[0].map((_, j) => mod(row.reduce((s, v, k) => s + BigInt(v) * BigInt(B[k][j]), 0n))));
+const r = Array.from({ length: n }, rnd);
+const mv = (M, v) => M.map(row => mod(row.reduce((s, x, k) => s + BigInt(x) * BigInt(v[k]), 0n)));
+const lhs = mv(C, r);
+const rhs = mv(A, mv(B, r).map(Number));
+const equal = (x, y) => x.length === y.length && x.every((v, i) => v === y[i]);
+const good = equal(lhs, rhs);
+C[3][5] = mod(C[3][5] + 1n);
+const detected = !equal(mv(C, r), rhs);
+console.log('C = A*B accepted:', good);
+console.log('corrupted C rejected:', detected);
+if (!good || !detected) process.exit(1);
