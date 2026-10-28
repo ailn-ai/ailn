@@ -169,3 +169,13 @@ and the token artwork. See [`LICENSE-SCOPE.md`](./LICENSE-SCOPE.md) — a root `
 should not be read as releasing the brand.
 
 ---
+
+## Technology reserves
+
+> **Technology reserves, not a runtime.**
+> Everything under `reserve/` and `third_party/` is AILN's technology reserve and selection reference. Except entries marked `verified`, none of it runs in AILN production and none of it is integrated. Full implementations are not published in this repository.
+
+> **技术储备，非运行代码。**
+> `reserve/` 与 `third_party/` 下的内容为 AILN 的技术储备与选型参考。除标注 `verified` 的条目外，均未在 AILN 生产中运行，也未完成接入；完整实现不在本仓库发布。
+
+The reserve list maps 1:1 to the standards in AILN's technical foundations appendix: see [`reserve/INDEX.md`](reserve/INDEX.md). Maturity labels are quoted, not claims of implementation.
