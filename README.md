@@ -4,7 +4,7 @@
 
 AILN is a three-protocol architecture plus a working pay-per-call data layer. This
 repository is the developer entry point: the protocols as specifications, the agent
-instructions, runnable examples, and the tests that back the claims.
+instructions, runnable examples, the tests that back the claims, and a 29-entry technology reserve index.
 
 ---
 
@@ -125,6 +125,7 @@ protocols/        Stigmergy, Amber, Chrysalis — specifications, all PROPOSED
 skill/ailn/       The single source for the Agent SKILL (candidate)
 examples/         Runnable, minimal, honest
 docs/             Architecture, x402 mechanics, network parameters
+reserve/          29-entry technology reserve index (standards we track, not a runtime)
 scripts/          Verification and scanning tools
 .github/          CI and contribution templates
 ```
