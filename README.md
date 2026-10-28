@@ -38,7 +38,7 @@ The **paid** per-call path is open. A call is quoted, the client signs an EIP-30
 facilitator settles it on chain, and data returns only after settlement. That path was exercised end to
 end on 2026-10-29: 0.003795 USDC on Base, checked on chain.
 
-When the paid path is open, the flow is:
+The paid flow is:
 
 ```
 agent  →  GET /mcp           discovery, current price, payment options
@@ -69,7 +69,7 @@ Earlier revisions of this file listed it as a payment chain — that was wrong a
 |---|---|
 | `tools/list` | 200, six tools |
 | `tools/call` → free `ailn_quote` | 200, real quote returned |
-| `tools/call` → paid `ailn_run` | **403 `pre_mint_business_closed`** |
+| `tools/call` → paid `ailn_search` | 200 with real results after settlement (0.003795 USDC on Base) |
 | `POST /demo/search` (sponsored) | 200, real results, `chargedMicros: 0` |
 
 Chain, asset and state facts are maintained in [`skill/ailn/status.json`](./skill/ailn/status.json).

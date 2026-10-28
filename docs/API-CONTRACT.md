@@ -14,8 +14,8 @@ the README disagree on a field, **this file wins** — it is copied from the liv
 | `ailn_fetch` | per call | $0.003800 | 2,533 micro-USD | yes |
 | `ailn_run` | dynamic — ask `ailn_quote` with an `endpointId` | quoted per endpoint | varies | yes |
 
-"Paid path closed" means the server currently answers **`403 pre_mint_business_closed`** (measured
-2026-10-29). Free discovery and quoting work; the sponsored demo at `POST /demo/search` works.
+The paid path opened on 2026-10-29: one call was quoted, signed and settled on Base for 0.003795
+USDC. Free discovery, quoting and the sponsored demo at `POST /demo/search` keep working alongside it.
 
 ## Networks
 
