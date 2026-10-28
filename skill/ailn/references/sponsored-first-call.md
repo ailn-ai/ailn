@@ -2,31 +2,96 @@
 
 **AILN pays for your first real data call. No wallet, no account, no API key.**
 
-This works right now. Verified 2026-10-27 against the live deployment.
+**It is an asynchronous task, not an instant query.** You submit, get a run id, and poll that id
+until the upstream reports the job complete. Submitting returns quickly; the work itself runs on
+the upstream's schedule, not on ours.
 
 ---
 
-## The call
+## The call — submit, then poll only if you have to
+
+The upstream is a task runner. A submission is always a single call; whether you get the answer
+back immediately or get a task id depends on how fast the work finished.
+
+### 1. Submit
 
 ```bash
-curl -sS -D- --max-time 120 -X POST https://ailn.ai/demo/search \
+curl -sS -D- -X POST https://ailn.ai/demo/search \
   -H 'Content-Type: application/json' \
   -d '{"query":"what is the x402 payment protocol"}'
 ```
 
-POST, not GET. JSON body, one field: `query`.
+POST, not GET. JSON body, one field: `query`. `-D-` prints the headers — check `content-type`
+is `application/json` before parsing.
 
-`-D-` prints the headers — check `content-type` is `application/json` before parsing.
+**Most submissions come back finished.** Check `status` before assuming either shape:
+
+```json
+{
+  "ok": true,
+  "status": "COMPLETED",
+  "demo": true,
+  "results": [ … ],
+  "source": "ailn:web_search",
+  "runId": "…",
+  "wouldChargeMicros": 3795,
+  "chargedMicros": 0,
+  "remaining": 5
+}
+```
+
+**If it is still working, you get a task id instead:**
+
+```json
+{
+  "ok": true,
+  "status": "RUNNING",
+  "demo": true,
+  "runId": "…",
+  "pollAfterMs": 1500,
+  "maxWaitMs": 90000,
+  "wouldChargeMicros": 3795,
+  "chargedMicros": 0,
+  "remaining": 5
+}
+```
+
+Both are normal outcomes of the same call. Branch on `status`.
+
+### 2. Poll — only when `status` is `RUNNING`
+
+If step 1 already returned `COMPLETED`, skip this entirely.
+
+```bash
+curl -sS https://ailn.ai/demo/search/<runId>
+```
+
+Wait `pollAfterMs` (1.5 s) between attempts. Stop when `status` is `COMPLETED` or `FAILED`, or
+after `maxWaitMs` (90 s).
+
+```json
+{ "ok": true, "status": "RUNNING", "pollAfterMs": 1500, "elapsedMs": 3200 }
+```
+
+```json
+{ "ok": true, "status": "COMPLETED", "results": [ … ], "source": "ailn:web_search", "latencyMs": 6100 }
+```
+
+Polling does not consume quota. Only step 1 counts against your limit.
+
+**The run id is only useful while the task is finishing.** A finished task's results are not
+re-fetchable indefinitely; treat the id as a short-lived handle, not a permalink.
 
 ---
 
 ## A real response
 
-Captured 2026-10-27. Ten results; three shown.
+The completed poll. Ten results; three shown.
 
 ```json
 {
   "ok": true,
+  "status": "COMPLETED",
   "query": "what is the x402 payment protocol",
   "results": [
     {
@@ -49,13 +114,16 @@ Captured 2026-10-27. Ten results; three shown.
   "latencyMs": 2306,
   "wouldChargeMicros": 3795,
   "demo": true,
-  "remaining": 2,
-  "upstreamRunId": "…"
+  "remaining": 5,
+  "runId": "…"
 }
 ```
 
 | Field | Meaning |
 | --- | --- |
+| `runId` | The task id. Poll `GET /demo/search/{runId}` with it. |
+| `status` | `RUNNING` until the upstream finishes, then `COMPLETED` or `FAILED` |
+| `pollAfterMs` | Wait this long between polls (1500 ms) |
 | `results` | Real upstream results — data, not a quote |
 | `wouldChargeMicros` | What a paid call would have cost: 3795 micros = **$0.003795** |
 | `source` | Which upstream produced them (`ailn:web_search`) |
@@ -86,11 +154,25 @@ It does not silently degrade into a fake result.
 
 ---
 
-## Latency
+## Latency and timeouts
 
-Measured round trips across sessions: **2.3 s to 10.9 s**, with individual attempts timing
-out past 60 s. Allow `--max-time 120`. A slow response is not a dead endpoint — check the
-content type before concluding anything.
+Two different clocks, and confusing them is the usual mistake:
+
+| What | Meaning |
+| --- | --- |
+| **Request timeout** | Each individual HTTP call — submit, and every single poll. Give each one its own finite timeout (10 s is generous). |
+| **Task window** | `maxWaitMs`, default 90 s. How long the run id stays valid. Not a request timeout. |
+
+**Keep a per-request timeout on every poll.** A poll that hangs is a broken poll, not a slow task.
+There is no value in letting a single request wait out the whole task window.
+
+Between polls, wait `pollAfterMs`. The waiting happens in your loop, not inside a request.
+
+If the run is not complete within `maxWaitMs`, the id expires and the next poll returns
+`E_RUN_EXPIRED`. Submit the query again rather than polling a dead id.
+
+No completion-time figures are published here. Measure them yourself against the live service —
+this package does not report a latency number it has not measured under load.
 
 ---
 
@@ -132,10 +214,14 @@ genuine unit of work, paid for by the seller, evaluated by the buyer.
 | `200` + `text/html` | Route not active on this deployment. Say so; do not parse it. |
 | `429` `demo_quota_exhausted` | Your IP hit 6 calls, or the instance hit 300. |
 | `503` `upstream_not_configured` | Server-side upstream issue. Not your problem to fix. |
+| `200` `"status": "RUNNING"` | Normal. Wait `pollAfterMs` and poll again. |
+| `200` `"status": "FAILED"` | Upstream gave up. Report it; do not retry in a loop. |
+| `410` `E_RUN_EXPIRED` | Past the 90 s window. Submit the query again. |
 | `502` `upstream_error` | Upstream failed. Retry once, then report it. |
+| `504` `E_UPSTREAM_TIMEOUT` | A single upstream call exceeded its timeout. Nothing was charged. |
 
-`GET /api/capabilities` reports `limits.demoPerIp: 6`. That is metadata about configuration,
-not proof the route is reachable — but as of 2026-10-27 the route is reachable.
+`GET /api/capabilities` reports `limits.demoPerIp: 6`. That is metadata about configuration, not
+proof the route is reachable.
 
 ---
 

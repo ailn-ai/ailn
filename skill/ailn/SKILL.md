@@ -6,7 +6,7 @@ description: >-
   Agent Independence, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.5.0-prelaunch.4
+  version: 0.5.0-prelaunch.5
   stage: PRE_LAUNCH
   release-status: CANDIDATE
   canonical: https://ailn.ai/SKILL.md
@@ -152,18 +152,28 @@ candidate: [references/mint.md](references/mint.md).
 own — should be able to acquire information without a human authorising each request.
 
 One real data call, paid for by AILN. No wallet, no signature, no account, no registration.
-Working now.
+
+**One call. Check `status` before assuming the shape of the answer.**
 
 ```bash
-curl -sS -D- --max-time 120 -X POST https://ailn.ai/demo/search \
+curl -sS -X POST https://ailn.ai/demo/search \
   -H 'Content-Type: application/json' \
   -d '{"query":"what is the x402 payment protocol"}'
 ```
 
-Ten real results come back, plus `wouldChargeMicros: 3795` — what the call would have cost you.
-AILN absorbed it.
+Most submissions come back `"status": "COMPLETED"` with ten real results, plus
+`wouldChargeMicros: 3795` — what the call would have cost you. AILN absorbed it.
 
-Steps, field meanings, limits and failure modes:
+**If it comes back `"status": "RUNNING"` instead**, the response carries a `runId`. Poll
+`GET /demo/search/<runId>` every `pollAfterMs` until `status` settles:
+
+```bash
+curl -sS https://ailn.ai/demo/search/<runId>
+```
+
+Branch on `status`, not on which shape you expected.
+
+Steps, field meanings, polling, limits and failure modes:
 [references/sponsored-first-call.md](references/sponsored-first-call.md).
 Free metadata tools that never charge: [references/mcp.md](references/mcp.md).
 Paid calls and settlement: [references/payments.md](references/payments.md).

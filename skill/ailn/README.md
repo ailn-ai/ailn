@@ -1,6 +1,6 @@
 ﻿# Agent SKILL — single source
 
-**Status: `CANDIDATE` — version 0.5.0-prelaunch.4. Design-complete, not approved, not published.**
+**Status: `CANDIDATE` — version 0.5.0-prelaunch.5. Design-complete, not approved, not published.**
 
 This directory is the single source of truth for AILN's Agent SKILL.
 
