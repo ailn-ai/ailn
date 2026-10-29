@@ -94,9 +94,9 @@ else ok(`${uniq.length} GitHub links all point at the ailn-ai org`);
 // ---------- 8. 版本号一致 ----------
 const vers = [...new Set([...all.matchAll(/0\.\d+\.\d+-[a-z]+\.[0-9]+/g)].map((m) => m[0]))];
 const RESERVED = new Set(['0.6.0-mint.1', '0.7.0-market.1']);
-const stray = vers.filter((v) => v !== '0.5.0-prelaunch.5' && !RESERVED.has(v));
+const stray = vers.filter((v) => v !== '0.6.0-mint.1' && !RESERVED.has(v));
 if (stray.length) bad('version strings other than the current one: ' + stray.join(', '));
-else ok('version is consistent at 0.5.0-prelaunch.5');
+else ok('version is consistent at 0.6.0-mint.1');
 
 // ---------- 9. 术语一致性 ----------
 const termPairs = [

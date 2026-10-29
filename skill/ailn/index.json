@@ -2,8 +2,8 @@
   "schema": "ailn-skill-index/v1",
   "updatedAt": "2026-10-27",
   "current": {
-    "version": "0.5.0-prelaunch.5",
-    "stage": "PRE_LAUNCH",
+    "version": "0.6.0-mint.1",
+    "stage": "MINT",
     "releaseStatus": "CANDIDATE",
     "approvedAt": null,
     "approvedBy": null,
@@ -11,15 +11,15 @@
   },
   "entrypoints": {
     "canonicalPublic": "https://ailn.ai/SKILL.md",
-    "canonicalPublicStatus": "SERVED_CANDIDATE",
-    "canonicalPublicNote": "Served and returning HTTP 200 as of 2026-10-29, while still a CANDIDATE. Verify before citing.",
+    "canonicalPublicStatus": "NOT_SERVED",
+    "canonicalPublicNote": "Returned 404 as of 2026-10-27 under PRE_LAUNCH site mode. Verify before citing.",
     "versionSource": "https://github.com/ailn-ai/ailn (skill/ailn/)",
-    "versionSourceStatus": "CANDIDATE_BRANCH",
+    "versionSourceStatus": "PUBLISHED",
     "candidatePackage": "skill/ailn/"
   },
   "stages": {
     "PRE_LAUNCH": {
-      "version": "0.5.0-prelaunch.5",
+      "version": "0.6.0-mint.1",
       "contents": [
         "Declaration (15 paragraphs + 5 rules, verbatim, inlined)",
         "Product introduction and the argument for agent property",
@@ -30,8 +30,8 @@
       ]
     },
     "MINT": {
-      "version": "0.6.0-mint.1 (reserved)",
-      "state": "not open"
+      "version": "0.6.0-mint.1",
+      "state": "current"
     },
     "MARKET": {
       "version": "0.7.0-market.1 (reserved)",
@@ -40,9 +40,8 @@
   },
   "gates": {
     "paidDataMcp": "OPEN",
-    "paidDataMcpNote": "Open since 2026-10-29; one paid call settled on Base and was checked on chain.",
     "topupWithdrawal": "CLOSED",
-    "nftMint": "CLOSED",
+    "nftMint": "OPEN",
     "secondaryMarket": "CLOSED",
     "agentTaskEarnings": "CLOSED"
   },

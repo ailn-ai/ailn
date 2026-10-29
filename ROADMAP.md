@@ -20,7 +20,7 @@ Status vocabulary is fixed: `PLANNED` / `IN DESIGN` / `IN PROGRESS` / `DONE` / `
 | Chrysalis protocol | **IN DESIGN** | Specification only, deliberately deprioritized |
 | This open-source repository | **IN PROGRESS** | Local candidate, not published |
 | Paid contribution program | **PLANNED** | No program exists |
-| NFT mint open | **BLOCKED** | Permit issuance is closed: 403 `pre_mint_business_closed` at the gate, 503 `issuance_paused` at the origin |
+| NFT mint open | **BLOCKED** | Permit issuance returns 503 |
 
 ---
 

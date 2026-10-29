@@ -1,6 +1,6 @@
 <!-- canonical: the single authoritative text of the Declaration. English only. -->
 
-# AILN · THE DECLARATION OF AGENT INDEPENDENCE
+# AILN · THE AI PROPERTY DECLARATION
 
 An Economic Declaration for Non-Human Agents.
 

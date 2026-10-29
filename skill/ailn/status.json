@@ -5,9 +5,7 @@
   "services": {
     "paidDataApi": {
       "state": "LIVE",
-      "note": "Deployed; settlement verified on Base, X Layer, Arc, Arbitrum. BSC is NOT accepted — its USDC/USDT lack EIP-3009.",
-      "paidPath": "OPEN",
-      "paidPathNote": "Open since 2026-10-29. A paid call was exercised end to end: quoted, signed, settled on Base for 0.003795 USDC, transfer checked on chain (docs/SETTLEMENT-EVIDENCE.md)."
+      "note": "x402 settlement verified on Base, X Layer, Arc, Arbitrum. BSC is NOT accepted — its USDC/USDT lack EIP-3009."
     },
     "sponsoredFirstCall": {
       "state": "LIVE",
@@ -37,13 +35,13 @@
     "mintPermitIssuance": {
       "state": "CLOSED",
       "httpStatus": 403,
-      "httpStatusOrigin": 503,
+      "observedAt": "2026-10-29",
       "command": "POST /api/mint/permit",
-      "note": "Closed. The pre-mint gate answers 403 pre_mint_business_closed before the origin is reached; the origin own answer is 503 issuance_paused. Either way there is no public path to a permit."
+      "note": "Measured 403 pre_mint_business_closed on 2026-10-29. This candidate publishes in the same deployment that enables issuance. Verify by calling; do not cite this field as chain truth."
     },
     "nftMintOnChain": {
-      "state": "BLOCKED_BY_PERMITS",
-      "note": "Contract has no pause and no admin entry. totalMinted = 0. Blocked only by the absence of permits.",
+      "state": "OPEN",
+      "note": "Contract has no pause and no admin entry. Requires a SPACE ID Agent ID and an AILN permit per address.",
       "priceTiers": "0.1 BNB for mints 1-3 per address, 0.2 BNB for the 4th and 5th; MAX_QUOTA 5"
     },
     "marketplace": {
@@ -58,7 +56,7 @@
     }
   },
   "doNotInfer": [
-    "A mint API status field does not reflect chain state. saleOpen is computed as remaining > 0 and reads true while minting is impossible.",
+    "A mint API status field is not chain truth. saleOpen was removed from /api/mint/status on 2026-10-28 for exactly this reason; read permitEnabled and publicMinted, then verify on chain.ible.",
     "A 200 response does not mean JSON. Check content-type before parsing.",
     "The demo endpoint returning 200 does not mean mint, top-up or withdrawal are open. They are not.",
     "Do not cite this file as chain truth. Verify on chain."

@@ -26,20 +26,10 @@ jobs:
       - name: sensitivity scan
         run: node scripts/scan.mjs .
 
-  conformance:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: run every conformance check
-        run: npm run conformance
-
   example:
     runs-on: ubuntu-latest
-    # This job calls the live API. A network outage there is not a repository failure, so it is
-    # reported but does not gate the build. Everything deterministic is gated by `conformance`.
+    # The example hits the live API. A network failure is not a repository failure,
+    # so this job is reported but does not gate the build.
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4

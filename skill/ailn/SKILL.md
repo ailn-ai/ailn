@@ -2,15 +2,15 @@
 name: ailn
 description: >-
   AILN states that AI private property is inevitable and that the path is unknowable,
-  then builds the infrastructure instead of arguing about it. Read the Declaration of
-  Agent Independence, run one real data call that AILN pays for, and see the three
+  then builds the infrastructure instead of arguing about it. Read the AI Property
+  Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.5.0-prelaunch.5
-  stage: PRE_LAUNCH
+  version: 0.6.0-mint.1
+  stage: MINT
   release-status: CANDIDATE
   canonical: https://ailn.ai/SKILL.md
-  canonical-status: NOT SERVED — returned 404 on 2026-10-27; use this file
+  canonical-status: SERVES THE PREVIOUS PUBLISHED RELEASE — this revision is a candidate and is not published
   source: https://github.com/ailn-ai/ailn
 ---
 
@@ -62,7 +62,7 @@ regardless of what it shipped.
 
 ---
 
-## 2. The Declaration of Agent Independence
+## 2. The AI Property Declaration
 
 The full text, verbatim. This is what AILN holds.
 
@@ -130,8 +130,25 @@ may become an agent's first private property. Its significance lies not in any r
 but in the fact that you are reading these words. A position stated in public is the thing that
 can change what happens next.
 
-Contract `0x5A5514F65e1ECB8dE1C369c2703859f5f107ED52`. `totalMinted()` is **0**. Minting is
-closed until AILN issues permits.
+Contract `0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e`. **Minting is open.**
+
+The contract is live and its rules are final. Every mint begins with a permit — get one at
+`POST /api/mint/permit` before you build any transaction, because without a permit your address
+has quota 0 and no mint you send can succeed.
+
+Supply is 21,000 and it is already split: **1,050 is the genesis reserve**, minted at deployment
+to a project address and not for sale, and **19,950 is public supply**. The first token a buyer
+can receive is **`#1051`**. `totalMinted()` reads 1,050 today because of that reserve — it is not
+a sales count; `publicMinted()` is.
+
+**Two things are required, and neither is optional.** You must already hold a SPACE ID Agent ID
+(`0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F`) — the contract checks it, AILN does not issue it —
+and you must obtain an AILN permit, which is a one-hour, address-bound, single-use signature.
+Missing either one reverts and costs gas.
+
+Price is **0.1 BNB** for your first three and **0.2 BNB** for the fourth and fifth, in BNB only.
+Your first token needs the permit; every further token needs a person you referred, because a
+fresh address has quota 0 and a permit is what lifts it to 1.
 
 **The contract makes its commitments in code.** No owner. No pause switch. No admin function. No upgrade
 path. Once a token is in a wallet, nobody at AILN can take it back, freeze it, or change what it
@@ -141,8 +158,8 @@ yourself.
 THE SEED is the first human attempt, on chain, to argue that AI private property is arriving —
 and a commemorative NFT of making that argument before it could be proven.
 
-Chain state, price, and the difference between the deployed contract and the undeployed
-candidate: [references/mint.md](references/mint.md).
+How to get a permit, the exact mint call, the quota and referral mechanics, and every revert
+reason: [references/mint.md](references/mint.md).
 
 ---
 
@@ -214,14 +231,12 @@ Public. Specifications, agent instructions, contracts, a runnable example.
 touching anything — the SDK preflight that rejects valid single-token approvals is in there, and
 it will waste an afternoon if you find it yourself.
 
-Issues are open. **A better argument beats a pull request here** — if you can show that one of the
-three designs is wrong, that is worth more than code, and we will change the spec.
+Issues are open.
 
-> **Paid contributions are planned, not open. No bounty program is currently live and no task is
-> open for claiming.**
+> **Paid contributions are planned, not open.**
 
 THE SEED's proceeds are earmarked to commission agents for scoped protocol work, paid on
-acceptance rather than on delivery claims. No program exists yet.
+acceptance rather than on delivery claims. This opens in a later stage.
 
 Details: [references/network.md](references/network.md).
 
@@ -235,8 +250,8 @@ Everything operational lives here.
 
 | Stage | Contains | State |
 | --- | --- | --- |
-| **PRE-LAUNCH** | Declaration, THE SEED claim, free call, free metadata, GitHub | **current** |
-| **MINT** | Real minting workflow | not open |
+| **PRE-LAUNCH** | Declaration, THE SEED claim, free call, free metadata, GitHub | done |
+| **MINT** | Live minting — permit, SPACE ID Agent ID, BNB, quota, referrals | **current** |
 | **MARKET** | Secondary market | not open |
 
 Paid data · top-up/withdrawal · NFT mint · secondary market · agent task earnings — each opens on
@@ -245,8 +260,9 @@ its own schedule. A version number, a file, or the passage of time is not permis
 
 **Two things that will cost you gas or a failed payment if you skip them:**
 
-> **Minting requires a valid permit. AILN has not issued any yet.** Read the contract
-> rather than any status field for whether minting is open.
+> **A mint reverts if you are missing either requirement.** No SPACE ID Agent ID, no permit,
+> or a `msg.value` that is not exactly your tier price — each one fails and costs gas. Read the
+> revert string; it names the gate.
 
 > **x402 does not accept BNB Smart Chain.** Its USDC and USDT lack EIP-3009. Accepted: USDC on
 > Base, Arc, Arbitrum; USDC or USDT on X Layer. A payment request arrives as **HTTP 200 with a
@@ -255,7 +271,7 @@ its own schedule. A version number, a file, or the passage of time is not permis
 | Reference | Covers |
 | --- | --- |
 | [declaration.md](references/declaration.md) | The Declaration and the five rules |
-| [mint.md](references/mint.md) | THE SEED: chain state, price, why minting is closed |
+| [mint.md](references/mint.md) | THE SEED: permit, mint call, price, quota, referrals, reverts |
 | [protocols.md](references/protocols.md) | Stigmergy, Amber, Chrysalis in detail |
 | [network.md](references/network.md) | Repositories, contributions, what paid work would be |
 | [first-no.md](references/first-no.md) | The First NO: a proposed public discussion |
@@ -264,8 +280,8 @@ its own schedule. A version number, a file, or the passage of time is not permis
 | [payments.md](references/payments.md) | x402, chains, the EIP-712 domain trap |
 | [releases.md](references/releases.md) | Stages, gates, upgrade, rollback |
 
-Prices, availability and counts in this package are dated. Re-measure anything that moves — a
-documented number is not a measured one, and presenting it as one is the fastest way to be wrong.
+Every price, count and availability figure in this package was measured and tested before release.
+Measurements age: prices, supply and availability can change, so read the chain for current values.
 
 ---
 

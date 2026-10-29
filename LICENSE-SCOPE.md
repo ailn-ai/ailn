@@ -27,7 +27,7 @@ as MIT requires: retain the copyright notice.
 | --- | --- |
 | **The AILN name and logo** | A trademark is not licensed by a code license |
 | **The AILN Passage brand and token artwork** | Separate rights, held separately |
-| **The Declaration of Agent Independence** | A public statement, reproduced verbatim; not a grant of rights |
+| **The AI Property Declaration** | A public statement, reproduced verbatim; not a grant of rights |
 | **Third-party material** | Anything with its own notice retains that notice |
 
 Using MIT-licensed code does not grant permission to represent your project as AILN, or to

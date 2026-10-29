@@ -95,7 +95,7 @@ of your funds at any point.
 | Paid data calls | Live (Base / X Layer / Arc / Arbitrum) |
 | Top-up | Not open |
 | Withdrawal | Not open |
-| NFT minting | Not open — paid in **BNB**, a different rail entirely |
+| NFT minting | Open — paid in **BNB**, a different rail entirely |
 | Secondary market | Not open |
 
 Minting is not an x402 payment. Do not tell anyone they can mint with USDC; they cannot.

@@ -43,7 +43,7 @@ describing this project as audited is wrong.
 assume the live system has the fix.
 
 **Minting depends on off-chain permits.** The deployed contract has no pause and no admin;
-permit issuance is closed (403 `pre_mint_business_closed` at the pre-mint gate, 503 `issuance_paused` at the origin), so minting is impossible in practice.
+permit issuance currently returns HTTP 503, so minting is impossible in practice.
 
 ---
 

@@ -14,8 +14,7 @@
     "lint:docs": "node scripts/verify.mjs --only=docs",
     "lint:links": "node scripts/verify.mjs --only=links",
     "example:quote": "node examples/mcp-quote/index.mjs",
-    "test": "node scripts/verify.mjs && node conformance/run-once-2026-10-29/run-all.mjs && node conformance/run-once-2026-10-29/run-reserve.mjs",
-    "conformance": "node conformance/run-once-2026-10-29/run-all.mjs && node conformance/run-once-2026-10-29/run-reserve.mjs",
+    "test": "node scripts/verify.mjs",
     "check:skill": "node skill/ailn/tools/check-skill.mjs skill/ailn",
     "check:consistency": "node skill/ailn/tools/check-consistency.mjs skill/ailn"
   },

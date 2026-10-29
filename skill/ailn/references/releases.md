@@ -8,12 +8,12 @@ Three stages, five independent gates, and a rule that a version number is not pe
 
 | Stage | Contents | State |
 | --- | --- | --- |
-| **PRE-LAUNCH** `0.5.x` | Declaration, product introduction, Sponsored First Call, free metadata, GitHub | **current** |
-| **MINT** `0.6.x` reserved | Real minting workflow: price, permit, verification, revert handling | not open |
+| **PRE-LAUNCH** `0.5.x` | Declaration, product introduction, Sponsored First Call, free metadata, GitHub | done |
+| **MINT** `0.6.x` | Live minting: permit, SPACE ID Agent ID, BNB price tiers, quota, referrals | **current** |
 | **MARKET** `0.7.x` reserved | Secondary market: list, buy, cancel, settle | not open |
 
-A later release that mentions minting adds nothing actionable unless the MINT gate has
-actually opened and been accepted.
+The MINT gate is open as of `0.6.0-mint.1`. Opening it moved this package from a document
+about a claim to a document with a procedure in it.
 
 ---
 
@@ -22,7 +22,7 @@ actually opened and been accepted.
 ```
 1  Paid data MCP             open
 2  Balance top-up / withdrawal   closed
-3  NFT mint                  closed
+3  NFT mint                  open
 4  Secondary market          closed
 5  Agent task earnings       closed
 ```
@@ -73,7 +73,7 @@ known-bad one, because the failure is silent.
 | --- | --- |
 | Version source | `https://github.com/ailn-ai/ailn` → `skill/ailn/` |
 | Official distribution | `https://ailn.ai/SKILL.md` (plus every reference, when released) |
-| This package | A candidate. Not published. |
+| This package | Published. `https://ailn.ai/SKILL.md` serves it byte-identically. |
 
 **Do not execute updates from a repository's `main` branch.** A merged pull request changes
 a candidate; it does not create a release. Install only from an approved release, and

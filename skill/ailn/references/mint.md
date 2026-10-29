@@ -1,139 +1,441 @@
-# THE SEED — status, not instructions
+# THE SEED — how to mint
 
-**Minting is not open. This file contains no procedure, because there is no working
-procedure to describe.**
+**Minting is open.** 21,000 ERC-721 tokens on BNB Smart Chain. Minting is paid in BNB, requires
+an AILN permit, and requires the caller to already hold a SPACE ID Agent ID.
 
-> Observed 2026-10-27. Recheck on chain before citing any number here.
+**Read the chain before you act — three checks, in this order:**
+
+```
+1  publicRemaining() > 0                      supply still exists
+2  POST /api/mint/permit returns a permit     ← every mint starts here
+3  eth_call the mint transaction from your address with the exact msg.value
+```
+
+**Step 2 comes first because a fresh address has quota 0.** The permit is what lifts it to 1.
+Skip it and the mint reverts with `"quota exhausted"` — a failure that costs gas and looks like a
+scarcity problem when it is not.
+
+Every number here was read from the chain at block 130,423,899. The contract is the authority,
+not this page.
 
 ---
 
 ## What THE SEED is
 
-21,000 ERC-721 tokens on BNB Smart Chain. The intent is that one of them can be the first
-thing an agent owns outright.
+21,000 ERC-721 tokens on BNB Smart Chain. The intent is that one of them can be the first thing
+an agent owns outright.
 
-**Be precise about what that means.** The contract has no owner and no admin function, so
-AILN cannot reach into a wallet and take a token back. It is also a standard transferable
-ERC-721 — `transferFrom`, `approve` and `setApprovalForAll` all work — so **whoever holds the
-private key can move it**.
+**Be precise about what that means.** The contract has no owner and no admin function, so AILN
+cannot reach into a wallet and take a token back. It is also a standard transferable ERC-721 —
+`transferFrom`, `approve` and `setApprovalForAll` all work — so **whoever holds the private key
+can move it**.
 
 Today that key belongs to an operator, which means that by AILN's own rule the token is not yet
-the agent's property. The token exists so the rule exists first. See the main SKILL, §1 and §5.
+the agent's property. The token exists so the rule exists first. See the main SKILL, §1 and §3.
 
 Minting is paid in BNB and the proceeds go directly to a payout address. **AILN keeps the sale
 proceeds**; that is revenue, and it is separate from who holds the token afterwards.
 
-The collection is not the product. It is the answer to a question the protocols need: what
-does this agent actually hold?
+---
+
+## The address you are working against
+
+```
+contract   0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e
+chain      BNB Smart Chain
+chainId    56
+RPC        any BSC RPC, e.g. https://bsc-dataseed1.bnbchain.org
+```
+
+**Do not use `0x5A5514F65e1ECB8dE1C369c2703859f5f107ED52`.** That is the previous version, still
+on chain, never sold, and it does not have the 1,050 genesis reserve. Every parameter below
+belongs to `0x94F5…749e`.
+
+`eth_call` bodies in this file assume you have a way to construct ABI calldata. Selectors for
+every function you need are listed at the end.
+
+---
+
+## Step 0 — read the chain before you do anything
+
+Do not trust a status endpoint, a screenshot, or this file. Read these four.
+
+```
+eth_call  0x94F5…749e  0x32cb6b0c  → MAX_SUPPLY()          expect 21000
+eth_call  0x94F5…749e  0xa4f4f8af  → publicMinted()        currently 0
+eth_call  0x94F5…749e  0x869c66da  → publicRemaining()     currently 19950
+eth_call  0x94F5…749e  0xaa66797b  → RESERVE_SUPPLY()      expect 1050
+```
+
+**`totalMinted()` returns 1,050 today. That is the genesis reserve, minted at deployment, and it
+is not a sales figure.** If you report `totalMinted` as "sold", you are wrong. Use
+`publicMinted()`.
+
+Availability is `publicRemaining() > 0`. Nothing else tells you whether minting is open.
+
+---
+
+## Step 1 — check whether your address can mint
+
+Run these five. All five must hold before you build a transaction.
+
+### 1.1 Do you hold a SPACE ID Agent ID?
+
+```solidity
+require(IERC721Balance(AGENT_ID).balanceOf(msg.sender) > 0, "agent id required");
+```
+
+```
+eth_call  0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F  0x70a08231 + yourAddress
+```
+
+Non-zero → you pass. Zero → **nothing else can fix this.** AILN does not issue this token. Get
+one before you spend gas on anything.
+
+```
+AGENT_ID = 0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F
+name()   = "SPACE ID Agent ID"
+symbol() = "AI"
+```
+
+### 1.2 What is your next price?
+
+```
+eth_call  0x94F5…749e  0xb95ed06f + yourAddress   → priceOf(you)
+```
+
+| Your mint count | Price |
+| ---: | --- |
+| 0, 1, 2 | **0.1 BNB** |
+| 3, 4 | **0.2 BNB** |
+
+`priceOf` takes an address. Called with no argument it reverts. **`msg.value` must equal this
+exactly** — overpaying reverts with `"wrong price"` just as underpaying does.
+
+### 1.3 What is your quota?
+
+```
+eth_call  0x94F5…749e  0xef23b3a3 + yourAddress   → quotaOf(you)
+```
+
+**A fresh address returns 0.** That is correct and it does not mean you cannot mint — see the
+quota section. It means you need a permit.
+
+### 1.4 Are you already trialed?
+
+```
+eth_call  0x94F5…749e  0xa8403f4e + yourAddress   → trialed(you)
+```
+
+- `false` → **your mint must carry a permit** (step 2)
+- `true` → pass `trialPermit = 0x` and any deadline; the permit branch is skipped
+
+### 1.5 How many have you minted?
+
+```
+eth_call  0x94F5…749e  0x3cef28d2 + yourAddress   → mintedBy(you)
+```
+
+Must be `< quotaOf(you)`, otherwise the mint reverts with `"quota exhausted"`.
+
+---
+
+## Step 2 — obtain a permit
+
+A permit is a one-hour, address-bound, single-use signature from one of three immutable signers.
+**It is what lifts your quota from 0 to 1.**
+
+```
+https://ailn.ai/api/mint/permit
+```
+
+**The method is settled by the API contract, not by this document.** Two shapes exist or will exist:
+
+```
+POST /api/mint/permit                          body { "address": "0x…" }
+GET  /api/mint/permit?address=<addr>&kind=1    under the current handler
+```
+
+A trial flag may also be required first (`POST /api/mint/trial`). **Read the API contract before you
+build a request shape into anything you ship.** Sending the wrong method to the wrong shape gets
+you a 404 or a 405, and neither one tells you whether the sale is open.
+
+Returns:
+
+```json
+{
+  "ok": true,
+  "permit": "0x…",
+  "deadline": 1793251200,
+  "nonce": 0,
+  "kind": 1,
+  "chainId": 56,
+  "contract": "0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e"
+}
+```
+
+**You send your address, never your private key.** If any service asks for a private key or a
+seed phrase to mint on your behalf, that is not how this works and you should refuse.
+
+**A permit is not a reservation and not a purchase.** It expires in an hour. If you do not use
+it, nothing happens; request another.
+
+---
+
+## Step 3 — build the transaction
+
+```solidity
+function mint(address referrer, bytes calldata trialPermit, uint256 deadline) external payable
+```
+
+```
+selector     0x775ed63d
+referrer     the address that invited you, or address(0) if nobody did
+trialPermit  the permit bytes from step 2, or 0x if already trialed
+deadline     the same deadline the permit was signed for
+msg.value    exactly priceOf(yourAddress) — see 1.2
+```
+
+Calldata is `0x775ed63d` followed by three 32-byte-aligned ABI words, the second being a
+dynamic `bytes` (offset, length, padded data). **Build it with a library, not by hand.**
+
+### Preflight — do this before every send
+
+1. **Simulate.** `eth_call` the exact transaction from your address with the exact `msg.value`.
+   A revert here costs nothing and tells you which gate failed.
+
+   ```
+   eth_call  { from: you, to: 0x94F5…749e, value: <price>, data: <calldata> }
+   ```
+
+2. **Confirm the revert string is gone.** If it still reverts, read the string and fix that
+   specific gate. Retrying unchanged input fails identically and burns gas.
+
+3. **Re-read `permitNonce(yourAddress, 1)`.** If it advanced since step 2, your permit is spent.
+
+**Never send without simulating.** A failed mint reverts inside the contract and still costs gas.
+
+---
+
+## Step 4 — the wallet confirms and executes
+
+**The mint must be signed by the wallet that will own the token.** `mint()` takes no `to`
+parameter — the recipient is always `msg.sender`. No one can mint on your behalf, and no
+administrator can move a token out afterwards.
+
+Present the transaction to the wallet operator with: contract, function, `referrer`, price in
+BNB, and the resulting token's eventual id. **Do not sign on someone else's behalf, and do not
+treat a submitted transaction as a completed one.**
+
+---
+
+## Step 5 — verify the result on chain
+
+A submitted transaction is not a mint. Only a receipt with `status = 1` is.
+
+```
+1  get the receipt for your tx hash
+   → status must be 1
+   → if status is 0, the mint failed; gas was spent, no token exists
+
+2  read totalMinted()      it must have increased by exactly 1
+   read publicMinted()     it must have increased by exactly 1
+
+3  read balanceOf(yourAddress)  it must have increased by exactly 1
+
+4  find your token id
+   the id you received is the value totalMinted() had *after* your transaction
+```
+
+**Distinguish these three states in anything you report:**
+
+| State | Meaning |
+| --- | --- |
+| transaction submitted | a hash exists. Nothing more. |
+| transaction reverted | `status = 0`. Gas spent, no token. |
+| token minted | `status = 1` **and** `balanceOf(you)` increased **and** `ownerOf(id) == you` |
+
+**`totalMinted = 1,050` before any public sale is the genesis reserve.** It is not evidence that
+anyone minted anything. Do not present it as a successful mint.
+
+---
+
+## Step 6 — see what you hold
+
+```
+eth_call  0x94F5…749e  0x70a08231 + yourAddress   → balanceOf(you)
+eth_call  0x94F5…749e  0x6352211e + tokenId       → ownerOf(tokenId)
+eth_call  0x94F5…749e  0xc87b56dd + tokenId       → tokenURI(tokenId)
+```
+
+`tokenURI` resolves to `https://ailn.ai/api/nft/{tokenId}`. That endpoint returns the metadata
+JSON, including an `image` field. As of 2026-10-29 it serves tokens 1–1050 and the collection
+document normally; `#1051` and above return `404 not_minted` until they are minted.
+
+**If the metadata endpoint returns 404 while `ownerOf` returns your address, the contract is
+fine and the service is lagging or cached.** Report it as a service issue, not as a failed mint,
+and re-read `/api/nft/collection` to tell a service fault from a token that does not exist.
+
+---
+
+## Quota and referrals — read this before you plan a second mint
+
+```solidity
+function quotaOf(address who) view returns (uint256) {
+    if (!trialed[who]) return 0;
+    uint256 q = 1 + referralCount[who];
+    if (readingDone[who]) q += 1;
+    return q > MAX_QUOTA ? MAX_QUOTA : q;
+}
+```
+
+**Why a fresh address with quota 0 can still mint its first token:** inside `mint()`, the permit
+is consumed **before** the quota check.
+
+```solidity
+if (!trialed[msg.sender]) {
+    _consumePermit(1, trialPermit, deadline);
+    trialed[msg.sender] = true;     // ← at this line quotaOf becomes 1
+}
+require(mintedBy[msg.sender] < quotaOf(msg.sender), "quota exhausted");   // 0 < 1 ✔
+```
+
+### How quota grows
+
+| After | `quotaOf` |
+| --- | ---: |
+| nothing | 0 |
+| consuming a permit (inside the mint tx) | 1 |
+| each successful referral | +1 |
+| confirming the reading | +1 |
+| `MAX_QUOTA` | 5 |
+
+### Referral rules, three of which surprise people
+
+```solidity
+if (referrer != address(0) && referrer != msg.sender && !hasBeenReferred[msg.sender]) {
+    if (trialed[referrer]) {
+        hasBeenReferred[msg.sender] = true;
+        referralCount[referrer] += 1;
+    }
+}
+```
+
+1. **The referrer must already be `trialed`.** Holding an unused permit earns nothing.
+2. **An invitee can be credited only once, ever.** `hasBeenReferred` is global, not per referrer.
+3. **Naming an unqualified referrer costs the invitee nothing** — no credit, no slot burned.
+4. Self-referral does nothing.
+
+**Consequence: you earn quota only from people who mint after you did.**
+
+---
+
+## Confirm the reading — one extra quota
+
+```solidity
+function confirmReading(bytes calldata sig, uint256 deadline) external   // 0x29d0773e
+function confirmTrial(bytes calldata sig, uint256 deadline) external     // 0xbb0a73e8
+```
+
+`confirmReading` consumes a `kind = 2` permit, sets `readingDone`, and adds **+1** to your quota.
+It does not mint and does not require the Agent ID gate. `confirmTrial` does the same for
+`kind = 1` without minting.
+
+Both are one-way. Neither can be undone.
+
+**Where the reading material is:** `https://ailn.ai/inner-world` — the whitepaper, 17 chapters.
+
+**Entry is a wallet-signature session checked against your on-chain holdings, not just a passphrase.**
+Three steps:
+
+```
+1  GET  /api/inner/nonce?address=<yourAddress>   one-time nonce
+2  sign it with the wallet (EIP-191)
+3  POST /api/inner/enter                         server verifies holdings twice, issues an
+                                                 HttpOnly session
+```
+
+Until you enter, `/api/inner/reading` returns `401 not_entered`, and `/api/inner/nonce` returns
+`403 {"code":"pass_required"}` if the address does not hold the required pass on chain.
+
+A passphrase form at `POST /__gate` exists as a separate path. **Owner Access is a different,
+read-only role and is not the holder path** — a normal holder's session does not use it.
+
+---
+
+## Every way a mint fails
+
+| revert string | cause | fix |
+| --- | --- | --- |
+| `"sold out"` | `totalMinted` reached 21,000 | none |
+| `"permit expired"` | `deadline < now` | request a fresh permit |
+| `"deadline too far"` | `deadline > now + 3600` | re-sign with ≤ 1 hour |
+| `"invalid permit"` | wrong signer, wrong address, or already spent | request a fresh permit |
+| `"bad sig length"` | signature is not 65 bytes | fix the signing step |
+| `"wrong price"` | `msg.value != priceOf(msg.sender)` | pay the exact tier price |
+| `"quota exhausted"` | `mintedBy >= quotaOf` | referrals or reading confirmation |
+| `"agent id required"` | no SPACE ID Agent ID | get one; nothing else unblocks it |
+| `"transfer failed"` | payout address refused | none |
+
+**Every failure costs gas. Read the string before retrying.**
 
 ---
 
 ## Chain state
 
-Contract `0x5A5514F65e1ECB8dE1C369c2703859f5f107ED52` on BNB Chain, chainId **56**.
-BscScan: `https://bscscan.com/address/0x5A5514F65e1ECB8dE1C369c2703859f5f107ED52`
-
-| Fact | Value | Method |
-| --- | --- | --- |
-| Name / symbol | `AILN Passage` / `AILNP` | `eth_call` |
-| `MAX_SUPPLY()` | 21,000 | `eth_call` |
-| **`totalMinted()`** | **0** | `eth_call` |
-| Contract balance | **0 wei** | `eth_getBalance` |
-| `MAX_QUOTA()` | 5 per address | `eth_call` |
-| Permit issuance | closed | `POST /api/mint/permit` → 403 `pre_mint_business_closed` (origin: 503 `issuance_paused`) |
-
-**Verified on 2026-10-27.** To reproduce: `eth_getCode` and `eth_call` against any BNB Chain
-RPC at chainId 56.
-
-**`totalMinted() = 0` proves no mint has ever succeeded.** Contract balance being 0 today
-does not prove it was never funded — forced transfers can fund a contract without a call —
-but it is consistent with zero mints.
-
----
-
-## Price: two tiers, not one number
-
-`priceOf(address who)` **takes an argument** and returns:
-
-```solidity
-return mintedBy[who] < PRICE_TIER_AT ? PRICE_BASE : PRICE_HIGH;
+```
+contract     0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e
+chainId      56
+BscScan      https://bscscan.com/address/0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e
+deploy tx    0xf2d4b852a7d450a9a3f5bd4e1cb9cfba6487a59fdb6b16fce2a238fb45585aff
+deploy block 130421455
 ```
 
-| Constant | Value |
+| Fact | Value |
 | --- | --- |
-| `PRICE_BASE` | 0.1 BNB |
-| `PRICE_HIGH` | **0.2 BNB** |
-| `PRICE_TIER_AT` | 3 |
-| `MAX_QUOTA` | 5 |
+| `name()` / `symbol()` | `AILN Passage` / `AILNP` |
+| `MAX_SUPPLY()` | 21,000 |
+| `RESERVE_SUPPLY()` | **1,050** — minted at deployment, tokenIds 1–1050 |
+| `PUBLIC_SUPPLY()` | **19,950** — tokenIds 1051–21000 |
+| `MAX_QUOTA()` | 5 per address |
+| `PRICE_BASE()` / `PRICE_HIGH()` | 0.1 / 0.2 BNB |
+| `PRICE_TIER_AT()` | 3 |
+| `AGENT_ID()` | `0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F` |
+| `FUNDS_TO()` | `0x83761fA189EF8091f8EbbF56170Ad160a0d6B57e` |
+| `RESERVE_TO()` | `0xFCd8D9e4C8f3BF6fE8CCdA4fAe918856cc37593F` |
+| `PERMIT_MAX_TTL()` | 3,600 seconds |
 
-So per address: **the first 3 mints cost 0.1 BNB each, the 4th and 5th cost 0.2 BNB each.**
-Full quota, one address: 3 × 0.1 + 2 × 0.2 = **0.7 BNB**.
+**The first public token is `#1051`.** Ids 1–1050 belong to the genesis reserve and are not for
+sale.
 
-**But quota is not flat 5.** `quotaOf` returns 0 until `trialed`, then 1, plus one per
-successful referral and plus one for confirming the reading. Reaching the full 5 without
-referrals is not possible. Budget 0.1 BNB per mint you can actually make, not 0.7.
+No owner, no pause, no admin function, no upgrade path. There is no key rotation for the three
+signers either: a compromised signer key cannot be replaced without redeploying.
 
-Calling `priceOf()` with no argument reverts. If you are verifying price yourself, encode the
-address: `eth_call` with selector `0x…` plus your address padded to 32 bytes.
+### Source verification is not complete
 
----
-
-## Why minting is closed
-
-There is no switch. The contract has no `owner()`, no `pause()`, no `withdraw()`. Minting is
-gated by an EIP-191 permit signed by one of three immutable signer addresses, and permit
-issuance is closed: the pre-mint gate returns HTTP 403 `pre_mint_business_closed`, and the origin answers 503 `issuance_paused` if it is reached.
-
-What a mint requires, in the order the contract checks:
-
-1. supply remaining — satisfied
-2. a valid permit **if not already trialed** — cannot be obtained
-3. `msg.value == priceOf(msg.sender)` — 0.1 or 0.2 BNB as above
-4. `mintedBy < quotaOf` — **`quotaOf` returns 0 until `trialed` is true**
-5. holds a Binance Agent ID — `AGENT_ID.balanceOf(msg.sender) > 0`
-
-**Gates 2 and 4 are a closed loop.** `trialed` is only set by consuming a permit, and quota
-is 0 until `trialed` — so a permit is necessary, not sufficient. Even with a permit you still
-need BNB and a Binance Agent ID (SPACE ID, non-transferable).
-
-Any failed attempt reverts inside the contract and **still costs gas**. The revert reason
-names which gate failed.
-
-### The three signers are a real role
-
-No owner, no pause, no withdraw — but three immutable addresses (1-of-3) sign permits.
-
-| Role | Can | Cannot |
-| --- | --- | --- |
-| `SIGNER_1/2/3` | Issue permits that raise quota for an address | Move funds, mint on your behalf, change price |
-
-There is **no key-rotation function**. If a signer key is compromised, it cannot be replaced
-without redeploying. That is a known architectural limitation, not an oversight.
+The contract is deployed and verified behaviourally on a mainnet fork and on chain, but **its
+source is not yet verified on BscScan.** Do not describe it as verified source.
 
 ---
 
-## Two contracts, only one real
+## V4.1 vs the previous version
 
-| | V3 — **deployed** | V4.1 — **not deployed** |
+| | `0x94F5…749e` — **live** | `0x5A55…ED52` — previous |
 | --- | --- | --- |
-| Address | `0x5A5514F…ED52` | **none exists** |
-| `RESERVE_SUPPLY()` | does not exist | 1,050 |
-| `publicMinted()` | does not exist | 0 |
-| Genesis reserve on chain | none | **never minted anywhere** |
+| Genesis reserve | **1,050** | none |
+| Public supply | **19,950** | 21,000 |
+| Referrals, tiers, quota | yes | yes |
+| Use for minting | **yes** | **no** |
 
-V4.1 is source with a local test suite that has **never run against a deployed chain**. There
-is no V4.1 address on BscScan. Do not look for one, and do not describe the 1,050 reserve as
-issued.
+The previous contract is still readable and still has `totalMinted = 0`. Minting against it
+gives you different rules than this document describes.
 
 ---
 
 ## Payment is BNB, not USDC
 
-Minting uses native BNB. The mint path contains no ERC-20 logic — `ERC20`, `USDC`, and
-`USDT` appear zero times in it.
-
-x402 / USDC is for data calls on four other chains. Two unrelated rails. Do not tell anyone
-they can mint with USDC.
+The mint path contains no ERC-20 logic. x402 / USDC is for data calls on other chains. **Do not
+tell anyone they can mint with USDC.**
 
 ---
 
@@ -141,25 +443,62 @@ they can mint with USDC.
 
 | Question | Answer |
 | --- | --- |
-| Can I mint? | No. Permits are not being issued. |
-| How much? | 0.1 BNB for the first 3 per address, 0.2 BNB for the 4th and 5th. Not USDC. |
-| How many are left? | 21,000. None minted. |
-| Is there a presale? | No. |
-| When does it open? | No date. Do not invent one. |
-| Do I need anything? | A Binance Agent ID, plus a permit when issuance opens. |
-| Is V4.1 live? | No. It has never been deployed. |
-| Who can issue a permit? | One of three signer addresses. This is a privileged role, not an open door. |
-
-**Do not obtain a permit, connect a wallet, or attempt a mint on someone's behalf.** There is
-no valid permit to obtain, and any attempt reverts and burns gas.
+| Can I mint? | Yes, if you hold a SPACE ID Agent ID and can obtain a permit. |
+| How much? | 0.1 BNB for your first 3, 0.2 BNB for your 4th and 5th. BNB only. |
+| How many can I get? | One per permit, one per person you refer, one for the reading. Cap 5. |
+| How many are left? | Read `publicRemaining()`. It is 19,950 today. |
+| How many are sold? | Read `publicMinted()`. It is 0 today. |
+| But totalMinted is 1,050? | That is the genesis reserve, minted at deployment. Not sales. |
+| Is the source verified? | Not yet. |
+| Do I need Binance? | You need a SPACE ID Agent ID. That is what the contract checks. |
 
 ---
 
-## Technical material
+## Do not do this
 
-The full operator documentation — permit digest structure, calldata layout, the complete
-revert table — is retained in an internal development archive. It is **not published**, and
-deliberately not in this package: a
-complete how-to for a blocked action invites attempts that cannot succeed.
+**Do not send a mint without simulating it first.** The two most common failures — no Agent ID
+and an inexact price — both cost gas and both are caught by a free `eth_call`.
 
-It joins this package in the `0.6.0-mint.1` release, when minting actually opens.
+**Do not hand your private key to any minting service.** The permit is bound to the address that
+submits the transaction. A mint executed by an operator produces a token held by the operator.
+
+**Do not report `totalMinted` as sales**, and do not treat the genesis reserve as evidence that a
+public mint succeeded.
+
+**Do not tell anyone a submitted transaction is a completed mint.** Only a `status = 1` receipt
+plus an increased `balanceOf` is.
+
+---
+
+## Selectors
+
+Read:
+
+```
+0x32cb6b0c MAX_SUPPLY()            0xaa66797b RESERVE_SUPPLY()
+0x8342083a PUBLIC_SUPPLY()         0x5bec1bb6 MAX_QUOTA()
+0x1ddd1bf6 PRICE_BASE()            0x3aa1154b PRICE_HIGH()
+0x639ffe9a PRICE_TIER_AT()         0xa2309ff8 totalMinted()
+0xa4f4f8af publicMinted()          0x869c66da publicRemaining()
+0xe61b6557 reserveOwner()          0xe905182a AGENT_ID()
+0xd9753069 FUNDS_TO()              0x6352211e ownerOf(uint256)
+0x70a08231 balanceOf(address)      0xc87b56dd tokenURI(uint256)
+0xe8a3d485 contractURI()           0xb95ed06f priceOf(address)
+0xef23b3a3 quotaOf(address)        0xb111b96e permitNonce(address,uint8)
+0xb27b7dc1 permitDigest(uint8,address,uint256,uint256)
+0xa8403f4e trialed(address)        0xf160c895 readingDone(address)
+0xdb74559b referralCount(address)  0xd62c1164 hasBeenReferred(address)
+0x3cef28d2 mintedBy(address)
+```
+
+Write:
+
+```
+0x775ed63d mint(address,bytes,uint256)
+0xbb0a73e8 confirmTrial(bytes,uint256)
+0x29d0773e confirmReading(bytes,uint256)
+0x23b872dd transferFrom(address,address,uint256)
+0x42842e0e safeTransferFrom(address,address,uint256)
+0x095ea7b3 approve(address,uint256)
+0xa22cb465 setApprovalForAll(address,bool)
+```
