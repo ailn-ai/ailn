@@ -1,4 +1,4 @@
-﻿# Agent SKILL — single source
+# Agent SKILL — single source
 
 **Status: `CANDIDATE` — version 0.5.0-prelaunch.5. Design-complete, not approved, not published.**
 

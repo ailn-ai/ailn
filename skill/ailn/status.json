@@ -36,9 +36,10 @@
     },
     "mintPermitIssuance": {
       "state": "CLOSED",
-      "httpStatus": 503,
+      "httpStatus": 403,
+      "httpStatusOrigin": 503,
       "command": "POST /api/mint/permit",
-      "note": "issuance_paused. No public path to a permit."
+      "note": "Closed. The pre-mint gate answers 403 pre_mint_business_closed before the origin is reached; the origin own answer is 503 issuance_paused. Either way there is no public path to a permit."
     },
     "nftMintOnChain": {
       "state": "BLOCKED_BY_PERMITS",

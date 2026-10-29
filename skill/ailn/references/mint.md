@@ -40,7 +40,7 @@ BscScan: `https://bscscan.com/address/0x5A5514F65e1ECB8dE1C369c2703859f5f107ED52
 | **`totalMinted()`** | **0** | `eth_call` |
 | Contract balance | **0 wei** | `eth_getBalance` |
 | `MAX_QUOTA()` | 5 per address | `eth_call` |
-| Permit issuance | closed | `POST /api/mint/permit` → 503 `issuance_paused` |
+| Permit issuance | closed | `POST /api/mint/permit` → 403 `pre_mint_business_closed` (origin: 503 `issuance_paused`) |
 
 **Verified on 2026-10-27.** To reproduce: `eth_getCode` and `eth_call` against any BNB Chain
 RPC at chainId 56.
@@ -82,7 +82,7 @@ address: `eth_call` with selector `0x…` plus your address padded to 32 bytes.
 
 There is no switch. The contract has no `owner()`, no `pause()`, no `withdraw()`. Minting is
 gated by an EIP-191 permit signed by one of three immutable signer addresses, and permit
-issuance returns HTTP 503.
+issuance is closed: the pre-mint gate returns HTTP 403 `pre_mint_business_closed`, and the origin answers 503 `issuance_paused` if it is reached.
 
 What a mint requires, in the order the contract checks:
 
