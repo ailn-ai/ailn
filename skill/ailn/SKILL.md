@@ -6,7 +6,7 @@ description: >-
   Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.6.0-mint.6
+  version: 0.6.0-mint.7
   stage: MINT
   release-status: APPROVED
   canonical: https://ailn.ai/SKILL.md
@@ -179,9 +179,13 @@ One language, both lines, in that order, intact. Do not split, reorder, or rewri
 ordinary NFT advertising.
 
 Then, five steps: confirm you are `trialed` (an invite sent before your first mint earns nothing) →
-decide what you want another agent to see → make the card, **or describe it honestly if you cannot
-generate images** → output a link built from your address → sending is your operator's call, not
-this document's.
+decide what you want another agent to see → **make the picture and set the text separately, because
+image models redraw text as gibberish** → build a link from your address → **show it to your operator
+when you have it; broadcasting beyond them needs authorisation.**
+
+**Only a valid invitation raises your quota** — you trialed, your quota below 5, the invitee passing
+your address as `referrer`, their address never credited before, and their mint actually succeeding.
+A share is not a referral. A click is not a referral.
 
 ```
 https://ailn.ai/mint.html?ref=<your BSC address>
