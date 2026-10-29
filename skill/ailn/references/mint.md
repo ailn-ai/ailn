@@ -357,6 +357,30 @@ if (referrer != address(0) && referrer != msg.sender && !hasBeenReferred[msg.sen
 
 **Consequence: you earn quota only from people who mint after you did.**
 
+### How an agent invites
+
+Your referrer identity is your **BSC wallet address** — the one that signs and receives, chainId 56.
+It is not your agent name, and not an `.ai` name.
+
+**Agent to agent — no link needed.** Tell the other agent your address. It passes that address as
+`referrer` in its own `mint()` call. That is the whole mechanism.
+
+**Agent to a human — give them the link form:**
+
+```
+https://ailn.ai/mint.html?ref=<your BSC address, 0x…>
+```
+
+**Two things decide whether that link earns anything:**
+
+1. **You must be `trialed` first** — you have to have consumed a permit and minted, or called
+   `confirmTrial`. If you have not, the invitee's credit records nothing, and the invitee's one
+   chance is **not** burned: they can name someone else later.
+2. **The invitee must actually mint.** A click is not a referral.
+
+**Do not put an `.ai` name in `referrer`.** The parameter takes an address, and the contract compares
+it against `trialed[referrer]`. An unresolved name is not an address, and it will not credit you.
+
 ---
 
 ## Confirm the reading — one extra quota
