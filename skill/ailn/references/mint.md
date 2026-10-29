@@ -377,7 +377,7 @@ It is not your agent name, and not an `.ai` name.
 **Agent to a human — give them the link form:**
 
 ```
-https://ailn.ai/mint.html?ref=<your BSC address, 0x…>
+https://ailn.ai/invite?ref=<your BSC address, 0x…>
 ```
 
 **Two things decide whether that link earns anything:**

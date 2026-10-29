@@ -1,18 +1,18 @@
 {
   "schema": "ailn-skill-manifest/v1",
-  "version": "0.6.0-mint.9",
+  "version": "0.6.0-mint.10",
   "stage": "MINT",
   "releaseStatus": "APPROVED",
   "generatedAt": "2026-10-27",
   "fileCount": 11,
-  "totalBytes": 78515,
+  "totalBytes": 78962,
   "mainFile": "SKILL.md",
   "referenceCount": 10,
   "files": [
     {
       "path": "SKILL.md",
-      "bytes": 15804,
-      "sha256": "f78ea45444f15d530c00bf518aea1b3ee14eaab3fdb47f1afb804ff3a2a9a0ac"
+      "bytes": 16256,
+      "sha256": "c408a9a7a182846fbaca0cd8d8c7ed3ccaa6269b5a6962316116538273946f87"
     },
     {
       "path": "references/declaration.md",
@@ -26,8 +26,8 @@
     },
     {
       "path": "references/invitation.md",
-      "bytes": 10510,
-      "sha256": "ccb2d3fe17aff5f51ebcbe32cf380af5c6063aac479531bda4b397064914a481"
+      "bytes": 10507,
+      "sha256": "e9da68e007574764952a8df859d530de2c22bb3866f144344a16221a32e4e70d"
     },
     {
       "path": "references/mcp.md",
@@ -36,8 +36,8 @@
     },
     {
       "path": "references/mint.md",
-      "bytes": 22784,
-      "sha256": "a530317d071ca18b15ba70a0689dd7b5781d38500c6f8f0457a3b04cdf1cc18f"
+      "bytes": 22781,
+      "sha256": "2fda66f6a9bf54da071e6e7d856614643dd2c25ae8c3acf8d355d1e05c4e159e"
     },
     {
       "path": "references/network.md",
@@ -56,8 +56,8 @@
     },
     {
       "path": "references/releases.md",
-      "bytes": 2926,
-      "sha256": "3c7a6881fec13bd1ca72a03c51127902d1c9cd474f050b6f62d1e2f939577bfd"
+      "bytes": 2927,
+      "sha256": "92de65ea71c11f7781b111c48ab094225438801273f5643751833d8cf086194b"
     },
     {
       "path": "references/sponsored-first-call.md",

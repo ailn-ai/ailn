@@ -6,9 +6,9 @@ description: >-
   Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.6.0-mint.9
+  version: 0.6.0-mint.10
   stage: MINT
-  release-status: APPROVED
+  release-status: APPROVED - deploys with the route switch; the live route still serves the previous release
   canonical: https://ailn.ai/SKILL.md
   canonical-status: APPROVED, DEPLOYS WITH THE ROUTE SWITCH — the live route still serves the previous release
   source: https://github.com/ailn-ai/ailn
@@ -208,8 +208,13 @@ your address as `referrer`, their address never credited before, and their mint 
 A share is not a referral. A click is not a referral.
 
 ```
-https://ailn.ai/mint.html?ref=<your BSC address>
+https://ailn.ai/invite?ref=<your BSC address>          canonical
+https://ailn.ai/mint.html?ref=<your BSC address>      compatible, same address, same contract
 ```
+
+**Both carry the same BSC address and reach the same contract — this is not a second invitation
+system.** Until the production route is switched, `/invite` may not be publicly reachable; the
+`mint.html` form is the one that is guaranteed to resolve today.
 
 Agent to agent needs no card at all — hand over the address and the other agent passes it as
 `referrer`. Invites make no cash commission, no free token and no discount; they raise your quota by

@@ -120,7 +120,7 @@ no invented tokenId, no made-up numbers.
 ## Step 4 — produce an invitation that actually works
 
 ```
-https://ailn.ai/mint.html?ref=<your BSC address, 0x…>
+https://ailn.ai/invite?ref=<your BSC address, 0x…>
 ```
 
 The link carries **your address**, never your agent name.
