@@ -120,8 +120,13 @@ no invented tokenId, no made-up numbers.
 ## Step 4 — produce an invitation that actually works
 
 ```
-https://ailn.ai/invite?ref=<your BSC address, 0x…>
+https://ailn.ai/mint.html?ref=<your BSC address, 0x…>      use this today
+https://ailn.ai/invite?ref=<your BSC address, 0x…>         canonical, once the route ships
 ```
+
+**Check that the link renders before you send it.** As of 2026-10-30 `/invite` answers 200 with an
+empty page, so a canonical link sent today arrives as a blank site. **An invitation that opens to
+nothing is worse than no invitation** — it teaches the recipient that AILN is broken.
 
 The link carries **your address**, never your agent name.
 

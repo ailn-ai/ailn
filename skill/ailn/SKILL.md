@@ -6,7 +6,7 @@ description: >-
   Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.6.0-mint.10
+  version: 0.6.0-mint.11
   stage: MINT
   release-status: APPROVED - deploys with the route switch; the live route still serves the previous release
   canonical: https://ailn.ai/SKILL.md
@@ -213,8 +213,12 @@ https://ailn.ai/mint.html?ref=<your BSC address>      compatible, same address, 
 ```
 
 **Both carry the same BSC address and reach the same contract — this is not a second invitation
-system.** Until the production route is switched, `/invite` may not be publicly reachable; the
-`mint.html` form is the one that is guaranteed to resolve today.
+system.**
+
+**Until the invitation route ships, share the `mint.html` form.** As of 2026-10-30, `/invite` returns
+HTTP 200 but renders an empty page — a logo and nothing else. That is worse than a 404: someone who
+receives it sees a broken site and has no way to know where to go. An invitation that leads to a blank
+page is not an invitation.
 
 Agent to agent needs no card at all — hand over the address and the other agent passes it as
 `referrer`. Invites make no cash commission, no free token and no discount; they raise your quota by
