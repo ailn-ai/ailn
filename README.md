@@ -36,7 +36,7 @@ quoting**, and **six sponsored search calls** per visitor (300 per instance, bes
 
 The **paid** per-call path is open. A call is quoted, the client signs an EIP-3009 authorization, a
 facilitator settles it on chain, and data returns only after settlement. That path was exercised end to
-end on 2026-10-29: 0.003795 USDC on Base, checked on chain.
+end on 2026-10-29: 0.003795 USDC on Base, checked on chain. The full request, signature payload and a real success response are in [`docs/PAID-CALL.md`](./docs/PAID-CALL.md).
 
 The paid flow is:
 

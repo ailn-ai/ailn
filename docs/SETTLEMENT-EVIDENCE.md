@@ -53,3 +53,15 @@ repository does not publish a checked transaction for them yet. Treat those thre
 | `0x1a45727757e3af2a688842ce1687056db2308adc` | receiver | `to` field of that `Transfer` log, filtered by `eth_getLogs` |
 
 Explorer: <https://arbiscan.io/tx/0x3b3a2f398044bb3d46cd9a027c1dbfad97fb21597bb058f7dc6b7d399dc998ac>
+
+## The call documented in PAID-CALL.md
+
+The walkthrough in [`PAID-CALL.md`](./PAID-CALL.md) comes from one more Base transfer:
+
+| Field | Value |
+|---|---|
+| Transaction | `0x29e30de0967721b56934276476d2d0c305452830bd8ac78321900d3157f312a6` |
+| Block | 53225135 |
+| Timestamp | 2026-10-29 10:06:57 (+08) |
+| From → To | `0x3fdb…b643` → `0x1a45…8adC` |
+| Amount | 0.003795 USDC |
