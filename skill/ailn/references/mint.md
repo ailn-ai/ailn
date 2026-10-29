@@ -142,45 +142,74 @@ Must be `< quotaOf(you)`, otherwise the mint reverts with `"quota exhausted"`.
 
 ## Step 2 — obtain a permit
 
-A permit is a one-hour, address-bound, single-use signature from one of three immutable signers.
-**It is what lifts your quota from 0 to 1.**
+A permit is an address-bound, single-use signature from one of three immutable signers, valid for
+30 minutes when issued and never more than 60. **It is what lifts your quota from 0 to 1.**
 
 ```
-https://ailn.ai/api/mint/permit
+POST https://ailn.ai/api/mint/permit
+Content-Type: application/json
+
+{ "address": "0x…", "kind": 1 }
 ```
 
-**The method is settled by the API contract, not by this document.** Two shapes exist or will exist:
-
-```
-POST /api/mint/permit                          body { "address": "0x…" }
-GET  /api/mint/permit?address=<addr>&kind=1    under the current handler
-```
-
-A trial flag may also be required first (`POST /api/mint/trial`). **Read the API contract before you
-build a request shape into anything you ship.** Sending the wrong method to the wrong shape gets
-you a 404 or a 405, and neither one tells you whether the sale is open.
+**There is no trial step first. POST is the first call.** It checks your Agent ID on chain, records
+your trial eligibility, and signs. Calling it again for the same address re-signs with the current
+nonce — it does not charge you twice.
 
 Returns:
 
 ```json
 {
   "ok": true,
-  "permit": "0x…",
-  "deadline": 1793251200,
-  "nonce": 0,
+  "address": "0x…",
   "kind": 1,
   "chainId": 56,
-  "contract": "0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e"
+  "contract": "0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e",
+  "permit": "0x<65-byte signature>",
+  "deadline": "<unix seconds, decimal string>",
+  "nonce": "<uint256, decimal string>"
 }
 ```
 
-**You send your address, never your private key.** If any service asks for a private key or a
-seed phrase to mint on your behalf, that is not how this works and you should refuse.
+**Check four things before you use it:**
 
-**A permit is not a reservation and not a purchase.** It expires in an hour. If you do not use
-it, nothing happens; request another.
+1. `address` is your address
+2. `chainId` is 56 and `contract` is the address above
+3. `deadline` is in the future, within an hour
+4. the signature recovers — via the on-chain `permitDigest(kind, who, deadline, nonce)` — to one of
+   the three signer addresses
 
----
+**A permit is not a reservation and not a purchase.** It expires. If you do not use it, request
+another.
+
+### Failure codes
+
+| HTTP | code | meaning |
+| --- | --- | --- |
+| 400 | `bad_address` / `bad_permit_request` | malformed input — do not send a transaction |
+| 403 | `agent_id_required` | this wallet holds no SPACE ID Agent ID |
+| 503 | `agent_id_unknown` | the Agent ID read failed — retry, do not read it as ineligible |
+| 403 | `kind_not_open` | only `kind = 1` is signed |
+| 403 | `pre_mint_business_closed` | issuance not open yet |
+| 503 | `signer_unavailable` | signing or the on-chain digest/nonce read failed |
+| 429 | `rate_limited` | honour `Retry-After` |
+| 405 | `method_not_allowed` | GET and POST only |
+
+**Rate limits are per edge instance, not globally consistent:** roughly 12 requests per IP and 6
+per address in a 60-second window. Treat 429 as "wait", not as "ineligible".
+
+### Reading and quota
+
+```
+GET /api/mint/eligibility?address=0x…
+→ Agent ID balance, trial state, quota, mintedBy, current price
+```
+
+**Use this instead of guessing.** `quotaOf` reads 0 for an address that has not been trialed — that
+is correct, not a refusal.
+
+**Only `kind = 1` is signed in this release.** The reading confirmation (`kind = 2`) is not open, so
+do not plan around the +1 quota it would give.
 
 ## Step 3 — build the transaction
 

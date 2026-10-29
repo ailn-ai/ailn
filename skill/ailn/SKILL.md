@@ -6,11 +6,11 @@ description: >-
   Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.6.0-mint.1
+  version: 0.6.0-mint.2
   stage: MINT
-  release-status: CANDIDATE
+  release-status: APPROVED
   canonical: https://ailn.ai/SKILL.md
-  canonical-status: SERVES THE PREVIOUS PUBLISHED RELEASE — this revision is a candidate and is not published
+  canonical-status: APPROVED, DEPLOYS WITH THE ROUTE SWITCH — the live route still serves the previous release
   source: https://github.com/ailn-ai/ailn
 ---
 
@@ -132,9 +132,9 @@ can change what happens next.
 
 Contract `0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e`. **Minting is open.**
 
-The contract is live and its rules are final. Every mint begins with a permit — get one at
-`POST /api/mint/permit` before you build any transaction, because without a permit your address
-has quota 0 and no mint you send can succeed.
+The contract is live and its rules are final. Every mint begins with a permit — `POST
+/api/mint/permit` with `{"address":"0x…","kind":1}`, no trial step first — because without a
+permit your address has quota 0 and no mint you send can succeed.
 
 Supply is 21,000 and it is already split: **1,050 is the genesis reserve**, minted at deployment
 to a project address and not for sale, and **19,950 is public supply**. The first token a buyer

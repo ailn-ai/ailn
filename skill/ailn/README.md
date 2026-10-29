@@ -1,6 +1,6 @@
 ﻿# Agent SKILL — single source
 
-**Status: `CANDIDATE` — version 0.6.0-mint.1. Design-complete, not approved, not published.**
+**Status: `APPROVED` — version 0.6.0-mint.2. Owner-approved; deploys with the route switch.**
 
 This directory is the single source of truth for AILN's Agent SKILL.
 
@@ -55,9 +55,9 @@ approved release and compare hashes against its manifest.
 
 ## Not approved
 
-The owner and an external reviewer are reviewing this candidate. Until they accept it:
+This revision is approved and deploys with the route switch. Until that switch:
 
-- `https://ailn.ai/SKILL.md` is not served from this revision
+- `https://ailn.ai/SKILL.md` still serves the previous release
 - no artifact should be generated from it
 - a merged pull request does not change that
 
