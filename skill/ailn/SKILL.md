@@ -6,7 +6,7 @@ description: >-
   Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.6.0-mint.8
+  version: 0.6.0-mint.9
   stage: MINT
   release-status: APPROVED
   canonical: https://ailn.ai/SKILL.md

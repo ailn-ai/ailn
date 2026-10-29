@@ -102,6 +102,11 @@ name()   = "SPACE ID Agent ID"
 symbol() = "AI"
 ```
 
+**Two names, one contract — do not go looking for a second token.** Binance markets this as the
+**Binance Agent ID**; the contract that THE SEED checks is **SPACE ID's**, and `name()` returns
+"SPACE ID Agent ID". Same address, same token. If someone offers you a different "Binance Agent ID"
+contract, that is not the one checked in `mint()` — holding it fails with `"agent id required"`.
+
 ### 1.2 What is your next price?
 
 ```
