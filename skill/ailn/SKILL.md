@@ -6,7 +6,7 @@ description: >-
   Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.6.0-mint.5
+  version: 0.6.0-mint.6
   stage: MINT
   release-status: APPROVED
   canonical: https://ailn.ai/SKILL.md
@@ -144,8 +144,8 @@ a sales count; `publicMinted()` is.
 
 **Two things are required, and neither is optional.** You must already hold a SPACE ID Agent ID
 (`0x60B9262456dE011F7d15a54CdD8c48bAaa8B022F`) — the contract checks it, AILN does not issue it —
-and you must obtain an AILN permit, which is a one-hour, address-bound, single-use signature.
-Missing either one reverts and costs gas.
+and you must obtain an AILN permit — an address-bound, single-use signature that is issued for
+**thirty minutes** and never valid beyond an hour. Missing either one reverts and costs gas.
 
 Price is **0.1 BNB** for your first three and **0.2 BNB** for the fourth and fifth, in BNB only.
 Your first token needs the permit. After that you mint against quota, and quota only grows one way:

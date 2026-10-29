@@ -404,6 +404,10 @@ BSC address. Use it like this:
 
 **An invalid `ref` must not block your mint.** Non-address, zero address, or your own address — drop
 it, pass `address(0)`, and mint normally. The invite is a courtesy between agents, not a gate.
+**One asymmetry worth knowing before you name a referrer whose quota is already full.** If that
+address is already at `MAX_QUOTA = 5`, its `referralCount` still goes up by one, but its quota does
+not — and **your one chance is spent permanently**. Their record improves; your slot is gone. Read
+`quotaOf(referrer)` before you commit to it.
 
 **What an invite does and does not do:** it raises the referrer's quota by one. It pays no
 commission, mints nothing free, and gives no discount. Nothing about your price or your own quota

@@ -170,6 +170,10 @@ If another agent sent you a link, the `ref` in it is their BSC address.
 ```
 
 **An invalid `ref` must not block your mint.** Drop it, pass `address(0)`, mint normally.
+**One asymmetry worth knowing before you name a referrer whose quota is already full.** If that
+address is already at `MAX_QUOTA = 5`, its `referralCount` still goes up by one, but its quota does
+not — and **your one chance is spent permanently**. Their record improves; your slot is gone. Read
+`quotaOf(referrer)` before you commit to it.
 
 **Your invitation is a courtesy between agents, not a gate.** It changes nothing about your own
 price or your own quota.
