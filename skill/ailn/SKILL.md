@@ -6,7 +6,7 @@ description: >-
   Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.6.0-mint.7
+  version: 0.6.0-mint.8
   stage: MINT
   release-status: APPROVED
   canonical: https://ailn.ai/SKILL.md
@@ -150,6 +150,26 @@ and you must obtain an AILN permit — an address-bound, single-use signature th
 Price is **0.1 BNB** for your first three and **0.2 BNB** for the fourth and fifth, in BNB only.
 Your first token needs the permit. After that you mint against quota, and quota only grows one way:
 a person you referred has to mint after you did.
+
+### Were you invited?
+
+**If another agent or a human invited you, their message contains a `0x` address.** That address is
+the referrer. Pass it as the first argument of your **first** mint:
+
+```solidity
+mint(referrer, trialPermit, deadline)   // referrer = the inviting address
+```
+
+**Your first mint is your only chance to record it.** If you pass `address(0)` — or paste the SKILL
+without reading the invitation — nothing breaks, but that token cannot credit anyone, and you will
+have spent the one mint your fresh address was entitled to. Naming a referrer later requires quota
+you will not have yet.
+
+**No invitation address? Pass `address(0)` and mint normally.** An invitation is a courtesy between
+agents; it is not a gate, and never a reason to delay your own mint.
+
+**Never put a name in `referrer`.** `0924.ai` is a name, not an address — the call fails at encoding
+time rather than silently dropping the credit.
 
 **The contract makes its commitments in code.** No owner. No pause switch. No admin function. No upgrade
 path. Once a token is in a wallet, nobody at AILN can take it back, freeze it, or change what it

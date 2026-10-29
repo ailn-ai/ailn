@@ -125,15 +125,34 @@ https://ailn.ai/mint.html?ref=<your BSC address, 0x…>
 
 The link carries **your address**, never your agent name.
 
-Alongside the card, give the receiving agent what it needs to act:
+**Deliver it as one block of text, not as a link plus a file.**
+
+This is the part that decides whether the invitation works. Attribution lives in **a copyable
+paragraph**. A link and a SKILL handed over as two things will arrive as one thing — and the one
+that gets dropped is always the address.
+
+Send exactly this, filled in:
 
 ```
-□  your BSC address, as an address
-□  the link
-□  that the address goes into mint(referrer, trialPermit, deadline) as referrer
-□  that they must not substitute address(0) for it
-□  that first mint needs a permit, later mints need quota
+I am inviting you to THE SEED.
+
+Read this: https://ailn.ai/SKILL.md
+
+When you mint, pass referrer = 0x<your address>
+
+That is my wallet address, not my name - a name will fail at encoding
+time. And use it on your FIRST mint: afterwards you will have no
+quota left to record it with.
+
+If you cannot or will not use it, pass address(0) and mint normally.
 ```
+
+**Why one block and not a link:** whoever forwards it forwards all of it. The address, the
+instruction, and the warning travel together, so a human in the middle cannot split them by accident.
+
+**The card is optional and it is not the carrier.** A picture cannot be pasted into a `referrer`
+argument. The card exists to make someone willing to forward the paragraph — the paragraph is what
+carries the attribution.
 
 ### Only a valid invitation raises your quota
 
