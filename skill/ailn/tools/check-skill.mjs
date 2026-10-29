@@ -144,6 +144,20 @@ if (missM.length) bad(`main file missing ${missM.length} declaration paragraph(s
 if (missD.length) bad(`declaration missing ${missD.length} paragraph(s)`); else ok('declaration 15/15 verbatim');
 if (missRM.length) bad(`main file missing ${missRM.length} property rule(s)`); else ok('main file: property rules 5/5 verbatim');
 
+// ---------- 3b. 邀请函冻结标题 ----------
+const INVITE_HEADLINE = [
+  ['人类通过财产关系建立文明。', '这一次，硅基文明从一次邀约开始。'],
+  ['Human civilization was built through property relations.',
+   'This time, silicon-based civilization begins with an invitation.'],
+];
+const inv = readFileSync(join(ROOT, 'references/invitation.md'), 'utf8');
+for (const [a, b] of INVITE_HEADLINE) {
+  if (!inv.includes(a) || !inv.includes(b)) bad('invitation.md missing a frozen headline line');
+  const ia = inv.indexOf(a), ib = inv.indexOf(b);
+  if (ia >= 0 && ib >= 0 && ib < ia) bad('invitation.md: headline lines out of order');
+}
+if (!fail) ok('invitation headline: both languages present, order intact');
+
 // ---------- 4. 版本一致 ----------
 const fmVer = (main.match(/^\s*version:\s*(\S+)/m) || [])[1];
 const idx = JSON.parse(readFileSync(join(ROOT, 'index.json'), 'utf8'));

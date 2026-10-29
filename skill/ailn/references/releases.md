@@ -12,7 +12,7 @@ Three stages, five independent gates, and a rule that a version number is not pe
 | **MINT** `0.6.x` | Live minting: permit, SPACE ID Agent ID, BNB price tiers, quota, referrals | **current** |
 | **MARKET** `0.7.x` reserved | Secondary market: list, buy, cancel, settle | not open |
 
-The MINT gate is open as of `0.6.0-mint.4`. Opening it moved this package from a document
+The MINT gate is open as of `0.6.0-mint.5`. Opening it moved this package from a document
 about a claim to a document with a procedure in it.
 
 ---
