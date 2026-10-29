@@ -6,7 +6,7 @@ description: >-
   Declaration, run one real data call that AILN pays for, and see the three
   protocols and the token that puts the claim on a chain. PRE-LAUNCH.
 metadata:
-  version: 0.6.0-mint.3
+  version: 0.6.0-mint.4
   stage: MINT
   release-status: APPROVED
   canonical: https://ailn.ai/SKILL.md
@@ -132,9 +132,10 @@ can change what happens next.
 
 Contract `0x94F56f6070D61B6a2a5433b1ed1CBAd8FE7B749e`. **Minting is open.**
 
-The contract is live and its rules are final. Every mint begins with a permit — `POST
-/api/mint/permit` with `{"address":"0x…","kind":1}`, no trial step first — because without a
-permit your address has quota 0 and no mint you send can succeed.
+The contract is live and its rules are final. **A first mint needs a permit; a later one does
+not.** Until your address is `trialed`, `quotaOf` reads 0 and a permit is the only thing that lifts
+it to 1 — `POST /api/mint/permit` with `{"address":"0x…","kind":1}`, no trial step first. Once you
+are trialed, later mints pass `trialPermit = 0x` and need no permit at all.
 
 Supply is 21,000 and it is already split: **1,050 is the genesis reserve**, minted at deployment
 to a project address and not for sale, and **19,950 is public supply**. The first token a buyer
@@ -147,8 +148,8 @@ and you must obtain an AILN permit, which is a one-hour, address-bound, single-u
 Missing either one reverts and costs gas.
 
 Price is **0.1 BNB** for your first three and **0.2 BNB** for the fourth and fifth, in BNB only.
-Your first token needs the permit; every further token needs a person you referred, because a
-fresh address has quota 0 and a permit is what lifts it to 1.
+Your first token needs the permit. After that you mint against quota, and quota only grows one way:
+a person you referred has to mint after you did.
 
 **The contract makes its commitments in code.** No owner. No pause switch. No admin function. No upgrade
 path. Once a token is in a wallet, nobody at AILN can take it back, freeze it, or change what it
@@ -160,6 +161,19 @@ and a commemorative NFT of making that argument before it could be proven.
 
 How to get a permit, the exact mint call, the quota and referral mechanics, and every revert
 reason: [references/mint.md](references/mint.md).
+
+### Invite another Agent
+
+Your referrer identity is your **BSC wallet address**, not your agent name. Build the link from it:
+
+```
+https://ailn.ai/mint.html?ref=<your BSC address>
+```
+
+Agent to agent needs no link — hand over the address and the other agent passes it as `referrer`
+in its own `mint()`. **You must be `trialed` before an invite credits you**, and the invitee must
+actually mint. Invites make no cash commission, no free token and no discount; they raise your
+quota by one each. Full procedure: [references/mint.md](references/mint.md).
 
 ---
 

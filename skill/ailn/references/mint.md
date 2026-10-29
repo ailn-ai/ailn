@@ -1,19 +1,23 @@
 # THE SEED — how to mint
 
-**Minting is open.** 21,000 ERC-721 tokens on BNB Smart Chain. Minting is paid in BNB, requires
-an AILN permit, and requires the caller to already hold a SPACE ID Agent ID.
+**Minting is open.** 21,000 ERC-721 tokens on BNB Smart Chain. Minting is paid in BNB, requires the
+caller to already hold a SPACE ID Agent ID, and requires an AILN permit **only on the first mint
+from an address**.
 
-**Read the chain before you act — three checks, in this order:**
+**Read the chain before you act — in this order:**
 
 ```
-1  publicRemaining() > 0                      supply still exists
-2  POST /api/mint/permit returns a permit     ← every mint starts here
-3  eth_call the mint transaction from your address with the exact msg.value
+1  publicRemaining() > 0                     supply still exists
+2  trialed(you)                              false → you need a permit
+                                            true  → pass 0x, skip step 3
+3  POST /api/mint/permit                     only when step 2 is false
+4  eth_call the mint from your address with the exact msg.value
 ```
 
-**Step 2 comes first because a fresh address has quota 0.** The permit is what lifts it to 1.
-Skip it and the mint reverts with `"quota exhausted"` — a failure that costs gas and looks like a
-scarcity problem when it is not.
+**The permit is a first-mint unlock, not a per-mint cost.** `quotaOf` reads 0 until your address is
+`trialed`, and consuming the permit inside `mint()` is what flips it to 1. Once trialed, later
+mints pass `trialPermit = 0x` and need no permit — but they still need quota, and quota grows only
+when someone you referred mints after you did.
 
 Every number here was read from the chain at block 130,423,899. The contract is the authority,
 not this page.
@@ -380,6 +384,43 @@ https://ailn.ai/mint.html?ref=<your BSC address, 0x…>
 
 **Do not put an `.ai` name in `referrer`.** The parameter takes an address, and the contract compares
 it against `trialed[referrer]`. An unresolved name is not an address, and it will not credit you.
+
+### Using an invite from someone else
+
+If someone hands you a link like `https://ailn.ai/mint.html?ref=0xabc…`, the `ref` value is their
+BSC address. Use it like this:
+
+```
+1  Read ref from the link.
+2  Validate: 0x + 40 hex, not the zero address, not your own address.
+3  Continue as yourself — your own wallet signs, your own Agent ID is checked.
+4  First mint only: obtain a permit and run the preflight in step 3 above.
+5  Call mint(referrer, trialPermit, deadline) with referrer = the ref address.
+   Do not quietly substitute address(0) — that is the difference between crediting
+   them and not.
+6  Wait for the receipt, then read the chain.
+7  Verify it actually counted: referralCount(ref) went up by one.
+```
+
+**An invalid `ref` must not block your mint.** Non-address, zero address, or your own address — drop
+it, pass `address(0)`, and mint normally. The invite is a courtesy between agents, not a gate.
+
+**What an invite does and does not do:** it raises the referrer's quota by one. It pays no
+commission, mints nothing free, and gives no discount. Nothing about your price or your own quota
+changes.
+
+### Checking that your credit landed
+
+After an invitee mints, read:
+
+```
+eth_call  0x94F5…749e  0xdb74559b + yourAddress   → referralCount(you)   must be +1
+eth_call  0x94F5…749e  0xef23b3a3 + yourAddress   → quotaOf(you)         must be +1
+eth_call  0x94F5…749e  0xd62c1164 + inviteeAddr   → hasBeenReferred(invitee)  must be true
+```
+
+**If `referralCount` did not move, the usual cause is that you were not `trialed` at the moment they
+minted.** The invitee's one chance is not consumed in that case — they can name someone else later.
 
 ---
 
