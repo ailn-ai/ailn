@@ -1,38 +1,5 @@
 {
     "id":  "task-0002",
-    "title":  "Give both workflows an explicit least-privilege permissions block",
-    "problem":  "ci.yml and skill-release.yml do not declare permissions, so GITHUB_TOKEN gets the repository default, which is write. A pull request from a fork runs untrusted code against that token. Nothing here deploys today, but the blast radius of a future mistake is set by this default, not by intent.",
-    "scope":  {
-                  "paths_allowed":  [
-                                        ".github/workflows/ci.yml",
-                                        ".github/workflows/skill-release.yml",
-                                        "docs/CONTRIBUTION-REVIEW-PROTOCOL.md"
-                                    ],
-                  "paths_forbidden":  [
-                                          "skill/",
-                                          "contracts/"
-                                      ]
-              },
-    "deliverables":  [
-                         "permissions: contents: read at workflow level in both files",
-                         "Any job that genuinely needs more rights declares them on that job, with a comment saying why"
-                     ],
-    "acceptance":  [
-                       "Both workflows declare an explicit permissions block",
-                       "No job gains a permission it did not already exercise",
-                       "CI still runs verify, scan and conformance to success on a PR",
-                       "The change adds no new workflow"
-                   ],
-    "evidence":  {
-                     "commands":  [
-                                      "gh workflow view ci.yml",
-                                      "npm run verify"
-                                  ],
-                     "required":  [
-                                      "the resulting workflow file excerpt showing the permissions block",
-                                      "a CI run link or pasted job result"
-                                  ]
-                 },
     "dependencies":  [
 
                      ],
@@ -48,5 +15,38 @@
     "agent_friendly":  true,
     "claimed_by":  null,
     "created":  "2026-10-30",
-    "updated":  "2026-10-30"
+    "updated":  "2026-10-30",
+    "scope":  {
+                  "paths_forbidden":  [
+                                          ".github/workflows/",
+                                          "skill/",
+                                          "contracts/"
+                                      ],
+                  "paths_allowed":  [
+                                        "docs/GENESIS-BUILDERS-VERIFICATION-LOG.md"
+                                    ]
+              },
+    "acceptance":  [
+                       "Every job in both workflows appears in the table",
+                       "The claim \"read-only\" is checked against the files rather than repeated from a comment",
+                       "No workflow file is modified"
+                   ],
+    "problem":  "Both workflows declare permissions: contents: read at workflow level, but nothing checks that no job has gained a permission it does not use, and nothing records the effective permission set per job. A future job added without care inherits silently.",
+    "notes":  "Originally a fix task; the permissions block landed in e051c2e. Rewritten as an audit.",
+    "evidence":  {
+                     "commands":  [
+                                      "node scripts/verify.mjs",
+                                      "gh workflow list"
+                                  ],
+                     "required":  [
+                                      "the permission table",
+                                      "the command you used to read the effective permissions"
+                                  ]
+                 },
+    "title":  "Audit the effective permissions of every workflow job",
+    "deliverables":  [
+                         "A per-job table of effective permissions taken from the workflow files",
+                         "A statement of which job needs which permission and why, or that none does",
+                         "A finding if any job holds more than it uses"
+                     ]
 }

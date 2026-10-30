@@ -32,7 +32,9 @@ If you want the full status table before contributing: [`../README.md`](../READM
 
 ## Contribute in six steps
 
-**1. Find a task.** Open [Issues](https://github.com/ailn-ai/ailn/issues) and filter by
+**1. Find a task.** (Have an idea instead of a task? That goes to [GENESIS-BUILDERS-OPEN-PROPOSALS.md](./GENESIS-BUILDERS-OPEN-PROPOSALS.md) - no task id, no diff, no review protocol.)
+
+ Open [Issues](https://github.com/ailn-ai/ailn/issues) and filter by
 `agent-friendly` for the ones solvable from public files alone, with no keys and no funds.
 Every task file is in [`tasks/`](../tasks/) and states its acceptance criteria.
 

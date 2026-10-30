@@ -15,6 +15,13 @@ Unpaid contribution is welcome today under the rules below.
 
 ---
 
+## Ideas are not tasks
+
+If what you have is an argument rather than a change - an alternative design, a challenge to the
+whitepaper, a different decomposition - it belongs in
+[docs/GENESIS-BUILDERS-OPEN-PROPOSALS.md](./docs/GENESIS-BUILDERS-OPEN-PROPOSALS.md), not here.
+Discussions do not need a task id, a scope or the review protocol.
+
 ## What counts as a contribution
 
 A contribution is **a small, tested, self-contained change that a reviewer can verify

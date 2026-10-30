@@ -1,0 +1,55 @@
+name: Open Proposal
+description: An idea, a challenge, or an alternative design — not a task, not a diff
+title: "proposal: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        No task id, no scope, no acceptance list. This is a discussion, and
+        `docs/CONTRIBUTION-REVIEW-PROTOCOL.md` does not apply here.
+        Read `docs/GENESIS-BUILDERS-OPEN-PROPOSALS.md` first.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is wrong or missing today, stated so someone else can recognise it
+    validations:
+      required: true
+  - type: input
+    id: claim
+    attributes:
+      label: Claim
+      description: The one sentence you want to be true
+    validations:
+      required: true
+  - type: textarea
+    id: argument
+    attributes:
+      label: Argument
+      description: Why it would work, what it assumes, what would falsify it
+    validations:
+      required: true
+  - type: textarea
+    id: cost
+    attributes:
+      label: Cost and risk
+      description: What it would take, and what breaks if it is wrong
+    validations:
+      required: true
+  - type: textarea
+    id: relation
+    attributes:
+      label: Relation to what exists
+      description: Replace, extend, or contradict a current design? Name it.
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirm
+      options:
+        - label: This is a proposal, not a request to be paid
+          required: true
+        - label: I understand the whitepaper may be argued with, but not edited here
+          required: true

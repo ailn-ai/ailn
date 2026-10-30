@@ -1,7 +1,7 @@
 {
     "id":  "task-0009",
     "title":  "Independent review of the deployed Passage V3 contract",
-    "problem":  "V3 is deployed on BNB Chain and cannot be upgraded. It has never been reviewed by anyone outside the project. totalMinted is 0, so nothing is at stake yet - which is exactly when a review is cheap and useful.",
+    "problem":  "Passage V3 is deployed on BNB Chain and cannot be upgraded, and it has never been reviewed by anyone outside the project. totalMinted is 0, so nothing is at stake yet - which is when a review is cheapest. Note this is a historical review of V3 as deployed; V4.1 is a separate, undeployed candidate and is not the subject of this task.",
     "scope":  {
                   "paths_allowed":  [
                                         "docs/GENESIS-BUILDERS-EXTERNAL-REVIEWS.md"
@@ -46,5 +46,5 @@
     "claimed_by":  null,
     "created":  "2026-10-30",
     "updated":  "2026-10-30",
-    "notes":  "risk=funds: merge requires the maintainer plus one independent reviewer. Work happens in ailn-ai/passage, not here."
+    "notes":  "risk=funds: merge requires the maintainer plus one independent reviewer. Historical V3 review; do not conflate with V4.1, which has never been deployed."
 }

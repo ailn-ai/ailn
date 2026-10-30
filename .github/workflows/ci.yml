@@ -62,8 +62,20 @@ jobs:
         with:
           node-version: '20'
       - name: run live quote example
+        # Exit 2 = network unreachable: a diagnostic, not a failure. Any other non-zero exit is a
+        # real protocol or JSON error and fails the job.
         run: |
-          node examples/mcp-quote/index.mjs || {
-            echo ':warning: skipped: the live API was unreachable from this runner, which is not a repository failure'
+          set +e
+          node examples/mcp-quote/index.mjs
+          code=$?
+          set -e
+          if [ "$code" -eq 0 ]; then
+            echo "live example: ok"
             exit 0
-          }
+          fi
+          if [ "$code" -eq 2 ]; then
+            echo "::warning::live API unreachable from this runner; example not exercised (exit 2)"
+            exit 0
+          fi
+          echo "::error::the example failed with exit $code - protocol failure, not a network one"
+          exit "$code"
