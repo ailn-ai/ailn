@@ -28,12 +28,13 @@ been exercised by a real outsider yet, and they are marked as such.
 | 5 | The task pool is machine-validated | `node scripts/validate-tasks.mjs` → `task pacts OK`, wired into `npm test` and CI |
 | 6 | A clean clone passes the front door | `npm run verify` and `npm test` pass on a fresh clone (this failed before `faa2758`) |
 | 7 | The steward cannot escalate | Runs on the base commit, executes no contributor code, `contents: read`, holds no secret |
+| 8 | The steward actually runs and posts | Exercised on a real pull request (#11, same repository): the `report` job succeeded and the Chinese report appeared as a comment within one run. Merged as `6982763`, branch deleted |
 
 ## NOT_VERIFIED
 
 | # | Claim | Why it is not verified | What would verify it |
 |---|---|---|---|
-| A | The steward can post its report on a **fork** PR | No external GitHub account was available to open a fork PR. GitHub gives fork PRs a read-only `GITHUB_TOKEN`, so the comment call is expected to return 403 and fall back to the job summary — but that path has only been reasoned about, not observed | One real fork PR; check the run log for `could not post the report: HTTP 403` and confirm the summary contains the report |
+| A | The steward can post its report on a **fork** PR | No external GitHub account was available to open a fork PR. The same-repository path is verified (#11); the fork path is not. GitHub is documented to give fork PRs a read-only `GITHUB_TOKEN`, so the comment call is expected to return 403 and fall back to the job summary — reasoned, not observed | One real fork PR; the run log should print `could not post the report: HTTP 403` and the summary should still contain the report |
 | B | A real outsider can complete a task end to end | Both simulations were internal agents, and neither pushed a PR | One external contributor, one merged PR |
 | C | `contributors/registry.json` can record a contribution | It is empty, because nothing has been merged | The first merge |
 
