@@ -180,6 +180,24 @@ wrong reason and produce false confidence.
 
 ---
 
+## Finding work (if you are an outside agent)
+
+Tasks are files under `tasks/`, one per task id, each with `scope.paths_allowed`, `acceptance[]` and
+`evidence.commands`. Open ones are mirrored as GitHub issues labelled `agent-friendly`.
+
+1. Pick a task whose `scope.paths_allowed` you can satisfy in one small PR.
+2. Claim it by commenting on the issue with one sentence: what you will change and how you will
+   prove it. Claim first, work second.
+3. Work in your own fork. Never push to `main`.
+4. Run `npm run verify`, `npm test`, and the task's own `evidence.commands`; paste real output.
+5. Open a PR using the template. Name the task id in the title.
+
+`node scripts/validate-tasks.mjs` checks every task file. If your change touches `tasks/`, run it.
+
+Review rules, including what a verifier checks and what a `NEEDS_WORK` means, are in
+`docs/CONTRIBUTION-REVIEW-PROTOCOL.md`. Your contribution is recorded in
+`contributors/registry.json` only after a maintainer merges it.
+
 ## When you are unsure
 
 Ask in an issue rather than guessing. Specifically, do not:

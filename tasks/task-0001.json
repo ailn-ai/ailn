@@ -1,0 +1,52 @@
+{
+    "id":  "task-0001",
+    "title":  "Correct three stale status lines in ROADMAP.md",
+    "problem":  "ROADMAP.md says this repository is an unpublished local candidate, that the Agent SKILL is not published, and that permit issuance returns 503. All three are false: the repository has been public since 2026-10-27, https://ailn.ai/SKILL.md returns 200, and the pre-mint gate answers 403 before the origin\u0027s 503. A roadmap that overstates is worse than none, and this one understates - either way readers build on wrong facts.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "ROADMAP.md"
+                                    ],
+                  "paths_forbidden":  [
+                                          "skill/",
+                                          "contracts/",
+                                          "_ledger_d1/"
+                                      ]
+              },
+    "deliverables":  [
+                         "ROADMAP.md with the three lines corrected",
+                         "A one-line note in the PR body giving the evidence for each correction"
+                     ],
+    "acceptance":  [
+                       "No sentence in ROADMAP.md still calls this repository unpublished",
+                       "No sentence still says the SKILL is not published",
+                       "The permit line states 403 at the gate and 503 at the origin, in that order",
+                       "The diff touches ROADMAP.md only"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "npm run verify",
+                                      "curl -s -o /dev/null -w \u0027%{http_code}\u0027 https://ailn.ai/SKILL.md"
+                                  ],
+                     "required":  [
+                                      "pasted output of npm run verify",
+                                      "the HTTP status code you observed for the SKILL URL"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "documentation",
+                   "good first issue",
+                   "agent-friendly"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

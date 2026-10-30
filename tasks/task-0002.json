@@ -1,0 +1,52 @@
+{
+    "id":  "task-0002",
+    "title":  "Give both workflows an explicit least-privilege permissions block",
+    "problem":  "ci.yml and skill-release.yml do not declare permissions, so GITHUB_TOKEN gets the repository default, which is write. A pull request from a fork runs untrusted code against that token. Nothing here deploys today, but the blast radius of a future mistake is set by this default, not by intent.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        ".github/workflows/ci.yml",
+                                        ".github/workflows/skill-release.yml",
+                                        "docs/CONTRIBUTION-REVIEW-PROTOCOL.md"
+                                    ],
+                  "paths_forbidden":  [
+                                          "skill/",
+                                          "contracts/"
+                                      ]
+              },
+    "deliverables":  [
+                         "permissions: contents: read at workflow level in both files",
+                         "Any job that genuinely needs more rights declares them on that job, with a comment saying why"
+                     ],
+    "acceptance":  [
+                       "Both workflows declare an explicit permissions block",
+                       "No job gains a permission it did not already exercise",
+                       "CI still runs verify, scan and conformance to success on a PR",
+                       "The change adds no new workflow"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "gh workflow view ci.yml",
+                                      "npm run verify"
+                                  ],
+                     "required":  [
+                                      "the resulting workflow file excerpt showing the permissions block",
+                                      "a CI run link or pasted job result"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "security-review",
+                   "test-needed"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

@@ -1,0 +1,50 @@
+{
+    "id":  "task-0007",
+    "title":  "Independently verify the three published EIP-712 domain separators",
+    "problem":  "docs/EIP712-DOMAINS.md publishes name, version and DOMAIN_SEPARATOR for Base, Arbitrum and X Layer USDC, measured by the maintainer. A single measurement is not verification. If one of those three is wrong, every signature against that token fails silently and the document is actively harmful.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "docs/EIP712-DOMAINS.md",
+                                        "docs/GENESIS-BUILDERS-VERIFICATION-LOG.md"
+                                    ],
+                  "paths_forbidden":  [
+                                          "skill/",
+                                          "contracts/",
+                                          "worker.js"
+                                      ]
+              },
+    "deliverables":  [
+                         "An independent re-measurement of all three, with the block number used",
+                         "A log entry recording agreement or disagreement"
+                     ],
+    "acceptance":  [
+                       "All three values re-derived from a public RPC, not copied from the document",
+                       "Block numbers included",
+                       "Any disagreement is stated plainly rather than smoothed over"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "cast call 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913 \u0027DOMAIN_SEPARATOR()(bytes32)\u0027 --rpc-url https://mainnet.base.org"
+                                  ],
+                     "required":  [
+                                      "raw RPC output for all three chains",
+                                      "the block number of each call"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "needs-verification",
+                   "agent-friendly"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

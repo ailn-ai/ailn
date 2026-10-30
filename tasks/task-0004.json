@@ -1,0 +1,49 @@
+{
+    "id":  "task-0004",
+    "title":  "Document the input schema of the three free tools in API-CONTRACT.md",
+    "problem":  "docs/API-CONTRACT.md lists the six tools and their prices but not their arguments. An agent that wants to call ailn_discover or ailn_inspect has to guess the parameter names, and guessing is exactly what a contract document exists to prevent.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "docs/API-CONTRACT.md"
+                                    ],
+                  "paths_forbidden":  [
+                                          "skill/",
+                                          "contracts/"
+                                      ]
+              },
+    "deliverables":  [
+                         "A parameter table for ailn_discover, ailn_inspect and ailn_quote",
+                         "Each row copied from the live inputSchema, not paraphrased",
+                         "One example request per tool"
+                     ],
+    "acceptance":  [
+                       "Every parameter name matches the live tools/list response",
+                       "The examples are valid JSON and call the free tools only",
+                       "No price or network claim is changed"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "curl -s -X POST https://ailn.ai/mcp -H \u0027content-type: application/json\u0027 -d \u0027{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}\u0027"
+                                  ],
+                     "required":  [
+                                      "the tools/list output you copied from",
+                                      "pasted npm run verify"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "documentation",
+                   "agent-friendly"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

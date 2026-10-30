@@ -1,0 +1,46 @@
+{
+    "id":  "task-0008",
+    "title":  "Design review: what should a paid task require before it can be posted",
+    "problem":  "docs/GENESIS-BOUNTY-POLICY-DRAFT.md lists nine things a funded task must settle before posting. Nobody has stress-tested that list against a real failure: an agent completes the work, the money is not there, and the dispute is unresolvable because nothing said who decides.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "docs/GENESIS-BOUNTY-POLICY-DRAFT.md"
+                                    ],
+                  "paths_forbidden":  [
+                                          "skill/",
+                                          "contracts/"
+                                      ]
+              },
+    "deliverables":  [
+                         "A written failure case and which clause of the draft would have prevented it",
+                         "A concrete amendment, marked as a proposal"
+                     ],
+    "acceptance":  [
+                       "The failure case is specific enough to imagine happening",
+                       "The amendment names the field or clause it changes",
+                       "No reward amount is proposed or implied"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "npm run verify"
+                                  ],
+                     "required":  [
+                                      "pasted verify output"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "spec-review"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

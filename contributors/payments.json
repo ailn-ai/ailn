@@ -1,0 +1,5 @@
+{
+  "schema": "ailn-contributor-payments/v1",
+  "about": "One line per payment made under the bounty policy. Empty while no paid task exists.",
+  "entries": []
+}

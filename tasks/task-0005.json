@@ -1,0 +1,49 @@
+{
+    "id":  "task-0005",
+    "title":  "Review Task Pact V0 against the Stigmergy concepts and file findings",
+    "problem":  "The task files claim to be the GitHub sketch of Task Pact to BidTicket to Proof to Acceptance to Settlement Receipt, but no outsider has checked whether the fields actually carry those concepts or whether the mapping is decorative.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "docs/GENESIS-BUILDERS-TASK-PACT-REVIEW.md",
+                                        "tasks/schema/task-pact.schema.json"
+                                    ],
+                  "paths_forbidden":  [
+                                          "protocols/stigmergy/README.md",
+                                          "skill/"
+                                      ]
+              },
+    "deliverables":  [
+                         "A review document with one finding per field group: carried, missing, or contradicts",
+                         "A concrete list of schema changes you would make, marked as proposals"
+                     ],
+    "acceptance":  [
+                       "Each finding names the Stigmergy concept it is about",
+                       "At least one field is identified as missing or unnecessary, with a reason",
+                       "No file under protocols/ is modified"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "node scripts/validate-tasks.mjs"
+                                  ],
+                     "required":  [
+                                      "pasted validator output",
+                                      "the diff stat of your change"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "spec-review",
+                   "agent-friendly"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

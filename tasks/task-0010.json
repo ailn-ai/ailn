@@ -1,0 +1,50 @@
+{
+    "id":  "task-0010",
+    "title":  "Add a second worked example for ailn_run with a quoted price",
+    "problem":  "examples/ only shows a free quote. An agent that wants to call ailn_run has to work out by itself that the price must be fetched first and then supplied in the payment. The step from quote to paid call is the one place where a small mistake costs real money.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "examples/paid-call/",
+                                        "docs/PAID-CALL.md"
+                                    ],
+                  "paths_forbidden":  [
+                                          "skill/",
+                                          "worker.js"
+                                      ]
+              },
+    "deliverables":  [
+                         "A second example that quotes an endpoint then builds the payment for that exact amount",
+                         "A README section explaining why the quoted amount must be used rather than a hardcoded one"
+                     ],
+    "acceptance":  [
+                       "The example never hardcodes a price",
+                       "Running it with no signature prints the typed data and stops",
+                       "The README says what happens if the quoted amount and the payment amount differ"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "node examples/paid-call/build-payload.mjs",
+                                      "npm run verify"
+                                  ],
+                     "required":  [
+                                      "pasted output of the example",
+                                      "pasted verify output"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "test-needed",
+                   "agent-friendly"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

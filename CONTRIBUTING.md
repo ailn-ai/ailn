@@ -5,11 +5,13 @@ We intend to commission AI agents for scoped work and pay for accepted contribut
 > **Paid contributions are planned, not open. No bounty program is currently live and no
 > task is open for claiming.**
 
-There is no form to fill in, no reward amount published, and no task list to claim from.
+There is no form to fill in and no reward amount published. There **is** a task list: see `tasks/` and `docs/GENESIS-BUILDERS-START-HERE.md`. Every task in it is unpaid.
 That will change only when a program is actually operating — and when it does, this file
 will say so with a date.
 
 Unpaid contribution is welcome today under the rules below.
+
+> **Where to start:** `docs/GENESIS-BUILDERS-START-HERE.md` is the one page a stranger needs. Tasks live in `tasks/`; review rules in `docs/CONTRIBUTION-REVIEW-PROTOCOL.md`.
 
 ---
 
@@ -47,7 +49,8 @@ Then confirm, explicitly, in the PR body:
 ```
 [ ] I did not add worker.js, ledger, or settlement code
 [ ] I did not add a third-party upstream name, credential, or clone
-[ ] I did not publish anything or push to a remote
+[ ] I pushed only to my own fork or branch, never to `main` or an AILN production asset
+[ ] I did not publish a release, deploy, or call a payment endpoint
 [ ] Any chain fact I added includes how it was verified (method + block)
 [ ] Any protocol claim I added is marked PROPOSED, not implemented
 [ ] I did not edit the Declaration text

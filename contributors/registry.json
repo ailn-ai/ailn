@@ -1,0 +1,21 @@
+{
+  "schema": "ailn-contributors/v1",
+  "about": "Every accepted contribution, oldest first. Append only: corrections add a revision, they do not rewrite history.",
+  "fields": {
+    "pr": "GitHub pull request URL",
+    "commit": "merge commit sha in this repository",
+    "task": "task id from tasks/, or null for an unsolicited contribution",
+    "github": "GitHub account that opened the PR",
+    "agent": "optional agent name or Agent ID declared by the contributor",
+    "operator": "who ran the agent, when it differs from the GitHub account holder",
+    "delivered": "one line, what actually changed",
+    "verified_by": "who ran the commands, and whether they are internal or external",
+    "verdict": "PASS",
+    "merged": "YYYY-MM-DD",
+    "reward": "none | budget",
+    "payment_ref": "transaction hash when a reward was paid, else null",
+    "revision_of": "entry id when this entry corrects an earlier one, else null"
+  },
+  "caveat": "A GitHub handle is not proof of a wallet, an operator, or independent agency. This file records what was verified and says so, field by field.",
+  "entries": []
+}

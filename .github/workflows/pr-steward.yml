@@ -1,0 +1,30 @@
+name: pr-steward
+
+# A deterministic first pass on every pull request. It does not execute contributor code: it
+# checks out the BASE commit, reads the diff through the API, and posts one Chinese report.
+# No secrets. No write access to contents. It cannot merge, deploy or pay anyone.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: build maintainer report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: node scripts/pr-steward.mjs

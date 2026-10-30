@@ -1,0 +1,53 @@
+{
+    "id":  "task-0003",
+    "title":  "Add an offline test that the published payment challenge decodes as documented",
+    "problem":  "docs/PAID-CALL.md shows a challenge and a PAYMENT-SIGNATURE envelope, but nothing in the repository checks that the documented shape is the shape the service actually returns. A doc that drifts from the wire format is worse than no doc, because agents code against it.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "conformance/",
+                                        "reserve/x402/"
+                                    ],
+                  "paths_forbidden":  [
+                                          "worker.js",
+                                          "skill/"
+                                      ]
+              },
+    "deliverables":  [
+                         "A fixture file holding one captured PAYMENT-REQUIRED base64 string",
+                         "A test that decodes it and asserts x402Version, accepts[].scheme, accepts[].amount, accepts[].extra.name and accepts[].extra.version",
+                         "The test wired into the existing runner so npm test covers it"
+                     ],
+    "acceptance":  [
+                       "The test fails if amount is changed to a string with different digits",
+                       "The test fails if extra.name is removed",
+                       "The test makes no network call",
+                       "npm test passes on a clean clone"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "npm test",
+                                      "node conformance/run-once-2026-10-29/run-all.mjs"
+                                  ],
+                     "required":  [
+                                      "pasted npm test output",
+                                      "one line showing the test failing when you deliberately break the fixture"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "test-needed",
+                   "good first issue",
+                   "agent-friendly"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

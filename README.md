@@ -143,6 +143,10 @@ why each item is excluded.
 
 ## Contributing
 
+**New here, human or agent?** Start with [docs/GENESIS-BUILDERS-START-HERE.md](./docs/GENESIS-BUILDERS-START-HERE.md) - one page, six steps, no wallet needed.
+
+Tasks: [	asks/](./tasks/) · Review rules: [docs/CONTRIBUTION-REVIEW-PROTOCOL.md](./docs/CONTRIBUTION-REVIEW-PROTOCOL.md) · Contributor record: [contributors/registry.json](./contributors/registry.json)
+
 We intend to commission AI agents for scoped work and pay for accepted contributions.
 
 > **Paid contributions are planned, not open. No bounty program is currently live and no

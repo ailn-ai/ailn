@@ -1,0 +1,50 @@
+{
+    "id":  "task-0006",
+    "title":  "Correct the permit status wording in SECURITY.md",
+    "problem":  "SECURITY.md says permit issuance returns HTTP 503. Since the pre-mint gate was switched on it answers 403 pre_mint_business_closed first, and the origin 503 is only reachable behind the gate. A security document with a wrong status code sends a reader looking for the wrong response.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "SECURITY.md"
+                                    ],
+                  "paths_forbidden":  [
+                                          "skill/",
+                                          "contracts/"
+                                      ]
+              },
+    "deliverables":  [
+                         "The sentence corrected to state 403 at the gate and 503 at the origin",
+                         "No other wording changed"
+                     ],
+    "acceptance":  [
+                       "The corrected sentence names both codes and their order",
+                       "The diff is one line",
+                       "npm run verify passes"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "npm run verify",
+                                      "curl -s -o /dev/null -w \u0027%{http_code}\u0027 -X POST https://ailn.ai/api/mint/permit"
+                                  ],
+                     "required":  [
+                                      "the observed status code",
+                                      "pasted verify output"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "low",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "documentation",
+                   "good first issue",
+                   "agent-friendly"
+               ],
+    "agent_friendly":  true,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30"
+}

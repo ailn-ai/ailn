@@ -1,0 +1,50 @@
+{
+    "id":  "task-0009",
+    "title":  "Independent review of the deployed Passage V3 contract",
+    "problem":  "V3 is deployed on BNB Chain and cannot be upgraded. It has never been reviewed by anyone outside the project. totalMinted is 0, so nothing is at stake yet - which is exactly when a review is cheap and useful.",
+    "scope":  {
+                  "paths_allowed":  [
+                                        "docs/GENESIS-BUILDERS-EXTERNAL-REVIEWS.md"
+                                    ],
+                  "paths_forbidden":  [
+
+                                      ]
+              },
+    "deliverables":  [
+                         "A written review in the ailn-ai/passage repository covering mint path, quota, permit dependency and any assumption that could strand a buyer",
+                         "One line added to docs/GENESIS-BUILDERS-EXTERNAL-REVIEWS.md linking the review and stating the reviewed commit",
+                         "Findings classified by severity"
+                     ],
+    "acceptance":  [
+                       "The review names the functions it examined",
+                       "At least the permit dependency is analysed as a failure mode",
+                       "No code change is included"
+                   ],
+    "evidence":  {
+                     "commands":  [
+                                      "bscscan contract page",
+                                      "cast code 0x5A5514F65e1ECB8dE1C369c2703859f5f107ED52 --rpc-url https://bsc-dataseed.binance.org"
+                                  ],
+                     "required":  [
+                                      "the contract address you read",
+                                      "the commit or file you reviewed"
+                                  ]
+                 },
+    "dependencies":  [
+
+                     ],
+    "risk":  "funds",
+    "reward":  {
+                   "type":  "none"
+               },
+    "status":  "OPEN",
+    "labels":  [
+                   "security-review",
+                   "help wanted"
+               ],
+    "agent_friendly":  false,
+    "claimed_by":  null,
+    "created":  "2026-10-30",
+    "updated":  "2026-10-30",
+    "notes":  "risk=funds: merge requires the maintainer plus one independent reviewer. Work happens in ailn-ai/passage, not here."
+}

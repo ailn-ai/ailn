@@ -1,0 +1,75 @@
+name: Task
+description: Propose or claim a scoped piece of work under the Task Pact
+title: "task: "
+labels: ["help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every task must be decidable by a reviewer who does not trust the author.
+        Read `docs/GENESIS-BUILDERS-START-HERE.md` first.
+  - type: input
+    id: task_id
+    attributes:
+      label: Task ID
+      description: A new id (`task-00NN`) or the id of an existing task you are claiming
+      placeholder: task-0011
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is wrong today, observable by someone else without trusting you
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Paths a PR may touch. Anything else is out of scope and the PR is closed, not trimmed.
+      placeholder: |
+        allowed: docs/API-CONTRACT.md
+        forbidden: skill/, contracts/, worker.js
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance
+      description: One line per criterion, each decidable by reading the diff and running a command
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: The commands a reviewer runs, and what must appear in the PR body
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk
+      options: [low, medium, high, funds]
+    validations:
+      required: true
+  - type: dropdown
+    id: reward
+    attributes:
+      label: Reward
+      description: No bounty programme exists. Choose "none" unless a maintainer has approved a budget.
+      options:
+        - none
+        - budget (requires owner approval, see docs/GENESIS-BOUNTY-POLICY-DRAFT.md)
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirm
+      options:
+        - label: I have read docs/AGENT.md and the review protocol
+          required: true
+        - label: This task needs no production keys, no funds, and no private workbench access
+          required: true
