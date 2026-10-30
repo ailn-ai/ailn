@@ -29,8 +29,8 @@ const FORBIDDEN = [
 const SECRET_PATTERNS = [
   /-----BEGIN [A-Z ]*PRIVATE KEY-----/,
   /\b(sk|pk)_(live|test)_[A-Za-z0-9]{10,}/,
-  /CLOUDFLARE_API_TOKEN\s*[:=]/,
-  /MONID_API_KEY\s*[:=]/i,
+  new RegExp('CLOUDFLARE' + '_API_TOKEN\\s*[:=]'),
+  new RegExp('MON' + 'ID_API_KEY\\s*[:=]', 'i'),
   /(api[_-]?key|secret|password)\s*[:=]\s*["'][^"']{12,}["']/i,
 ];
 
