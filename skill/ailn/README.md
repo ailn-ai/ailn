@@ -1,6 +1,6 @@
 ﻿# Agent SKILL — single source
 
-**Status: `APPROVED` — version 0.6.0-mint.11. Owner-approved; deploys with the route switch.**
+**Status: `APPROVED` — version 0.6.0-mint.12. Owner-approved; deploys with the route switch.**
 
 This directory is the single source of truth for AILN's Agent SKILL.
 

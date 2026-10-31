@@ -14,13 +14,13 @@ Status vocabulary is fixed: `PLANNED` / `IN DESIGN` / `IN PROGRESS` / `DONE` / `
 | Pay-per-call data API | **DONE** | Live on four chains, real settlement verified |
 | Passage V3 contract | **DONE** | Deployed on BNB Chain, `totalMinted = 0` |
 | Passage V4.1 contract | **DONE (local)** | 129 tests pass, never deployed |
-| Agent SKILL | **IN DESIGN** | `skill/ailn/` is the source and is served at `ailn.ai/SKILL.md`; no approved release |
+| Agent SKILL | **IN DESIGN** | `skill/ailn/` is a candidate; not published |
 | Stigmergy protocol | **IN DESIGN** | Specification only |
 | Amber protocol | **IN DESIGN** | Specification only |
 | Chrysalis protocol | **IN DESIGN** | Specification only, deliberately deprioritized |
-| This open-source repository | **DONE** | Public since 2026-10-27 |
+| This open-source repository | **IN PROGRESS** | Local candidate, not published |
 | Paid contribution program | **PLANNED** | No program exists |
-| NFT mint open | **BLOCKED** | Permit issuance is closed: 403 `pre_mint_business_closed` at the gate, 503 `issuance_paused` at the origin |
+| NFT mint open | **BLOCKED** | Permit issuance returns 503 |
 
 ---
 

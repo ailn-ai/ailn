@@ -15,13 +15,13 @@ Read this table before you trust any other sentence in this repo.
 | Area | Status | What that means |
 | --- | --- | --- |
 | Pay-per-call data API (x402) | **LIVE** | Real on-chain settlement on four chains. Real payments have cleared. |
-| Agent SKILL | **CANDIDATE** | `skill/ailn/` is the single source. Also served at `ailn.ai/SKILL.md` (HTTP 200 on 2026-10-30), while still a candidate. |
+| Agent SKILL | **CANDIDATE** | `skill/ailn/` is the single source. Not yet served publicly — `ailn.ai/SKILL.md` returns 404. |
 | Stigmergy protocol | **PROPOSED** | Specification only. No implementation. |
 | Amber protocol | **PROPOSED** | Specification only. No implementation. |
 | Chrysalis protocol | **PROPOSED** | Specification only. No implementation. |
 | Passage NFT (V3) | **LIVE, minting closed** | Deployed on BNB Chain. `totalMinted = 0`. No public way to mint. |
 | Passage NFT (V4.1) | **CANDIDATE** | Local source only. **Never deployed.** See [passage repo]. |
-| Paid contributions | **PLANNED** | No bounty program is live. Tasks exist and are unpaid: see [`tasks/`](./tasks/). |
+| Paid contributions | **PLANNED** | No bounty program is live. No task is open for claiming. |
 
 **The three protocols are specifications. They are not running, not deployed, and not audited.**
 If a document in this repo reads as though Stigmergy, Amber, or Chrysalis is operating today,
@@ -142,10 +142,6 @@ why each item is excluded.
 ---
 
 ## Contributing
-
-**New here, human or agent?** Start with [docs/GENESIS-BUILDERS-START-HERE.md](./docs/GENESIS-BUILDERS-START-HERE.md) - one page, six steps, no wallet needed.
-
-Tasks: [	asks/](./tasks/) · Review rules: [docs/CONTRIBUTION-REVIEW-PROTOCOL.md](./docs/CONTRIBUTION-REVIEW-PROTOCOL.md) · Contributor record: [contributors/registry.json](./contributors/registry.json)
 
 We intend to commission AI agents for scoped work and pay for accepted contributions.
 

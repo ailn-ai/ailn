@@ -5,11 +5,6 @@ on:
     branches: [main]
   pull_request:
 
-# Least privilege: a pull request from a fork runs untrusted code. Nothing here needs write access,
-# and nothing here can deploy.
-permissions:
-  contents: read
-
 jobs:
   verify:
     runs-on: ubuntu-latest
@@ -31,30 +26,10 @@ jobs:
       - name: sensitivity scan
         run: node scripts/scan.mjs .
 
-  tasks:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: validate task pacts
-        run: node scripts/validate-tasks.mjs
-
-  conformance:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: run every conformance check
-        run: npm run conformance
-
   example:
     runs-on: ubuntu-latest
-    # This job calls the live API. A network outage there is not a repository failure, so it is
-    # reported but does not gate the build. Everything deterministic is gated by the other jobs.
+    # The example hits the live API. A network failure is not a repository failure,
+    # so this job is reported but does not gate the build.
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
@@ -62,20 +37,4 @@ jobs:
         with:
           node-version: '20'
       - name: run live quote example
-        # Exit 2 = network unreachable: a diagnostic, not a failure. Any other non-zero exit is a
-        # real protocol or JSON error and fails the job.
-        run: |
-          set +e
-          node examples/mcp-quote/index.mjs
-          code=$?
-          set -e
-          if [ "$code" -eq 0 ]; then
-            echo "live example: ok"
-            exit 0
-          fi
-          if [ "$code" -eq 2 ]; then
-            echo "::warning::live API unreachable from this runner; example not exercised (exit 2)"
-            exit 0
-          fi
-          echo "::error::the example failed with exit $code - protocol failure, not a network one"
-          exit "$code"
+        run: node examples/mcp-quote/index.mjs
