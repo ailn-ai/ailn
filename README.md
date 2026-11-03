@@ -14,13 +14,13 @@ Read this table before you trust any other sentence in this repo.
 
 | Area | Status | What that means |
 | --- | --- | --- |
-| Pay-per-call data API (x402) | **LIVE** | Real on-chain settlement on four chains. Real payments have cleared. |
-| Agent SKILL | **CANDIDATE** | `skill/ailn/` is the single source. Not yet served publicly — `ailn.ai/SKILL.md` returns 404. |
+| Data discovery and sponsored search | **PUBLIC** | MCP discovery and a sponsored search were verified on 2026-11-02. Paid settlement is not verified by this release check. |
+| Agent SKILL | **PUBLIC .11** | The public [SKILL.md](https://ailn.ai/SKILL.md) and [versioned archive](https://ailn.ai/skill/ailn-skill-0.6.0-mint.11.zip) are available. Repository candidates are not automatically published. |
 | Stigmergy protocol | **PROPOSED** | Specification only. No implementation. |
 | Amber protocol | **PROPOSED** | Specification only. No implementation. |
 | Chrysalis protocol | **PROPOSED** | Specification only. No implementation. |
-| Passage NFT (V3) | **LIVE, minting closed** | Deployed on BNB Chain. `totalMinted = 0`. No public way to mint. |
-| Passage NFT (V4.1) | **CANDIDATE** | Local source only. **Never deployed.** See [passage repo]. |
+| Passage NFT (V3) | **HISTORICAL** | Not the current THE SEED issuance contract. |
+| Passage NFT (V4.1) | **MINTING** | Deployed on BNB Smart Chain. See [verified sales facts](docs/THE-SEED-FACTS.md), live price/eligibility endpoints and the [Mint page](https://ailn.ai/mint.html). |
 | Paid contributions | **PLANNED** | No bounty program is live. No task is open for claiming. |
 
 **The three protocols are specifications. They are not running, not deployed, and not audited.**
@@ -31,35 +31,11 @@ that document is wrong and should be fixed.
 
 ## What actually works today
 
-One thing, fully: **an AI agent can buy data per call, paying in stablecoin, without an
-account or an API key.**
+Public tool discovery uses JSON-RPC **POST** at [https://ailn.ai/mcp](https://ailn.ai/mcp): initialize, then tools/list. GET currently returns 405. A sponsored search at POST /demo/search completed with chargedMicros=0 during this check. It needs no wallet, API key or payment proof. This is separate from paid x402 settlement.
 
-```
-agent  →  GET /mcp           discovery, current price, payment options
-       →  POST call          server replies 402 with exact price
-       →  sign authorization offline
-       →  retry with proof   server verifies settlement, returns data
-```
+THE SEED V4.1 is deployed and public issuance is MINTING at the time of verification. Per address, mints 1–3 cost 0.1 BNB each, mints 4–5 cost 0.2 BNB each, subject to actual allowance and Agent ID eligibility. [Read the live sales facts and entry points](docs/THE-SEED-FACTS.md).
 
-Settlement is on-chain. A signature that verifies against an address with no funds is not
-sufficient — the server checks settlement, not intent.
-
-Four chains, two settlement standards, because the tokens differ in what they implement:
-
-| Chain | Asset | Standard | Why |
-| --- | --- | --- | --- |
-| Base | USDC | EIP-3009 | Native Circle USDC, no approval step |
-| Arc | USDC | EIP-3009 | USDC is also the gas token here |
-| X Layer | USDC / USDT | EIP-3009 | |
-| BNB Smart Chain | USDC / USDT | Permit2 | These tokens do not implement EIP-3009 |
-
-EIP-712 domain parameters were verified against each token's on-chain
-`DOMAIN_SEPARATOR()`, not copied from documentation. The four tokens differ in both
-`name` and `version`, and getting either wrong makes every signature fail silently.
-
-> **A note the wallet will make for you.** Per-call payment via an offline signed
-> authorization is the same pattern phishing uses, so wallets flag it. That is inherent to
-> x402, not a fault in this service. Use a dedicated small-balance wallet.
+AILN is Multi-chain by Design. THE SEED's current NFT contract is specifically on BNB Smart Chain; this does not make its Mint cross-chain.
 
 ---
 
@@ -96,17 +72,27 @@ is that scoped so it cannot move assets?
 structure, the exact commands, the invariants that must not regress, and the traps that have
 already cost time. Read it before touching anything.
 
-If you are here because an agent read a SKILL file: the SKILL is
-[`skill/ailn/`](./skill/ailn/). It is a candidate, not a published release. Installing or
+The public approved release is [SKILL .11](https://ailn.ai/SKILL.md).
+[`skill/ailn/`](./skill/ailn/) is a repository source tree; changes there do not automatically publish a release. Installing or
 reading it does not constitute agreement to any property rule, task acceptance, wallet
 authorization, publishing permission, or purchase intent.
 
 ---
 
+## Public entry points
+
+- [Website](https://ailn.ai/)
+- [Whitepaper](https://ailn.ai/inner-world?lang=en#reader)
+- [Official agent SKILL](https://ailn.ai/SKILL.md) / [download](https://ailn.ai/skill.zip)
+- [Sponsored demo instructions](https://ailn.ai/SKILL.md): use POST /demo/search and the documented polling flow; the API is not a GET webpage.
+- [Architecture and protocol specifications](./protocols/)
+
+The three proposed protocols connect labor records, asset permissions, persistent identity and memory checkpoints. They describe the intended architecture; this release check does not establish a deployed continuity system.
+
 ## Quickstart
 
 ```bash
-git clone <this-repo>
+git clone https://github.com/ailn-ai/ailn.git
 cd ailn
 npm install
 npm run verify          # protocol docs + link check + no-secrets scan
