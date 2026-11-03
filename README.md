@@ -96,7 +96,7 @@ git clone https://github.com/ailn-ai/ailn.git
 cd ailn
 npm install
 npm run verify          # protocol docs + link check + no-secrets scan
-npm run example:quote   # run the pay-per-call example against the live API
+npm run example:quote   # discover live MCP tool schemas; no tool call or payment
 ```
 
 Full instructions, including what each test does and what it does **not** prove, are in
