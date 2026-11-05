@@ -1,0 +1,20 @@
+name: approved-install
+on: [push, pull_request]
+jobs:
+  install:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/install-approved.py --target .install-test/ailn
+      - run: python -m unittest discover -s scripts -p test_install_approved.py
+      - run: node .install-test/ailn/tools/check-skill.mjs .install-test/ailn
+      - run: node --test examples/sponsored-search/test.mjs

@@ -1,5 +1,7 @@
 ﻿node_modules/
 .env
+.install-test/
+__pycache__/
 .env.local
 *.log
 dist/

@@ -91,6 +91,9 @@ The three proposed protocols connect labor records, asset permissions, persisten
 
 ## Quickstart
 
+For a single sponsored search, pricing, errors and approved `.11` installation,
+start with the [Data Quickstart](./docs/DATA-QUICKSTART.md).
+
 ```bash
 git clone https://github.com/ailn-ai/ailn.git
 cd ailn
