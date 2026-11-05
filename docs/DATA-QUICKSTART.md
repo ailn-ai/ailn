@@ -52,6 +52,17 @@ verified; do not promise them.
 
 ## Approved SKILL installation
 
+Tested with Skills CLI 1.7.6 on Node 24.20.0 in a disposable Windows project:
+
+```sh
+npx skills@1.7.6 add https://ailn.ai/skill/ailn-skill-0.6.0-mint.11.zip --agent codex --yes --copy
+```
+
+This installs the existing versioned archive, not moving main. Select the agent
+you actually use. Review the skill before activation. A CLI success is a local
+file installation, not proof of skills.sh indexing or a customer conversion.
+The offline installer below additionally pins and verifies the approved SHA.
+
 Moving `skill/ailn/` contains candidate `.12`; the public approved release was `.11`
 on 2026-11-05. Install its frozen archive without changing package bytes:
 
