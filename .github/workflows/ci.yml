@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: '20'
       - name: verify repository
-        run: node scripts/verify.mjs
+        run: npm run verify
 
   scan:
     runs-on: ubuntu-latest
